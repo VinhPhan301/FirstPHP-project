@@ -1,0 +1,782 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto";
+}
+
+/******************** Start Up date form *******************/
+.updateform {
+    width: 30%;
+    margin: 0 auto;
+    background: pink;
+    padding: 20px 30px;
+    border-radius: 5px;
+}
+.updateform input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    padding: 5px 12px;
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+.updateform button {
+    border-radius: 5px;
+    border: none;
+    background: rgb(91, 219, 255);
+    padding: 12px 22px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.updateform button:hover {
+    color: white;
+    background: blue;
+    cursor: pointer;
+}
+/******************** End updateform **************************/
+
+/******************** Login form ********************/
+.loginform {
+    width: 30%;
+    background: rgb(58, 157, 255);
+    margin: 20px auto;
+    padding: 20px 25px;
+    border-radius: 5px;
+}
+.loginform input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 15px;
+}
+.loginform p {
+    font-size: 60px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.loginform button {
+    background: pink;
+    font-size: 18px;
+    border-radius: 5px;
+    border: none;
+    width: 30%;
+    padding: 10px 0;
+    color: black;
+}
+.loginform button:hover {
+    color: white;
+    background: rgb(218, 0, 36);
+    cursor: pointer;
+}
+/********************* End login form *********************/
+
+/********************* Start Admin header *********************/
+header {
+    width: 81.7%;
+    border-radius: 10px;
+    background: black;
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    border: 2px solid black;
+    color: rgb(98, 0, 219);
+    float: right;
+    margin-right: 10px;
+    margin-top: 7px;
+}
+header p:hover {
+    cursor: pointer;
+}
+
+.headerright {
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+}
+.pic {
+    width: 37px;
+    height: 25px;
+}
+.father {
+    position: relative;
+}
+.son {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    line-height: 13px;
+    font-weight: bold;
+    top: -2px;
+    right: -5px;
+}
+.nonebookmark,
+.nonestar {
+    display: none;
+}
+.headermid input {
+    width: 100%;
+    height: 35px;
+    border-radius: 50px;
+    background: rgb(230, 210, 255);
+    padding: 5px 37px;
+    border: 1px solid rgb(181, 181, 181);
+    font-size: 18px;
+}
+.headermid {
+    width: 40%;
+    position: relative;
+}
+.placeholder {
+    position: absolute;
+    top: 9px;
+    left: 12px;
+    font-size: 15px;
+    color: black;
+    opacity: 0.5;
+}
+.headermid,
+.headerright,
+.headerleft {
+    height: 35px;
+}
+/********************* End header *********************/
+
+/********************* Start Sidebar css *********************/
+.boxsidebar {
+    width: 17%;
+    color: white;
+    height: 100vh;
+    padding: 7px 0px 7px 5px;
+}
+.sidebar {
+    background: black;
+    padding: 15px;
+    margin: 0 auto;
+    height: 100%;
+    border-radius: 10px;
+}
+.about {
+    font-size: 15px;
+    opacity: 0.8;
+    color: grey;
+}
+.sidebarheader {
+    color: rgb(0, 170, 255);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.fa-gem {
+    font-size: 45px;
+}
+.sideleftheader {
+    display: flex;
+    justify-content: space-between;
+    width: 28%;
+    font-size: 20px;
+    height: 45px;
+    color: white;
+}
+.sideleftheader p {
+    line-height: 45px;
+}
+.sideleftheader p:hover {
+    color: rgb(98, 0, 219);
+    cursor: pointer;
+}
+.logoutchild {
+    position: absolute;
+    background: white;
+    border: 1px solid black;
+    right: -75px;
+    top: 40px;
+    border-radius: 5px;
+    z-index: 1;
+    display: none;
+}
+.logoutchild a {
+    width: 100%;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: black;
+}
+.logoutchild span {
+    margin-left: 5px;
+}
+.logoutchild a:hover {
+    cursor: pointer;
+    background: rgb(98, 0, 219);
+    color: white;
+}
+.sidebaruserpic {
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+.sidebaruserpic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.username {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 5px;
+}
+.userfact {
+    font-size: 12px;
+    color: rgb(192, 192, 192);
+}
+.dashbar {
+    background: rgb(98, 0, 219);
+    padding: 8px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    text-align: center;
+}
+.dashbar h1 {
+    color: white;
+    font-size: 23px;
+}
+.actions {
+    margin-top: 10px;
+}
+.actionicon div:first-child {
+    padding: 13px 20px;
+    border-radius: 5px;
+}
+.actionicon div:first-child {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+}
+.actionicon p:nth-child(2) {
+    width: 82%;
+}
+.actionicon div:first-child:hover {
+    background: rgb(63, 0, 140);
+    cursor: pointer;
+}
+.childlist ul {
+    list-style: none;
+    font-size: 14px;
+}
+.childlist {
+    width: 80%;
+    margin: 0 auto;
+    display: none;
+}
+.childlist ul li a {
+    display: block;
+    padding: 7px 10px;
+}
+.childlist ul li {
+    border-radius: 5px;
+}
+.childlist ul li:hover {
+    background: grey;
+    cursor: pointer;
+}
+.childlist ul li span {
+    margin-left: 10px;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+/********************* End sidebar css *********************/
+
+/******************** Start Content CSS ********************/
+.content {
+    padding: 8px;
+    width: 83%;
+    height: 85.7%;
+    position: absolute;
+    top: 78px;
+    right: 0;
+}
+/******************** End Content CSS ********************/
+
+/******************** Start User List CSS ********************/
+.list_user_table th,
+.list_user_table tr,
+.list_user_table td {
+    padding: 15px 0;
+    text-align: center;
+}
+.list_user_table {
+    width: 100%;
+    padding: 10px;
+    height: 100px;
+}
+.divtablefather {
+    height: 101%;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+.divtable {
+    height: 86%;
+    overflow-y: scroll;
+}
+.divtable::-webkit-scrollbar {
+    display: none;
+}
+
+.listmsg {
+    width: 25%;
+    background: rgb(113, 255, 113);
+    position: fixed;
+    top: 10px;
+    left: 35%;
+    border-radius: 5px;
+    padding: 20px 30px;
+}
+.listmsg h3 {
+    border-bottom: 2px solid black;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+.thongbao {
+    position: relative;
+}
+.thongbao p {
+    font-size: 50px;
+}
+.checkadd {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/******************** End User List CSS ********************/
+
+/******************** Start User Create  CSS ********************/
+
+.signup_form {
+    width: 100%;
+    height: 100%;
+    padding: 15px 30px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(52, 52, 52, 0.8);
+}
+.name_pass_form,
+.phone_date_form,
+.address_role_form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.signup_form p {
+    margin-left: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.signup_form div input {
+    border-radius: 5px;
+    padding: 5px 15px;
+    border: none;
+    font-size: 18px;
+}
+.name_pass_form div {
+    width: 49%;
+}
+.name_pass_form div input {
+    width: 100%;
+}
+.email_form input {
+    width: 100%;
+}
+.phone_date_form input {
+    width: 100%;
+}
+.password_form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.password_form div {
+    width: 49%;
+}
+.password_form div input {
+    width: 100%;
+}
+.phone {
+    width: 67%;
+}
+.dateofbirth {
+    width: 31%;
+}
+.address {
+    width: 81%;
+}
+.address input {
+    width: 100%;
+}
+.role {
+    width: 17%;
+}
+.role select {
+    width: 100%;
+    padding: 0 10px;
+    height: 32px;
+    border-radius: 5px;
+}
+.role option {
+    padding: 5px 10px;
+}
+#register {
+    font-size: 25px;
+    font-weight: normal;
+}
+.create_btn {
+    padding: 10px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    background: rgb(113, 186, 255);
+    margin-top: 7px;
+}
+.create_btn:hover {
+    color: white;
+    background: rgb(0, 0, 217);
+    cursor: pointer;
+}
+.coffeimg {
+    width: 30%;
+}
+.coffeimg img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.tocreate_btn {
+    padding: 10px 20px;
+    background: rgb(86, 156, 255);
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    margin-top: 10px;
+}
+#createbut {
+    position: absolute;
+    left: 20px;
+    bottom: 15px;
+}
+
+.tocreate_btn:hover {
+    background: rgb(0, 0, 211);
+    color: white;
+    cursor: pointer;
+}
+.createbox {
+    background-image: url(https://img.freepik.com/free-photo/liquid-purple-art-painting-abstract-colorful-background-with-color-splash-paints-modern-art_1258-97771.jpg?w=2000);
+    border-radius: 10px;
+    width: 100%;
+}
+
+#texterror {
+    opacity: 1;
+    color: red;
+}
+.texterror {
+    opacity: 0;
+}
+/******************** End Create  CSS ********************/
+
+/******************** Start Update  CSS ********************/
+.name_form input {
+    width: 100%;
+}
+.update_form_box {
+    width: 100%;
+    height: 100%;
+    background: url(https://img.jakpost.net/c/2017/03/15/2017_03_15_23480_1489559147._large.jpg);
+    background-repeat: no-repeat;
+    border-radius: 10px;
+}
+.update_form {
+    padding: 30px 20px;
+    width: 100%;
+    color: white;
+    height: 100%;
+    background: rgba(28, 28, 28, 0.6);
+}
+.update_form input {
+    margin-bottom: 15px;
+}
+.update_btn {
+    margin-top: 20px;
+}
+/******************** End Update  CSS ********************/
+
+/******************** Start Category Create Form CSS ********************/
+
+.category_content {
+    width: 100%;
+    height: 100%;
+    background: url(https://s35764.pcdn.co/wp-content/uploads/2022/08/Featured-Image-33.png);
+    border-radius: 10px;
+    padding: 20px 30px;
+}
+.create_category_form {
+    width: 40%;
+    border-radius: 10px;
+    padding: 10px 30px 20px 30px;
+    height: fit-content;
+    background: rgba(0, 0, 0, 0.7);
+    margin-top: 20px;
+}
+.create_category_form p {
+    margin: 10px 0px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+.category_content h1 {
+    width: 100%;
+    text-align: center;
+    color: white;
+    background-color: rgb(98, 0, 219);
+    padding: 20px 0;
+    border-radius: 10px;
+}
+.create_category_form div {
+    width: 100%;
+}
+.category_name input {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: none;
+}
+.category_image input {
+    width: 100%;
+}
+#upload_image {
+    opacity: 0;
+    z-index: -1;
+    display: none;
+}
+.fake_file {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.fake_file div {
+    width: 25%;
+    padding: 8px 12px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border: 1px solid black;
+    font-weight: bold;
+    font-size: 20px;
+}
+.fake_file .select_file {
+    background: rgb(19, 0, 101);
+    color: white;
+    font-size: 15px;
+    width: 40%;
+}
+.fake_file p:hover {
+    cursor: pointer;
+}
+.fake_file input {
+    width: 75%;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid black;
+    padding: 5px 20px;
+}
+.category_create {
+    background: rgb(110, 199, 255);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.category_create:hover {
+    color: white;
+    background: rgb(0, 0, 192);
+    cursor: pointer;
+}
+
+.select_file:hover {
+    color: white;
+    background: red;
+    cursor: pointer;
+}
+
+/******************** End Category Create Form CSS ********************/
+
+/******************** Start Product Create Form CSS ********************/
+.create_product_box {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 20px 30px;
+    background: url(https://www.edesk.com/wp-content/uploads/2021/03/find-trending-products-sell-ecommerce.png);
+}
+.create_product_form {
+    width: 40%;
+    padding: 10px 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 15px;
+    background: rgb(6, 6, 6, 0.7);
+}
+.create_product_box h1 {
+    padding: 10px 20px;
+    background: rgb(98, 0, 219);
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}
+.create_product_form p {
+    margin: 5px 0;
+    font-size: 15px;
+    color: white;
+}
+.category_type_name {
+    padding: 10px 20px;
+    width: fit-content;
+    background: rgb(98, 0, 219);
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.category_type_name span {
+    color: rgb(20, 255, 20);
+    margin-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+}
+.create_product_form input,
+.category_id select,
+.product_type select {
+    padding: 5px 20px;
+    width: 100%;
+    border: none;
+    font-size: 17px;
+}
+.product_price input,
+.product_name input,
+.category_id select,
+.product_type select {
+    border-radius: 10px;
+}
+.create_product_form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background: rgb(106, 193, 255);
+    margin-top: 20px;
+}
+.create_product_form button:hover {
+    color: white;
+    background: blue;
+    cursor: pointer;
+}
+
+/******************** End Product Create Form CSS ********************/
+
+/******************** Start ProductDetail Create Form CSS ********************/
+.create_detail_box {
+    width: 100%;
+    height: 100%;
+    background: rgb(147, 147, 147);
+    border-radius: 10px;
+    padding: 10px 30px;
+}
+.create_detail_box h1 {
+    width: 100%;
+    padding: 10px 0px;
+    text-align: center;
+    background: rgb(98, 0, 219);
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+}
+.create_detail_form {
+    width: 40%;
+    background: green;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+.create_detail_form p {
+    color: white;
+    margin: 10px 0px 3px 10px;
+}
+.create_detail_form input {
+    width: 100%;
+    border-radius: 10px;
+    padding: 5px 20px;
+    border: none;
+    font-size: 20px;
+}
+.detail_thumbnail input {
+    border-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.create_detail_btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 20px;
+    background: rgb(138, 187, 255);
+}
+.create_detail_btn:hover {
+    background: blue;
+    cursor: pointer;
+    color: white;
+}
+#detail_table {
+    height: 80%;
+}
+.productname_in_detail {
+    background: rgb(98, 0, 219);
+    width: fit-content;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+#detail_divtablefather {
+    height: 92%;
+}
+.product_default_id {
+    display: none;
+}
+#for_default_id {
+    background: rgb(98, 0, 219);
+    width: fit-content;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 17px;
+    border-radius: 5px;
+    margin: 0;
+}

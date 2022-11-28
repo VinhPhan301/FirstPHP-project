@@ -1,0 +1,497 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto";
+    scroll-behavior: smooth;
+}
+p {
+    margin-bottom: 0;
+}
+
+/**************************************** Start Header CSS ********************/
+.header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background: #27313a;
+    z-index: 2;
+}
+.header_img {
+    width: 100%;
+}
+.header_img img {
+    width: 100%;
+}
+.header_type {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: #27313a;
+    padding: 15px 40px;
+}
+.header_type div {
+    display: flex;
+    justify-content: space-between;
+}
+.name_type {
+    width: 40%;
+    color: #92b3ca;
+    font-weight: bold;
+    font-size: 18px;
+}
+.name_type a {
+    color: #92b3ca;
+    text-decoration: none;
+}
+.name_type p {
+    line-height: 38.4px;
+}
+
+.icon_type {
+    width: 35%;
+}
+.icon_type p {
+    color: white;
+    line-height: 38.4px;
+}
+.search {
+    width: 60%;
+    position: relative;
+}
+.search p {
+    color: #90b1c9;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    line-height: 0;
+}
+.search input {
+    width: 100%;
+    border: none;
+    border-radius: 50px;
+    background-color: #334451;
+    padding: 0px 40px;
+    color: #90b1c9;
+    font-weight: bold;
+    font-size: 13px;
+}
+.header_category {
+    width: 100%;
+    padding: 13px 50px;
+    background: #63b1bc;
+    color: white;
+    font-size: 15px;
+}
+.in_header_category {
+    width: 100%;
+    display: flex;
+}
+.in_header_category a {
+    margin-right: 60px;
+    color: white;
+    text-decoration: none;
+}
+.name_type a:hover {
+    cursor: pointer;
+    color: white;
+}
+.icon_type p:hover {
+    cursor: pointer;
+}
+.header_category p:hover {
+    font-weight: 900;
+    cursor: pointer;
+}
+/**************************************** End Header CSS ********************/
+
+/**************************************** Start Content CSS ********************/
+
+.home_content {
+    width: 100%;
+}
+.in_content {
+    padding: 1px 25px 25px 25px;
+    background: url(https://images.unsplash.com/photo-1529753253655-470be9a42781?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8YmxhY2slMjBzdG9uZXxlbnwwfHwwfHw%3D&w=1000&q=80);
+}
+
+/**************************************** End Content CSS ********************/
+
+/**************************************** Start Footer CSS ********************/
+.footer {
+    width: 100%;
+    background: #313e49;
+}
+.top_footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid white;
+}
+.top_footer div {
+    color: white;
+}
+.canifa {
+    width: 35%;
+    padding-right: 100px;
+}
+.side_canifa {
+    width: 22%;
+}
+.security_icon img {
+    width: 40%;
+}
+.qrcode {
+    width: 14% !important;
+}
+.top_footer div p {
+    margin-bottom: 15px;
+}
+.top_footer div h3 {
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.top_footer p {
+    font-size: 15px;
+}
+.payway {
+    margin-top: 50px;
+}
+.paywaypic {
+    width: 100% !important;
+}
+.bot_footer {
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 13px;
+}
+.bot_footer p {
+    line-height: 27px;
+}
+.bot_footer i {
+    font-size: 27px;
+}
+.bot_footer i:hover {
+    cursor: pointer;
+}
+.bot_footer a {
+    color: white;
+}
+.bot_footer span {
+    margin-right: 15px;
+}
+
+/**************************************** End Footer CSS *******************************/
+
+/**************************************** Start Home CSS ******************************/
+.new_product {
+    color: white;
+    font-size: 30px;
+    margin-top: 30px;
+}
+
+.product_slide {
+    display: flex;
+    justify-content: space-between;
+}
+.left_slide {
+    width: 28%;
+}
+.left_slide img {
+    border-radius: 10px;
+}
+.right_slide {
+    width: 70%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+.top_image {
+    margin-top: 50px;
+}
+.top_image img {
+    width: 100%;
+}
+.product_box {
+    width: 32%;
+    position: relative;
+}
+.product_box img {
+    width: 100%;
+    border-radius: 10px;
+}
+.product_box p {
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+}
+.product_box p:nth-child(1) {
+    font-size: 25px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+.name_price {
+    padding: 0px 10px;
+}
+.mid_image img {
+    width: 100%;
+}
+.mid_image {
+    margin-top: 50px;
+}
+.category_bar {
+    width: 100%;
+    color: #92b3ca;
+    padding: 20px 0;
+    background: #27313a;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.category_bar div {
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+}
+.category_bar a {
+    line-height: 39.8px;
+    color: white;
+    text-decoration: none;
+}
+.category_bar a:first-child {
+    font-size: 30px;
+}
+.category_bar p:hover {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.category_product {
+    width: 100%;
+    padding: 20px 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.category_product_box {
+    width: 23.5%;
+    color: white;
+    margin-right: 17px;
+    margin-bottom: 30px;
+    position: relative;
+}
+.category_product_box a,
+.product_box a {
+    color: white;
+    text-decoration: none;
+}
+.found_data_box a {
+    text-decoration: none;
+    color: black;
+}
+.found_data_box:hover {
+    color: black;
+}
+.category_product_box p:hover,
+.product_box p:hover {
+    color: red;
+}
+.category_product_box img {
+    width: 100%;
+    border-radius: 10px;
+}
+.category_product_box p {
+    font-size: 25px;
+}
+.category_product_box p:nth-child(1) {
+    font-size: 20px;
+    margin-top: 5px;
+    opacity: 0.8;
+}
+.see_detail {
+    position: absolute;
+    text-align: center;
+    width: 60%;
+    top: 30%;
+    right: 20%;
+    background: black;
+    color: white;
+    padding: 15px 0px;
+    display: none;
+    opacity: 0.6;
+}
+.see_detail a {
+    color: white;
+    text-decoration: none;
+}
+.see_detail:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+.category_product_box:hover .see_detail {
+    display: block;
+}
+.product_box:hover .see_detail {
+    display: block;
+}
+.contact {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+.contact div {
+    width: 49.3%;
+    display: flex;
+    background: #333f48;
+    padding: 30px 50px;
+    justify-content: space-between;
+}
+.contact div input {
+    width: 65%;
+    background: #53616b;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 20px;
+    height: fit-content;
+}
+.contact div p {
+    font-weight: bold;
+    line-height: 34px;
+}
+.contact_icon {
+    padding: 30px 270px !important;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.contact_icon a {
+    font-size: 25px;
+    color: white;
+}
+
+.contact_email {
+    position: relative;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.paper_plane {
+    position: absolute;
+    top: 32px;
+    right: 65px;
+}
+.choose_product {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.choose_product div {
+    width: 110px;
+    height: 45px;
+    border-radius: 3px;
+    background-color: #54a0aa;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    margin-right: 12px;
+    margin-bottom: 10px;
+}
+.choose_product div a {
+    color: white;
+    text-decoration: none;
+}
+.choose_product div p {
+    line-height: 45px;
+}
+.choose_product div:hover {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+#type {
+    display: none;
+}
+/**************************************** End Home CSS ******************************/
+
+/**************************************** Start To Top CSS ******************************/
+.to_top_box {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+.to_top_box div {
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 7px;
+    padding: 10px 5px;
+}
+.to_top_box div a {
+    color: white;
+    text-decoration: none;
+}
+.to_top_box div:nth-child(1) {
+    background: red;
+    margin-bottom: 10px;
+}
+.to_top_box div:nth-child(2) {
+    background: blue;
+}
+
+/**************************************** End To Top CSS ******************************/
+
+/**************************************** Start Find Product CSS ******************************/
+.in_content_product {
+    width: 100%;
+    padding: 25px;
+    background: url(https://img.freepik.com/premium-photo/white-grey-marble-texture-background-natural-pattern_38607-395.jpg?w=2000);
+    display: flex;
+    justify-content: space-between;
+}
+.in_content_left {
+    width: 20%;
+}
+.in_content_right {
+    width: 80%;
+}
+.found_data_box {
+    color: black;
+}
+
+/**************************************** End Find Product CSS ******************************/
+
+/**************************************** Start Infor Product CSS ******************************/
+
+.about_product {
+    width: 100%;
+    padding: 40px 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.product_thumbnail {
+    width: 50%;
+}
+.product_thumbnail img {
+    width: 100%;
+}
+.product_infor {
+    width: 40%;
+}
+.top_infor {
+    border-bottom: 2px solid rgb(202, 202, 202);
+    padding-bottom: 40px;
+}
+.top_infor p {
+    margin: 20px 0px;
+    font-size: 20px;
+    opacity: 0.7
+}
+.top_infor h3 {
+    font-size: 25px;
+    font-weight: bold;
+}
+/**************************************** End Infor Product CSS ******************************/

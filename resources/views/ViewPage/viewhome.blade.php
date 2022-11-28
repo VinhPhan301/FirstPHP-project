@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/home.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="header" id="header">
+        <div class="header_img">
+            <img src="{{ asset('picture/blackfriday.png') }}" alt="">
+        </div>
+        <div class="header_type">
+            <div class='name_type'>
+                <a class="to_main" href="{{ route('shop.view',['category' => $category]) }}"><p>TRANG CHỦ</p></a>
+                @foreach($productType as $item)
+                <a class="to_other" href="{{ route('shop.view',['type' => $item]) }}"><p>{{ strtoupper($item) }}</p></a>
+                @endforeach
+            </div>
+            <div class='icon_type'>
+                <div class='search'>
+                    <p><i class="fa-solid fa-magnifying-glass"></i></p>
+                    <input type="text" value="Bạn tìm gì ...">
+                </div>
+                <p><i class="fa-solid fa-store"></i></p>
+                <p><i class="fa-regular fa-heart"></i></p>
+                <p><i class="fa-regular fa-circle-user"></i></p>
+                <p><i class="fa-solid fa-bag-shopping"></i></p>
+
+            </div>
+        </div>
+    </div>
+    <div class="home_content">
+        @yield('home_content')
+    </div>
+    <div class="footer">
+        <div class="top_footer">
+            <div class="canifa">
+                <h3>CÔNG TY CỔ PHẦN CANIFA</h3>
+                <p>Số ĐKKD: 0107574310, ngày cấp: 23/09/2016, nơi cấp: Sở Kế hoạch và đầu tư Hà Nội</p>
+                <p>Trụ sở chính: Số 688, Đường Quang Trung, Phường La Khê, Quận Hà Đông, Hà Nội, Việt Nam</p>
+                <p>Địa chỉ liên hệ: Phòng 301 Tòa nhà GP Invest, 170 La Thành, P. Ô Chợ Dừa, Q. Đống Đa, Hà Nội</p>
+                <p>Số điện thoại: +8424 - 7303.0222</p>
+                <p>Fax: +8424 - 6277.6419</p>
+                <p>Địa chỉ email: hello@canifa.com</p>
+            </div>
+            <div class="side_canifa">
+                <h3>THƯƠNG HIỆU</h3>
+                <p>Giới thiệu</p>
+                <p>Tin tức</p>
+                <p>Tuyển dụng</p>
+                <p>Với cộng đồng</p>
+                <p>Hệ thống cửa hàng</p>
+                <p>Liên hệ</p>
+            </div>
+            <div class="side_canifa">
+                <h3>HỖ TRỢ</h3>
+                <p>Hỏi đáp</p>
+                <p>Chính sách KHTT</p>
+                <p>Chính sách vận chuyển</p>
+                <p>Hướng dẫn chọn size</p>
+                <p>Kiểm tra đơn hàng</p>
+                <p>Quy định đổi hàng</p>
+                <p>Tra cứu điểm thẻ</p>
+                <p>Chính sách bảo mật</p>
+            </div>
+            <div class="side_canifa security_icon">
+                <h3>Chính sách bảo mật</h3>
+                <img class="qrcode" src="{{ asset('picture/bancode.png') }}">
+                <img src="{{ asset('picture/appstore.png') }}">
+                <img src="{{ asset('picture/googleplay.png') }}">
+                <h3 class="payway">PHƯƠNG THỨC THANH TOÁN</h3>
+                <p><img class='paywaypic' src="{{ asset('picture/payway.png') }}"></p>
+                <p><img src="{{ asset('picture/bocongthuong.png') }}"></p>
+            </div>
+        </div>
+        <div class="bot_footer">
+            <p>© 2022 CANIFA</p>
+            <p>
+                <span>Visit Us</span>
+                <span><a href="https://www.facebook.com/canifa.fanpage/"><i class="fa-brands fa-square-facebook"></i></a></span>
+                <span><a href="https://www.instagram.com/canifa.fashion/"><i class="fa-brands fa-square-instagram"></i></a></span>
+            </p>
+        </div>
+    </div>
+    <div class='to_top_box'>
+        <div>
+            <a href="https://www.facebook.com/canifa.fanpage/">
+                <p><i class="fa-solid fa-headset"></i></p>
+                <p>Support</p>
+            </a>
+        </div>
+        <div>
+            <a href="#header">
+                <p><i class="fa-solid fa-chevron-up"></i></p>
+                <p>To Top</p>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+    
+    </script>
+</body>
+</html>
