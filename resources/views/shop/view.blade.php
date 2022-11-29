@@ -55,7 +55,7 @@
                     <img src="{{ asset("picture/$product->image") }}" >
                     <div class='name_price'>
                         <p>{{ $product->name }}</p>
-                        <p>{{ $product->price }}$</p>
+                        <p>{{ number_format($product->price,0,'.','.') }} đ</p>
                     </div>
                 </a>
             </div>
@@ -99,7 +99,7 @@
                     <img src="{{ asset("picture/$product->image") }}" >
                     <div class='name_price'>
                         <p>{{ $product->name }}</p>
-                        <p>{{ $product->price }}$</p>
+                        <p>{{ number_format($product->price,0,'.','.') }} đ</p>
                     </div>
                 </a>
             </div>
@@ -132,7 +132,7 @@
                 <img src="{{ asset("picture/$product->image") }}" >
                 <div class='name_price'>
                     <p>{{ $product->name }}</p>
-                    <p>{{ $product->price }}$</p>
+                    <p>{{ number_format($product->price,0,'.','.') }} đ</p>
                 </div>
             </a>
         </div>

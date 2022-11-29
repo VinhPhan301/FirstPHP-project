@@ -17,15 +17,15 @@
         <div class='product_infor'>
             <div class='top_infor'>
                 <h3>{{ $product->name }}</h3>
-                <p>Ma san pham: {{ $product->id}}</p>
-                <h3>{{ $product->price }}$</h3>
+                <p>Ma san pham: <span class="product_id">{{ $product->id}}</span></p>
+                <h3>{{ number_format($product->price,0,'.','.') }} đ</h3>
             </div>
             <div class='mid_infor'>
-                <p>Mau sac:</p>
+                <p>Mau sac: <span class='undefined_color'>Vui long chọn màu</span></p>
                 @foreach ($detailColor as $color)
                     <span class="detail_color" style="background:{{ $color }}; color:{{ $color }}">{{ $color }}</span>
                 @endforeach
-                <p>Kich co:</p>
+                <p>Kich co: <span class='undefined_size'>Vui long chọn kích cỡ</span></p>
                 @foreach ($detailSize as $size)
                     <span class="detail_size">{{ $size }}</span>
                 @endforeach
@@ -78,19 +78,46 @@
         </div>
     </div>
 </div>
+<div class="success_tocart">
+    <p><i class="fa-solid fa-circle-check"></i></p>
+    <p>Bạn đã thêm <span>{{ $product->name }}</span> vào giỏ hàng.</p>
+</div>
 @endsection
 @section('script')
 <script>
     $('.detail_size').click(function(){
+        $('.undefined_size').css('display','none')
         $(this).siblings('.detail_size').removeClass('size_chosen')
         $(this).addClass('size_chosen');
-        console.log($('.size_chosen').text());
     })
 
     $('.detail_color').click(function(){
+        $('.undefined_color').css('display','none')
         $(this).siblings('.detail_color').removeClass('color_chosen')
         $(this).addClass('color_chosen')
-        console.log($('.color_chosen').text());
+    })
+
+    $('.to_cart').click(function(){
+        var size = $('.size_chosen').text();
+        var color = $('.color_chosen').text();
+        var productID = $('.product_id').text();
+       
+        if(color === ''){
+            $('.undefined_color').css('display','inline')
+        }
+        else if(size === ''){
+            $('.undefined_size').css('display','inline')
+        }
+        else{ 
+            $.get('{{ route('shop.cart') }}', {'color':color, 'productID':productID, 'size':size}, function (data) {
+                $('.success_tocart').css('display','block')
+
+                setInterval(function() {
+                $('.success_tocart').slideUp();
+                },900)
+
+            })
+        }
     })
 </script>
 @endsection

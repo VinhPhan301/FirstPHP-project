@@ -7,6 +7,7 @@ use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepositoryInterface;
 use DB;
+use Response;
 
 class ShopController extends Controller
 
@@ -220,8 +221,17 @@ class ShopController extends Controller
         ]);
     }
 
-    public function getViewCart()
-    {
+    public function getViewCart(Request $request)
+    {   
+        $color = $request->query('color');
+        $size = $request->query('size');
+        $productID = $request->query('productID');
+        
+        return response()->json([
+            'color' => $color,
+            'size' => $size,
+        ], 200);
+
         return view('shop.cart');
     }
 }

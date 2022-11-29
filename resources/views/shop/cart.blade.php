@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Hinh anh</td>
+                            <td>{{ $color }}</td>
                             <td>Gia tien</td>
                             <td>
                                 <span class='minus'>
@@ -59,26 +59,25 @@
                             <td>1.000.000</td>
                             <td>x</td>
                         </tr>
-                        <tr>
-                            <td>Hinh anh</td>
-                            <td>Gia tien</td>
-                            <td>
-                                <span class='minus'>
-                                    <i class="fa-regular fa-square-minus"></i>
-                                </span>
-                                <span class='total_number'>3</span>
-                                <span class='plus'>
-                                    <i class="fa-regular fa-square-plus"></i>
-                                </span>
-                            </td>
-                            <td>1.000.000</td>
-                            <td>x</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="cart_body_right"></div>
+        <div class="cart_body_right">
+            <div class="cart_right_top">
+                <h3 style='margin-bottom:30px'>Đơn hàng</h3>
+                <p class="cart_price"><span>Giá gốc</span> <span>1.714.000$</span></p>
+                <p class="discount"><span>Giảm giá</span> <span>-194.400$</span></p>
+                <p class='total_price'><span>Tổng tiền thanh toán</span> <span>1.519.600$</span></p>
+                <p class="order">ĐẶT HÀNG</p>
+            </div>
+            <div class='cart_right_bottom'>
+                <p>Chúng tôi chấp nhận thanh toán:</p>
+                <img src="{{ asset('picture/thanhtoan.png') }}" alt="">
+            </div>
+
+        </div>
     </div>
 </div>       
 @endsection

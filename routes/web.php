@@ -98,5 +98,6 @@ Route::prefix('shop')->group(function () {
    Route::get('/product', [ShopController::class, 'getViewProduct'])->name('shop.product');
 
    Route::get('/cart',[ShopController::class, 'getViewCart'])->name('shop.cart');
+
 });
 
