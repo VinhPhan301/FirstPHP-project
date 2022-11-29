@@ -55,6 +55,9 @@ p {
     color: white;
     line-height: 38.4px;
 }
+.icon_type a {
+    color: white;
+}
 .search {
     width: 60%;
     position: relative;
@@ -318,16 +321,20 @@ p {
     right: 20%;
     background: black;
     color: white;
-    padding: 15px 0px;
     display: none;
     opacity: 0.6;
 }
 .see_detail a {
+    display: block;
     color: white;
     text-decoration: none;
+    width: 100%;
+    height: 100%;
+    padding: 15px 0px;
 }
 .see_detail:hover {
     cursor: pointer;
+    font-weight: bold;
     opacity: 1;
 }
 .category_product_box:hover .see_detail {
@@ -449,8 +456,6 @@ p {
     width: 100%;
     padding: 25px;
     background: url(https://img.freepik.com/premium-photo/white-grey-marble-texture-background-natural-pattern_38607-395.jpg?w=2000);
-    display: flex;
-    justify-content: space-between;
 }
 .in_content_left {
     width: 20%;
@@ -473,13 +478,13 @@ p {
     justify-content: space-between;
 }
 .product_thumbnail {
-    width: 50%;
+    width: 60%;
 }
 .product_thumbnail img {
     width: 100%;
 }
 .product_infor {
-    width: 40%;
+    width: 30%;
 }
 .top_infor {
     border-bottom: 2px solid rgb(202, 202, 202);
@@ -488,10 +493,226 @@ p {
 .top_infor p {
     margin: 20px 0px;
     font-size: 20px;
-    opacity: 0.7
+    opacity: 0.7;
 }
 .top_infor h3 {
     font-size: 25px;
     font-weight: bold;
 }
+.detail_color {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2.5px solid rgb(206, 206, 206);
+    margin-right: 5px;
+    font-size: 1px;
+    text-align: center;
+}
+.detail_color:hover {
+    cursor: pointer;
+    border: 2.5px solid black;
+}
+.detail_size {
+    display: inline-block;
+    border: 1px solid grey;
+    text-align: center;
+    padding: 8px 22px;
+    font-size: 15px;
+    margin: 0px 5px 5px 0px;
+}
+.detail_size:hover {
+    background: rgb(76, 76, 76);
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+.mid_infor {
+    padding: 30px 0px 50px 0px;
+    border-bottom: 2px solid rgb(202, 202, 202);
+}
+.mid_infor p {
+    margin: 15px 0px 10px 0px;
+    font-size: 13px;
+    color: grey;
+}
+.bot_infor {
+    padding: 35px 0px;
+    border-bottom: 2px solid rgb(202, 202, 202);
+}
+.bot_infor p i {
+    color: #63b1bc;
+    margin-right: 10px;
+}
+.bot_infor p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.to_cart,
+.buy_now {
+    width: 100%;
+    padding: 10px 0px;
+    text-align: center;
+    border: 1px solid #333f48;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 13px;
+    background: white;
+}
+.to_cart {
+    margin-top: 40px;
+    background: #333f48;
+    color: white;
+}
+.to_cart:hover,
+.buy_now:hover {
+    cursor: pointer;
+}
+.related_product {
+    padding: 40px 50px;
+    width: 100%;
+}
+.show_related_product {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.related_box {
+    width: 23%;
+    margin-right: 27px;
+    position: relative;
+}
+.related_box img {
+    width: 100%;
+}
+.related_box a:nth-child(2) {
+    color: black;
+    text-decoration: none;
+}
+.related_name {
+    font-size: 20px;
+    margin-top: 5px;
+    opacity: 0.7;
+}
+.related_price {
+    font-size: 25px;
+    font-weight: bold;
+    opacity: 0.7;
+}
+.under_bot_infor {
+    padding: 30px 0px;
+}
+.under_bot_infor h5 {
+    margin-top: 20px;
+    font-weight: bold;
+}
+.related_box:hover .see_detail {
+    display: block;
+}
+.size_chosen {
+    background: black;
+    font-weight: bold;
+    color: white;
+}
+.color_chosen {
+    border: 2.5px solid black;
+}
 /**************************************** End Infor Product CSS ******************************/
+
+/**************************************** Start Shop Cart CSS ******************************/
+.cart_header {
+    width: 100%;
+    background: #17242b;
+    padding: 20px 90px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+.header_logo {
+    display: flex;
+    justify-content: space-between;
+    width: 23%;
+}
+.vshop {
+    font-size: 20px;
+    padding: 8px 13px;
+    background: red;
+}
+.header_logo p:nth-child(2),
+.continue p {
+    padding: 10px 13px;
+}
+.cart_header a {
+    color: white;
+    text-decoration: none;
+}
+.cart_body {
+    width: 100%;
+    padding: 35px 90px;
+    display: flex;
+    justify-content: space-between;
+}
+.cart_body_left {
+    width: 70%;
+    background: rgb(222, 222, 222);
+    padding: 30px 40px;
+}
+.cart_body_right {
+    width: 29%;
+    background: rgb(214, 214, 214);
+    height: 300px;
+}
+.freeship {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    background: white;
+    box-shadow: 2px 5px 5px 1px rgb(184, 184, 184);
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.freeship p:nth-child(1) {
+    color: white;
+    background: #63b1bc;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+}
+.freeship p:nth-child(1) i {
+    line-height: 35px;
+}
+.freeship p:nth-child(2) {
+    font-size: 13px;
+    opacity: 0.8;
+    line-height: 35px;
+}
+.cart_body_table {
+    width: 100%;
+    margin-top: 30px;
+}
+.cart_body_table table {
+    width: 100%;
+}
+.cart_body_table thead td {
+    background: #333f48;
+    color: white;
+    padding: 10px 20px;
+    font-size: 15px;
+}
+table {
+    border-spacing: 0;
+}
+.cart_body_table td {
+    text-align: center;
+    padding: 10px 0px;
+}
+.total_number {
+    margin: 0px 10px;
+}
+.minus,
+.plus {
+    color: rgb(173, 173, 173);
+}
+/**************************************** End Shop Cart CSS ******************************/

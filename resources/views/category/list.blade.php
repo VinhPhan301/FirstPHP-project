@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{ $index++ }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->thumbnail }}</td>
+                    <td><img src="{{ asset("picture/$item->thumbnail") }}" alt=""></td>
                     <td>{{ $item->created_at->toDateString() }}</td>
                     <td>
                         <a style="color:black" onclick="return confirm('Xac nhan Sua {{ $item->name }}')" href="{{ route('category.update', ['id' => $item->id]) }}">

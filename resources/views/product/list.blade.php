@@ -45,8 +45,8 @@
                         @endif
                     </td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->image }}</td>
-                    <td>{{ $item->price }}</td>
+                    <td><img src="{{ asset("picture/$item->image") }}" alt=""></td>
+                    <td>{{ $item->price }}$</td>
                     <td>{{ $item->type }}</td>
                     <td>{{ $item->created_at->toDateString() }}</td>
                     <td>

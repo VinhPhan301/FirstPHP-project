@@ -33,7 +33,7 @@
                     <td>{{ $index++ }}</td>
                     <td>{{ $item->color }}</td>
                     <td>{{ $item->size }}</td>
-                    <td>{{ $item->thumbnail }}</td>
+                    <td><img src="{{ asset("picture/$item->thumbnail") }}" alt=""></td>
                     <td>{{ $item->storage }}</td>
                     <td>
                         <a style="color:black" onclick="return confirm('Xac nhan Sua')" href="{{ route('productDetail.update', ['id' => $item->id]) }}">

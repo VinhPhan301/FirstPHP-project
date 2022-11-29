@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepositoryInterface;
 use DB;
@@ -24,10 +25,27 @@ class ShopController extends Controller
         
         if (null !== $request->query('type')) {
             $products = DB::table('products')
-                ->where('type', $type)
-                ->get();
+                        ->where('type', $type)
+                        ->get();
+
             foreach ($products as $product) {
-                $arrProductName[] = $product->name;
+                $productNameSplit = explode(' ', $product->name);    
+                if ( count($productNameSplit) === 1 ){
+                    $productNameJoin = $productNameSplit[0];
+                    $arrProductName[] = $productNameJoin;  
+                }
+                if ( count($productNameSplit) === 2 ){
+                    $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1];
+                    $arrProductName[] = $productNameJoin;               
+                }
+                if ( count($productNameSplit) === 3 ){
+                    $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1]." ".$productNameSplit[2];
+                    $arrProductName[] = $productNameJoin; 
+                }
+                if ( count($productNameSplit) > 3 ){
+                    $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1];
+                    $arrProductName[] = $productNameJoin; 
+                }   
             }
             $productList = array_unique($arrProductName);
 
@@ -74,7 +92,9 @@ class ShopController extends Controller
                 ->get();
 
             foreach ($products as $product) {
-                $arrProductName[] = $product->name;
+                $productNameSplit = explode(' ', $product->name);
+                $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1];
+                $arrProductName[] = $productNameJoin;
             }
             $productList = array_unique($arrProductName); 
 
@@ -92,7 +112,9 @@ class ShopController extends Controller
                 ->get();
             
             foreach ($products as $product) {
-                $arrProductName[] = $product->name;
+                $productNameSplit = explode(' ', $product->name);
+                $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1];
+                $arrProductName[] = $productNameJoin;
             }
             $productList = array_unique($arrProductName); 
 
@@ -165,11 +187,41 @@ class ShopController extends Controller
 
     public function getViewProduct(Request $request)
     {
+        $arrSize = [];
+        $arrColor = [];
+
         $productID = $request->query('id');
         $product = Product::find($productID);
+        
+        $productNameSplit = explode(' ', $product->name);
+        $productName = $productNameSplit[0].' '.$productNameSplit[1];
+        
+
+        $relatedProducts = Product::where('name', 'like', '%'.$productName.'%')
+                                    ->where('id', '!=' ,$productID)
+                                    ->where('type', $product->type)
+                                    ->take(4)
+                                    ->get();
+
+        $productDetails = ProductDetail::where('product_id', $productID)->get();
+
+        foreach ($productDetails as $productDetail){
+            $arrSize[] = $productDetail->size;
+            $arrColor[] = $productDetail->color;
+        }
+        $sizeUnique = array_unique($arrSize);
+        $colorUnique = array_unique($arrColor);
 
         return view('shop.product',[
             'product' => $product,
+            'detailSize' => $sizeUnique,
+            'detailColor' => $colorUnique,
+            'relatedProducts' => $relatedProducts,
         ]);
+    }
+
+    public function getViewCart()
+    {
+        return view('shop.cart');
     }
 }

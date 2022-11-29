@@ -30,7 +30,7 @@
                 <p><i class="fa-solid fa-store"></i></p>
                 <p><i class="fa-regular fa-heart"></i></p>
                 <p><i class="fa-regular fa-circle-user"></i></p>
-                <p><i class="fa-solid fa-bag-shopping"></i></p>
+                <p><a href="{{ route('shop.cart')}}"><i class="fa-solid fa-bag-shopping"></i></a></p>
 
             </div>
         </div>
@@ -105,9 +105,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-    
-    </script>
+    @yield('script')
 </body>
 </html>
