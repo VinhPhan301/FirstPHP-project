@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Category;
 use App\Models\Product;
 use View;
+use Auth;
+use Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Product\ProductRepository::class,
             \App\Repositories\Product\ProductDetailRepositoryInterface::class,
             \App\Repositories\Product\ProductDetailRepository::class,
+            \App\Repositories\Product\CartRepositoryInterface::class,
+            \App\Repositories\Product\CartRepository::class,
+            \App\Repositories\Product\CartItemRepositoryInterface::class,
+            \App\Repositories\Product\CartItemRepository::class,
         );
     }
 
@@ -33,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
         \App\Repositories\Product\UserRepositoryInterface::class =>  \App\Repositories\Product\UserRepository::class,
         \App\Repositories\Product\ProductRepositoryInterface::class =>  \App\Repositories\Product\ProductRepository::class,
         \App\Repositories\Product\ProductDetailRepositoryInterface::class =>  \App\Repositories\Product\ProductDetailRepository::class,
+        \App\Repositories\Product\CartRepositoryInterface::class =>  \App\Repositories\Product\CartRepository::class,
+        \App\Repositories\Product\CartItemRepositoryInterface::class =>  \App\Repositories\Product\CartItemRepository::class,
            
     ];
 
@@ -43,7 +51,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Lay category de share cho all View// 
         $category = Category::all();  
         View::share([
             'category' => $category,
@@ -62,22 +69,22 @@ class AppServiceProvider extends ServiceProvider
             'product' => $product
         ]);
 
+        
+        // View::share([
+        //     'user' => $user
+        // ]);
 
-
-
-        // Share cho view chi dinh // 
-        // view()->composer(['product.list', 'product.create','ViewPage.viewhome','ViewPage.viewpage'], function($view){
-        //     $category = Category::all(); 
-        //         view()->share([
-        //             'category' => $category,
-        //         ]);
+        // $user = view()->composer('*', function ($view) use($auth) { 
+        //     dd($auth->user()); 
         // });
 
-        // view()->composer('ViewPage.viewhome', function(){
-        //     $category = Category::all(); dd($category);
-        //         view()->share([
-        //             'category' => $category,
-        //         ]);
-        // });
+        view()->composer('*', function($view) {
+            // dd(auth()->guard('user')->user());
+            $user = auth()->guard('user')->user();
+            view()->share([
+                'user'=> $user
+            ]);
+            // $view->with('user', auth()->user()); // does what you expect
+        });
     }
 }

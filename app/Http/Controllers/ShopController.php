@@ -220,18 +220,4 @@ class ShopController extends Controller
             'relatedProducts' => $relatedProducts,
         ]);
     }
-
-    public function getViewCart(Request $request)
-    {   
-        $color = $request->query('color');
-        $size = $request->query('size');
-        $productID = $request->query('productID');
-        
-        return response()->json([
-            'color' => $color,
-            'size' => $size,
-        ], 200);
-
-        return view('shop.cart');
-    }
 }

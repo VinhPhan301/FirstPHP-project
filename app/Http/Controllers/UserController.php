@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Cart;
 use App\Http\Requests\LoginRequest;
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,10 +16,13 @@ class UserController extends Controller
 {
 
     protected $userRepo;
+    // protected $currentUser;
 
     public function __construct(UserRepositoryInterface $userRepo)
     {
         $this->userRepo = $userRepo;
+        // \View::share([ 'user' => $this->currentUser ]);
+       
     }
 
     public function index()
@@ -56,6 +60,13 @@ class UserController extends Controller
         ];
         $user = $this->userRepo->create($data);
 
+        $userCallback = User::where('email', $request->email)->get();
+
+        foreach ($userCallback as $item) {
+            $userID = $item->id;
+        }
+        $cart = Cart::create(['user_id'=> $userID]);
+
         if (!$user || null === $user) {
             return redirect()->back();
         }
@@ -68,6 +79,7 @@ class UserController extends Controller
     public function delete($id)
     {
         $user = $this->userRepo->delete($id);
+
 
         if (!$user || null === $user) {
             return redirect()->back();
@@ -105,7 +117,7 @@ class UserController extends Controller
     }
 
     public function getViewLogin()
-    {
+    {  
         if(Auth::guard('user')->check() == false){
             return view('user.login');
         }
@@ -115,7 +127,7 @@ class UserController extends Controller
                 return redirect()->route('user.viewpage');
             }
             else{
-                return redirect()->route('shop.main');
+                return redirect()->route('shop.view');
             }
         }
     }
@@ -133,17 +145,17 @@ class UserController extends Controller
             'password' => $request->password,
         ];
         
-        if (Auth::guard('user')->attempt($login)) {
-
-            $role = Auth::guard('user')->user()->role;
+        if (auth()->guard('user')->attempt($login)) {
+            $this->currentUser = auth()->guard('user')->user();
+            $role = auth()->guard('user')->user()->role;
 
             if($role == 'admin') {
                 return redirect()
-                    ->route('user.viewpage');
+                    ->back();
             }
             else {
-                return redirect()
-                    ->route('shop.main');
+                return redirect()  
+                    ->back();
             }
            
         } else {

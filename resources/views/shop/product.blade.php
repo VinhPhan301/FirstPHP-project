@@ -17,24 +17,34 @@
         <div class='product_infor'>
             <div class='top_infor'>
                 <h3>{{ $product->name }}</h3>
-                <p>Ma san pham: <span class="product_id">{{ $product->id}}</span></p>
+                <p>Mã sản phẩm: <span class="product_id">{{ $product->id}}</span></p>
                 <h3>{{ number_format($product->price,0,'.','.') }} đ</h3>
             </div>
             <div class='mid_infor'>
-                <p>Mau sac: <span class='undefined_color'>Vui long chọn màu</span></p>
+                <p>Màu sắc: <span class='undefined_color'>Vui lòng chọn màu</span></p>
                 @foreach ($detailColor as $color)
                     <span class="detail_color" style="background:{{ $color }}; color:{{ $color }}">{{ $color }}</span>
                 @endforeach
-                <p>Kich co: <span class='undefined_size'>Vui long chọn kích cỡ</span></p>
+                <p>Kích cỡ: <span class='undefined_size'>Vui lòng chọn kích cỡ</span></p>
                 @foreach ($detailSize as $size)
                     <span class="detail_size">{{ $size }}</span>
                 @endforeach
+                <p>Số lượng:</p>
+                <p class="quantity_tocart">
+                    <span class='less'>
+                        <i class="fa-regular fa-square-minus"></i>
+                    </span>
+                    <span class='choose_quantity'>1</span>
+                    <span class='more'>
+                        <i class="fa-regular fa-square-plus"></i>
+                    </span>
+                </p>
             </div>
             <div class='bot_infor'>
                 <p><i class="fa-solid fa-check"></i><span>Fresship toàn bộ đơn hàng</span></p>
                 <p><i class="fa-solid fa-check"></i><span>Đổi trả miễn phí trong vòng 30 ngày kể từ ngày mua</span></p>
                 <div class='to_cart'>Thêm vào giỏ</div>
-                <div class='buy_now'>Mua ngay</div>
+                <div class='buy_now'><a >Mua ngay</a></div>
                 <div>
                     <i class="fa-regular fa-heart"></i>
                     <span>Thêm vào yêu thích</span>
@@ -49,11 +59,8 @@
                 <p>
                     Giặt máy ở chế độ nhẹ, nhiệt độ thường. <br>
                     Không sử dụng hóa chất tẩy có chứa Clo. <br>
-                    Phơi trong bóng mát. <br>
                     Sấy thùng, chế độ nhẹ nhàng. <br>
-                    Là ở nhiệt độ trung bình 150 độ C. <br>
                     Giặt với sản phẩm cùng màu. <br>
-                    Không là lên chi tiết trang trí. <br>
                 </p>
             </div>
         </div>
@@ -97,10 +104,26 @@
         $(this).addClass('color_chosen')
     })
 
+    $('.more').click(function(){
+        var number = $(this).siblings('.choose_quantity').text()*1 + 1;
+        $(this).siblings('.choose_quantity').text(number);
+    })
+
+    $('.less').click(function(){
+        var number = $(this).siblings('.choose_quantity').text()*1 - 1;
+        if (number < 1) {
+            $(this).siblings('.choose_quantity').text(1);
+        }
+        else {
+            $(this).siblings('.choose_quantity').text(number);
+        }
+    })
+
     $('.to_cart').click(function(){
         var size = $('.size_chosen').text();
         var color = $('.color_chosen').text();
         var productID = $('.product_id').text();
+        var quantity = $('.choose_quantity').text();
        
         if(color === ''){
             $('.undefined_color').css('display','inline')
@@ -109,14 +132,49 @@
             $('.undefined_size').css('display','inline')
         }
         else{ 
-            $.get('{{ route('shop.cart') }}', {'color':color, 'productID':productID, 'size':size}, function (data) {
-                $('.success_tocart').css('display','block')
+            $.get('{{ route('cartItem.create') }}', 
+                {'color':color, 'productID':productID, 'size':size, 'quantity':quantity}, 
+                function (data) {
+                    console.log(data);
+                    console.log('ok');
+                // $('.success_tocart').css('display','block')
 
-                setInterval(function() {
-                $('.success_tocart').slideUp();
-                },900)
+                // setInterval(function() {
+                // $('.success_tocart').slideUp();
+                // },900)
 
             })
+        }
+    })
+
+    $('.buy_now').click(function(){
+        var size = $('.size_chosen').text();
+        var color = $('.color_chosen').text();
+        var productID = $('.product_id').text();
+        var quantity = $('.choose_quantity').text();
+        var user = $('.user_logged').text();
+        
+        if(color === ''){
+            $('.undefined_color').css('display','inline')
+        }
+        else if(size === ''){
+            $('.undefined_size').css('display','inline')
+        }
+        else if (user === ''){
+            $('.fa-circle-user').click()
+        }
+        else{ 
+            $('.under_bot_infor').append('<p class="userID" style="display:none">{{ $user->id }}</p>')
+            var userID = $('.userID').text();
+            $.post('{{ route('cartItem.create') }}', 
+                {'_token': $('meta[name=csrf-token]').attr('content'),
+                'color':color, 'productID':productID, 'size':size, 'quantity':quantity, 'userID':userID,}, 
+                function (data) {
+                    console.log(data);
+                    
+            })
+            // $('.fa-bag-shopping').click()
+         
         }
     })
 </script>

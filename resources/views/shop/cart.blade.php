@@ -21,7 +21,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <td>SAN PHAM</td>
+                            <td>SẢN PHẨM</td>
                             <td>GIÁ TIỀN</td>
                             <td>SỐ LƯỢNG</td>
                             <td>TỔNG TIỀN</td>
@@ -29,24 +29,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
                         <tr>
-                            <td>{{ $color }}</td>
-                            <td>Gia tien</td>
-                            <td>
-                                <span class='minus'>
-                                    <i class="fa-regular fa-square-minus"></i>
-                                </span>
-                                <span class='total_number'>3</span>
-                                <span class='plus'>
-                                    <i class="fa-regular fa-square-plus"></i>
-                                </span>
-                            </td>
-                            <td>1.000.000</td>
-                            <td>x</td>
-                        </tr>
-                        <tr>
-                            <td>Hinh anh</td>
-                            <td>Gia tien</td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <span class='minus'>
                                     <i class="fa-regular fa-square-minus"></i>
@@ -90,10 +76,10 @@
             
         })
 
-        $('.minus').click(function(){
-            var number = $(this).siblings('.total_number').text()*1 - 1;
-            $(this).siblings('.total_number').text(number);
-            console.log($(this).siblings('.total_number').text());
-        })
+    $('.minus').click(function(){
+        var number = $(this).siblings('.total_number').text()*1 - 1;
+        $(this).siblings('.total_number').text(number);
+        console.log($(this).siblings('.total_number').text());
+    })
 </script>
 @endsection
