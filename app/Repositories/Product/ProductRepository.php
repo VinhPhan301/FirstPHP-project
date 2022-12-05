@@ -56,16 +56,28 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         $arrProductName = [];
 
-        $products = Category::where('name',$categoryName)->first();
-        $categoryID = $products->id;
+        $category = Category::where('name', $categoryName)->first(); //check lai logic query
+        // if (null !== $category) {
+        //     $products = $this->model->where('category_id', $category->id);
 
-        if (null !== $categoryName && null !== $type) {
-            $products = Product::where('type', $type)
-                ->where('category_id', $categoryID)
+        //     if(null !== $type) {
+        //         $products .= $products->where('type', $type);
+        //     }
+
+        //     if(null !== $price) {
+        //         $products .= $products->where('price', $price);
+        //     }
+
+        //     $products->get();
+        // }
+        if (null !== $category && null !== $type) {  //check lai dieu kien
+            $products = $this->model
+                ->where('type', $type)
+                ->where('category_id', $category->id)
                 ->get();
         }
-        if (null !== $categoryName && null === $type){
-            $products = Product::where('category_id', $categoryID)
+        if (null !== $category && null === $type){
+            $products = Product::where('category_id', $category->id)
                 ->get();
         }
 
@@ -76,7 +88,10 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         }
         $productList = array_unique($arrProductName); 
 
-        return [$productList, $products];
+        return [
+            'products' => $products,
+            'productList' => $productList
+        ];
     }
 
     public function findProduct($categoryName, $type, $productName)

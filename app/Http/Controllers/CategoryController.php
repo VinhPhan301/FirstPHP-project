@@ -31,21 +31,6 @@ class CategoryController extends Controller
         ]);
     }
 
-    // public function show($id)
-    // {
-    //     $category = $this->categoryRepo->find($id);
-
-    //     if (! $category || null == $category) { 
-    //         return redirect()
-    //             ->route('category.list')
-    //             ->with('msg', 'Khong tim thay Category'); 
-    //     }
-
-    //     return view('category.list', [
-    //         'category' => $category
-    //     ]);
-    // }
-
     public function getViewCreate()
     {
         return view('category.create', [

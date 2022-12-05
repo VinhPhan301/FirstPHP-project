@@ -1,5 +1,7 @@
 <?php
 namespace App\Repositories\Product;
+use App\Models\ProductDetail;
+use App\Models\Cart;
 
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\CartItemRepositoryInterface;

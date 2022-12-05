@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\ProductDetail;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 
@@ -19,11 +16,11 @@ class ProductDetailController extends Controller
     public function index($id)
     {
         $productDetail = $this->productDetailRepo->getProductDetail($id);
-        $product = Product::find($id);
+        $product = $this->productDetailRepo->getProduct($id);
 
         if (!$productDetail || null === $productDetail) {
             return redirect()
-                ->back()
+                ->route('product.list')
                 ->with('msg', 'Không tìm thấy sản phẩm');
         }
 
@@ -36,8 +33,9 @@ class ProductDetailController extends Controller
 
     public function getViewCreate($id)
     {
-        $product = Product::find($id);
-        return view('productDetail.create',[
+        $product = $this->productDetailRepo->getProduct($id);
+
+        return view('productDetail.create', [
             'product' => $product,
             'msg' => session()->get('msg') ?? null
         ]);
@@ -71,7 +69,7 @@ class ProductDetailController extends Controller
     public function getViewUpdate($id)
     {
         $productDetail = $this->productDetailRepo->find($id);
-        $product = Product::find($productDetail->product_id);
+        $product = $this->productDetailRepo->getProduct($productDetail->product_id);
 
         if (! $productDetail || null == $productDetail) { 
             return redirect()

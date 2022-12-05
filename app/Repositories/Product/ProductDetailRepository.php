@@ -2,7 +2,8 @@
 namespace App\Repositories\Product;
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
-
+use App\Models\ProductDetail;
+use App\Models\Product;
 class ProductDetailRepository extends BaseRepository implements ProductDetailRepositoryInterface
 {
     //lấy model tương ứng
@@ -19,9 +20,16 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
     public function getProductDetail($id)
     {
-        $productDetail = ProductDetail::where('product_id', $id)
-                                        ->get();
+        $productDetail = ProductDetail::where('product_id', $id)->get();
+
         return $productDetail;
+    }
+
+    public function getProduct($id)
+    {
+        $product = Product::find($id);
+
+        return $product;
     }
 
 }

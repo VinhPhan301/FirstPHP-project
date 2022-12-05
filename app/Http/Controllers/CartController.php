@@ -31,6 +31,6 @@ class CartController extends Controller
         //                                 ->get();
         // dd($productDetailID);                               
 
-            
+        // return cart->id
     }
 }

@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductDetail;
+
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepositoryInterface;
 use DB;
@@ -31,7 +29,7 @@ class ShopController extends Controller
                 'products' => $products,
                 'type' => $type,
                 'productList' => $productList,
-                'categoryName' => null
+                'categoryName' => null // thua
             ]);
         }
 
@@ -52,13 +50,14 @@ class ShopController extends Controller
         $type = $request->query('type');
 
         if ($categoryName && $type){
-            $productList = $this->productRepo->getViewCategory($type, $categoryName)[0];
-            $products = $this->productRepo->getViewCategory($type, $categoryName)[1];
+            // $productList = $this->productRepo->getViewCategory($type, $categoryName)['productList'];
+            // $products = $this->productRepo->getViewCategory($type, $categoryName)['products'];
+            $products = $this->productRepo->getViewCategory($type, $categoryName);
 
             return view('shop.view',[
                 'type' => $type,
-                'productList' => $productList,
-                'products' => $products,
+                'productList' => $products['productList'],
+                'products' => $products['products'],
                 'categoryName' => $categoryName
             ]);
         }
