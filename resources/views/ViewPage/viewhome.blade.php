@@ -12,6 +12,17 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="signup_form_box">
+        <form action="" method='post'>
+            <p>Email</p>
+            <input type="text" name='email'>
+            <p>Password</p>
+            <input type="text" name='password'>
+            <input style="display: none" type="text" name='role' value='user'>
+            <br>
+            <button type="submit">Đăng ký</button>
+        </form>
+    </div>
     <div class="header" id="header">
         <div class="header_img">
             <img src="{{ asset('picture/blackfriday.png') }}" alt="">
@@ -30,12 +41,17 @@
                 </div>
                 <p><i class="fa-solid fa-store"></i></p>
                 <p><i class="fa-regular fa-heart"></i></p>
-                <p><a href="{{ route('user.login') }}"><i class="fa-regular fa-circle-user"></i></a></p>
+                <p><a><i class="fa-regular fa-circle-user"></i></a></p>
                 <p><a href="{{ route('cartItem.view') }}"><i class="fa-solid fa-bag-shopping"><span class="user_logged" style="display:none">{{ $user }}</span></i></a></p>
-
+                <div id='user_action'>
+                    <p class='undefind'><a href="{{ route('user.login') }}">Đăng nhập</a></p>
+                    <p class='undefind'>Đăng ký</p>
+                    <p class='logged'>Tài khoản</p>
+                    <p class='logged'><a href='{{ route('user.logout') }}'>Đăng xuất</a></p>
+                </div>
             </div>
         </div>
-        <a href='{{ route('user.logout') }}'>Logout <span><i class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
+        
     </div>
     <div class="home_content">
         @yield('home_content')
@@ -107,6 +123,23 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $('.fa-circle-user').click(function() {
+            var user = $('.user_logged').text()
+            
+            if(user === ''){
+                $('.logged').css('display', 'none')
+                $('.undefind').css('display', 'block')
+            }
+            else {
+                $('.logged').css('display', 'block')
+                $('.undefind').css('display', 'none')
+            }
+
+            $('#user_action').slideToggle(200)
+
+        })
+    </script>
     @yield('script')
 </body>
 </html>

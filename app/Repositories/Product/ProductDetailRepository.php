@@ -1,8 +1,5 @@
 <?php
 namespace App\Repositories\Product;
-use App\Models\Category;
-use App\Models\Product;
-use DB;
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 
@@ -22,9 +19,8 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
     public function getProductDetail($id)
     {
-        $productDetail = DB::table('product_details')
-        ->where('product_id', $id)
-        ->get();
+        $productDetail = ProductDetail::where('product_id', $id)
+                                        ->get();
         return $productDetail;
     }
 

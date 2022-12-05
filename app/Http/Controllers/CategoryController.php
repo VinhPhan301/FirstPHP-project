@@ -21,7 +21,7 @@ class CategoryController extends Controller
         
         if (! $category || null == $category) { 
             return redirect()
-                ->back()
+                ->route('user.viewpage')
                 ->with('msg', 'Khong tim thay Category'); 
         }
 
@@ -31,20 +31,20 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show($id)
-    {
-        $category = $this->categoryRepo->find($id);
+    // public function show($id)
+    // {
+    //     $category = $this->categoryRepo->find($id);
 
-        if (! $category || null == $category) { 
-            return redirect()
-                ->route('category.list')
-                ->with('msg', 'Khong tim thay Category'); 
-        }
+    //     if (! $category || null == $category) { 
+    //         return redirect()
+    //             ->route('category.list')
+    //             ->with('msg', 'Khong tim thay Category'); 
+    //     }
 
-        return view('category.list', [
-            'category' => $category
-        ]);
-    }
+    //     return view('category.list', [
+    //         'category' => $category
+    //     ]);
+    // }
 
     public function getViewCreate()
     {
@@ -60,7 +60,7 @@ class CategoryController extends Controller
 
         if (! $category || null == $category) { 
             return redirect()
-                ->back()
+                ->route('category.list')
                 ->with('msg', 'Khong tim thay Category'); 
         }
 

@@ -20,16 +20,16 @@ class CartController extends Controller
 
     public function create(Request $request)
     {
-        $color = $request->query('color');
-        $size = $request->query('size');
-        $productID = $request->query('productID');
-        $quantity = $request->query('quantity');
+        // $color = $request->query('color');
+        // $size = $request->query('size');
+        // $productID = $request->query('productID');
+        // $quantity = $request->query('quantity');
 
-        $productDetailID = ProductDetail::where('product_id', $productID)
-                                        ->where('color', $color)
-                                        ->where('size', $size)
-                                        ->get();
-        dd($productDetailID);                               
+        // $productDetailID = ProductDetail::where('product_id', $productID)
+        //                                 ->where('color', $color)
+        //                                 ->where('size', $size)
+        //                                 ->get();
+        // dd($productDetailID);                               
 
             
     }

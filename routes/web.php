@@ -95,6 +95,8 @@ Route::prefix('productDetail')->group(function (){
 Route::prefix('shop')->group(function () {
    Route::get('/',[ShopController::class, 'getView'])->name('shop.view');
 
+   Route::post('/',[UserController::class, 'create']);
+
    Route::get('/view', [ShopController::class, 'getView'])->name('shop.view');
 
    Route::get('/viewcate', [ShopController::class, 'getViewCategory'])->name('shop.viewcate');
@@ -102,6 +104,7 @@ Route::prefix('shop')->group(function () {
    Route::get('/findProduct', [ShopController::class, 'findProduct'])->name('shop.findProduct');
 
    Route::get('/product', [ShopController::class, 'getViewProduct'])->name('shop.product');
+
 });
 
 

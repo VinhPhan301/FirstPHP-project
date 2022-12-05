@@ -22,7 +22,9 @@ class ProductDetailController extends Controller
         $product = Product::find($id);
 
         if (!$productDetail || null === $productDetail) {
-            return redirect()->back();
+            return redirect()
+                ->back()
+                ->with('msg', 'Không tìm thấy sản phẩm');
         }
 
         return view('productDetail.list', [

@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\ProductDetail;
-use App\Models\Cart;
-use App\Models\CartItem;
 use App\Repositories\Product\CartItemRepositoryInterface;
 
 
@@ -20,7 +15,7 @@ class CartItemController extends Controller
         $this->cartItemRepo = $cartItemRepo;
     }
 
-    public function getViewCart(Request $request)
+    public function getViewCart()
     {   
         $cartItems = $this->cartItemRepo->getAll();
 
@@ -30,7 +25,7 @@ class CartItemController extends Controller
 
         return view('shop.cart',[
             'cartItems' => $cartItems,
-            'msg' => session()->get('msg')
+            'msg' => session()->get('msg') ?? null
         ]);
     }
 
@@ -42,26 +37,17 @@ class CartItemController extends Controller
         $quantity = $request->quantity;
         $userID = $request->userID;
 
-        $productDetail = ProductDetail::where('product_id', $productID)
-                                        ->where('color', $color)
-                                        ->where('size', $size)
-                                        ->get();
-        $cart = Cart::where('user_id', $userID)
-                        ->get();
+        $productDetailID = $this->cartItemRepo->getProductDetail($productID,$color, $size);
 
-        foreach ($productDetail as $item){
-            $productDetailID = $item->id;
-        }
+        $cartID = $this->cartItemRepo->getCart($userID);
 
-        foreach ($cart as $item){
-            $cartID = $item->id;
-        }
-
-        $cartItem = CartItem::create([
-            'cart_id'=>$cartID,
-            'productDetail_id'=>$productDetailID,
-            'quantity'=>$quantity,
-        ]);
+        $data = [
+            'cart_id' =>$cartID,
+            'productDetail_id' => $productDetailID,
+            'quantity' => $quantity,
+        ];
+        
+        $cartItem = $this->cartItemRepo->create($data);
 
         return response()->json([
             'productDetailID' => $productDetailID,

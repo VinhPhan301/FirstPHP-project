@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Cart;
+// use App\Models\User;
 use App\Http\Requests\LoginRequest;
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,12 +59,12 @@ class UserController extends Controller
         ];
         $user = $this->userRepo->create($data);
 
-        $userCallback = User::where('email', $request->email)->get();
+        // $userCallback = User::where('email', $request->email)->get();
 
-        foreach ($userCallback as $item) {
-            $userID = $item->id;
-        }
-        $cart = Cart::create(['user_id'=> $userID]);
+        // foreach ($userCallback as $item) {
+        //     $userID = $item->id;
+        // }
+        // $cart = Cart::create(['user_id'=> $userID]);
 
         if (!$user || null === $user) {
             return redirect()->back();

@@ -132,7 +132,7 @@
             $('.undefined_size').css('display','inline')
         }
         else{ 
-            $.get('{{ route('cartItem.create') }}', 
+            $.post('{{ route('cartItem.create') }}', 
                 {'color':color, 'productID':productID, 'size':size, 'quantity':quantity}, 
                 function (data) {
                     console.log(data);
@@ -165,14 +165,16 @@
         }
         else{ 
             $('.under_bot_infor').append('<p class="userID" style="display:none">{{ $user->id }}</p>')
+
             var userID = $('.userID').text();
+  
             $.post('{{ route('cartItem.create') }}', 
                 {'_token': $('meta[name=csrf-token]').attr('content'),
                 'color':color, 'productID':productID, 'size':size, 'quantity':quantity, 'userID':userID,}, 
                 function (data) {
                     console.log(data);
-                    
-            })
+                }
+            )
             // $('.fa-bag-shopping').click()
          
         }
