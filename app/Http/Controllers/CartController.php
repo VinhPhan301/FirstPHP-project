@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\ProductDetail;
-use App\Models\Cart;
+use App\Constants\CommonConstant;
 
 
 class CartController extends Controller

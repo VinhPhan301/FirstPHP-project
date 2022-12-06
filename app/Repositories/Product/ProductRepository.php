@@ -1,8 +1,7 @@
 <?php
 namespace App\Repositories\Product;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductDetail;
+use App\Models\Category;
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 
@@ -77,10 +76,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 ->get();
         }
         if (null !== $category && null === $type){
-            $products = Product::where('category_id', $category->id)
+            $products = $this->model
+                ->where('category_id', $category->id)
                 ->get();
         }
-
+        
         foreach ($products as $product) {
             $productNameSplit = explode(' ', $product->name);
             $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1];
@@ -119,37 +119,25 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->get();
         }  
 
-        return [$dataFound, $allCategories, $allProducts];
+        return [
+            'dataFound' => $dataFound,
+            'allCategories' => $allCategories, 
+            'allProducts' => $allProducts
+        ];
     }
 
     public function getRelatedProduct($productID, $product)
     {
 
         $relatedProducts = Product::where('id', '!=' ,$productID)
-                                    ->where('type', $product->type)
-                                    ->where('category_id', $product->category_id)
-                                    ->take(4)
-                                    ->get();
+            ->where('type', $product->type)
+            ->where('category_id', $product->category_id)
+            ->take(4)
+            ->get();
 
         return $relatedProducts;
     }
 
-    public function getSizeColor($productID)
-    {
-        $arrSize = [];
-        $arrColor = [];
-        
-        $productDetails = ProductDetail::where('product_id', $productID)->get();
-
-        foreach ($productDetails as $productDetail){
-            $arrSize[] = $productDetail->size;
-            $arrColor[] = $productDetail->color;
-        }
-        $sizeUnique = array_unique($arrSize);
-        $colorUnique = array_unique($arrColor);
-
-        return [$sizeUnique, $colorUnique];
-    }
 }
 
 

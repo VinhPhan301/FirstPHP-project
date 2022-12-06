@@ -3,7 +3,6 @@ namespace App\Repositories\Product;
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 use App\Models\ProductDetail;
-use App\Models\Product;
 class ProductDetailRepository extends BaseRepository implements ProductDetailRepositoryInterface
 {
     //lấy model tương ứng
@@ -24,12 +23,37 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
         return $productDetail;
     }
-
-    public function getProduct($id)
+    
+    public function getProductDetailID($productID, $color, $size)
     {
-        $product = Product::find($id);
+        $productDetail = ProductDetail::where('product_id', $productID)
+            ->where('color', $color)
+            ->where('size', $size)
+            ->first();
 
-        return $product;
+        $productDetailID = $productDetail->id;
+        
+        return $productDetailID;
+    }
+
+    public function getSizeColor($productID)
+    {
+        $arrSize = [];
+        $arrColor = [];
+        
+        $productDetails = ProductDetail::where('product_id', $productID)->get();
+
+        foreach ($productDetails as $productDetail){
+            $arrSize[] = $productDetail->size;
+            $arrColor[] = $productDetail->color;
+        }
+        $sizeUnique = array_unique($arrSize);
+        $colorUnique = array_unique($arrColor);
+
+        return [
+           'sizeUnique' => $sizeUnique, 
+           'colorUnique' => $colorUnique
+        ];
     }
 
 }

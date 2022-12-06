@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepositoryInterface;
-use DB;
+use App\Repositories\Product\ProductDetailRepositoryInterface;
+use App\Constants\CommonConstant;
 use Response;
 
 class ShopController extends Controller
 
 {
     protected $productRepo;
+    protected $productDetailRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo)
+    public function __construct(ProductRepositoryInterface $productRepo, ProductDetailRepositoryInterface $productDetailRepo)
     {
         $this->productRepo = $productRepo;
+        $this->productDetailRepo = $productDetailRepo;
     }    
 
     public function getView(Request $request) 
@@ -50,8 +53,7 @@ class ShopController extends Controller
         $type = $request->query('type');
 
         if ($categoryName && $type){
-            // $productList = $this->productRepo->getViewCategory($type, $categoryName)['productList'];
-            // $products = $this->productRepo->getViewCategory($type, $categoryName)['products'];
+            
             $products = $this->productRepo->getViewCategory($type, $categoryName);
 
             return view('shop.view',[
@@ -67,7 +69,7 @@ class ShopController extends Controller
         return view('shop.view',[
             'products' => $products,
             'type' => $type,
-            'productList' => $productList,
+            'productList' => [],
         ]);
     }
 
@@ -77,18 +79,15 @@ class ShopController extends Controller
         $type = $request->query('type');
         $productName =$request->query('productName');
 
-        $dataFound = $this->productRepo->findProduct($categoryName, $type, $productName)[0];
-
-        $allCategories = $this->productRepo->findProduct($categoryName, $type, $productName)[1];
-
-        $allProducts = $this->productRepo->findProduct($categoryName, $type, $productName)[2];
+        $findProduct = $this->productRepo->findProduct($categoryName, $type, $productName);
+        // dd($findProduct);
 
         return view('shop.findProduct',[
-            'dataFound' => $dataFound,
+            'dataFound' => $findProduct['dataFound'],
             'type' => $type,
             'categoryName' => $categoryName,
-            'allCategories' => $allCategories,
-            'allProducts' => $allProducts,
+            'allCategories' => $findProduct['allCategories'],
+            'allProducts' => $findProduct['allProducts'],
         ]);
     }
 
@@ -99,13 +98,12 @@ class ShopController extends Controller
 
         $relatedProducts = $this->productRepo->getRelatedProduct($productID, $product);
 
-        $sizeUnique = $this->productRepo->getSizeColor($productID)[0];
-        $colorUnique = $this->productRepo->getSizeColor($productID)[1];
+        $getSizeColor = $this->productDetailRepo->getSizeColor($productID);
 
         return view('shop.product',[
             'product' => $product,
-            'detailSize' => $sizeUnique,
-            'detailColor' => $colorUnique,
+            'detailSize' => $getSizeColor['sizeUnique'],
+            'detailColor' => $getSizeColor['colorUnique'],
             'relatedProducts' => $relatedProducts,
         ]);
     }

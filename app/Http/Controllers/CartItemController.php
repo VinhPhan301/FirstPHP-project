@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Product\CartItemRepositoryInterface;
+use App\Repositories\Product\ProductDetailRepositoryInterface;
+use App\Repositories\Product\CartRepositoryInterface;
+use App\Constants\CommonConstant;
 
 
 class CartItemController extends Controller
 {
     protected $cartItemRepo;
+    protected $productDetailRepo;
 
-    public function __construct(CartItemRepositoryInterface $cartItemRepo)
+    public function __construct(CartItemRepositoryInterface $cartItemRepo, ProductDetailRepositoryInterface $productDetailRepo,
+    CartRepositoryInterface $cartRepo)
     {
         $this->cartItemRepo = $cartItemRepo;
+        $this->cartRepo = $cartRepo;
+        $this->productDetailRepo = $productDetailRepo;
     }
 
     public function getViewCart()
@@ -25,7 +32,7 @@ class CartItemController extends Controller
 
         return view('shop.cart',[
             'cartItems' => $cartItems,
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -37,9 +44,9 @@ class CartItemController extends Controller
         $quantity = $request->quantity;
         $userID = $request->userID;
 
-        $productDetailID = $this->cartItemRepo->getProductDetail($productID,$color, $size);
+        $productDetailID = $this->productDetailRepo->getProductDetailID($productID,$color, $size);
 
-        $cartID = $this->cartItemRepo->getCart($userID);
+        $cartID = $this->cartRepo->getCart($userID);
 
         $data = [
             'cart_id' =>$cartID,

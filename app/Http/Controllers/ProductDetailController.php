@@ -3,41 +3,46 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Constants\CommonConstant;
+use App\Constants\ProductConstant;
 
 class ProductDetailController extends Controller
 {
     protected $productDetailRepo;
+    protected $productRepo;
 
-    public function __construct(ProductDetailRepositoryInterface $productDetailRepo)
+    public function __construct(ProductDetailRepositoryInterface $productDetailRepo, ProductRepositoryInterface $productRepo)
     {
         $this->productDetailRepo = $productDetailRepo;
+        $this->productRepo = $productRepo;
     }
 
     public function index($id)
     {
         $productDetail = $this->productDetailRepo->getProductDetail($id);
-        $product = $this->productDetailRepo->getProduct($id);
+        $product = $this->productRepo->find($id);
 
         if (!$productDetail || null === $productDetail) {
             return redirect()
                 ->route('product.list')
-                ->with('msg', 'Không tìm thấy sản phẩm');
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
 
         return view('productDetail.list', [
             'productDetail' => $productDetail,
             'product' => $product,
-            'msg' => session()->get('msg') 
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
     public function getViewCreate($id)
     {
-        $product = $this->productDetailRepo->getProduct($id);
+        $product = $this->productRepo->find($id);
 
         return view('productDetail.create', [
             'product' => $product,
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -46,35 +51,40 @@ class ProductDetailController extends Controller
 
         $productDetail = $this->productDetailRepo->create($request->toArray());
         if (!$productDetail || null === $productDetail) {
-            return redirect()->back();
+            return redirect()
+                ->route('product.list')
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
 
         return redirect()
-            ->back()
-            ->with('msg', 'Tao thanh cong ');
+            ->route('product.list')
+            ->with(CommonConstant::MSG, ProductConstant::MSG['create_success']);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $productDetail = $this->productDetailRepo->delete($id);
 
         if (!$productDetail || null === $productDetail) {
-            return redirect()->back();
-        }
+            return redirect()
+            ->route('productDetail.list',['id' => $id])
+            ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
+      }
         
         return redirect()
-            ->back()
-            ->with('msg', 'Xoa thanh cong ');
+            ->route('productDetail.list',['id' => $id])
+            ->with(CommonConstant::MSG, ProductConstant::MSG['delete_success']);
     }
 
     public function getViewUpdate($id)
     {
         $productDetail = $this->productDetailRepo->find($id);
-        $product = $this->productDetailRepo->getProduct($productDetail->product_id);
+        $product = $this->productRepo->find($productDetail->product_id);
 
         if (! $productDetail || null == $productDetail) { 
             return redirect()
-                ->back()
-                ->with('msg', 'Khong tim thay product'); 
+                ->route('productDetail.list',['id' => $id])
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']); 
         }
        
         return view('productDetail.update', [
@@ -89,11 +99,13 @@ class ProductDetailController extends Controller
         $productDetail = $this->productDetailRepo->update($id, $request->toArray());
 
         if (!$productDetail || null === $productDetail) {
-            return redirect()->back();
+            return redirect()
+                ->route('productDetail.list',['id' => $id])
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
         
         return redirect()
-            ->back()
-            ->with('msg', 'Update thanh cong ');
+            ->route('productDetail.list',['id' => $id])
+            ->with(CommonConstant::MSG, ProductConstant::MSG['update_success']);
     }
 }

@@ -5,5 +5,5 @@ use App\Repositories\BaseRepositoryInterface;
 
 interface CartRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getCart();
+    public function getCart($userID);
 }

@@ -161,7 +161,8 @@
             $('.undefined_size').css('display','inline')
         }
         else if (user === ''){
-            $('.fa-circle-user').click()
+            // $('.fa-circle-user').click()
+            console.log('undefind');
         }
         else{ 
             $('.under_bot_infor').append('<p class="userID" style="display:none">{{ $user->id }}</p>')

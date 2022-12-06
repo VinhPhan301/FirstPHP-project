@@ -17,5 +17,4 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
 
     public function getRelatedProduct($productID, $product);
 
-    public function getSizeColor($productID);
 }

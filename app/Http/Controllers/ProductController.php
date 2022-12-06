@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Constants\CommonConstant;
+use App\Constants\ProductConstant;
 
 class ProductController extends Controller
 {
@@ -18,19 +20,21 @@ class ProductController extends Controller
         $products = $this->productRepo->getAll();
 
         if (!$products || null === $products) {
-            return redirect()->back();
+            return redirect()
+                ->route('user.viewpage')
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
 
         return view('product.list', [
             'product' => $products,
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
     public function getViewCreate()
     {      
         return view('product.create',[
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -39,24 +43,29 @@ class ProductController extends Controller
         $product = $this->productRepo->create($request->toArray());
 
         if (!$product || null === $product) {
-            return redirect()->back(); // thieu msg
+            return redirect()
+                ->route('product.create')
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']); 
         }
 
         return redirect()
             ->route('product.list')
-            ->with('msg', 'Tao thanh cong ');
+            ->with(CommonConstant::MSG, ProductConstant::MSG['create_success']);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $product = $this->productRepo->delete($id);
 
         if (!$product || null === $product) {
-            return redirect()->back();
+            return redirect()
+                ->route('product.list')
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
         
         return redirect()
-            ->back()
-            ->with('msg', 'Xoa thanh cong ');
+            ->route('product.list')
+            ->with(CommonConstant::MSG, ProductConstant::MSG['delete_success']);
     }
 
     public function getViewUpdate($id)
@@ -66,7 +75,7 @@ class ProductController extends Controller
         if (! $product || null == $product) { 
             return redirect()
                 ->route('product.list')
-                ->with('msg', 'Khong tim thay product'); 
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']); 
         }
        
         return view('product.update', ['product' => $product]);
@@ -78,12 +87,14 @@ class ProductController extends Controller
         $product = $this->productRepo->update($id, $request->toArray());
 
         if (!$product || null === $product) {
-            return redirect()->back();
+            return redirect()
+                ->route('product.list')
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
         
         return redirect()
             ->route('product.list')
-            ->with('msg', 'Update thanh cong ');
+            ->with(CommonConstant::MSG, ProductConstant::MSG['update_success']);
     }
 
     

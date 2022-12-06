@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Product\CategoryRepositoryInterface;
+use App\Constants\CommonConstant;
+use App\Constants\CategoryConstant;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
@@ -22,19 +25,19 @@ class CategoryController extends Controller
         if (! $category || null == $category) { 
             return redirect()
                 ->route('user.viewpage')
-                ->with('msg', 'Khong tim thay Category'); 
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
         }
 
         return view('category.list', [
             'category' => $category,
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
     public function getViewCreate()
     {
         return view('category.create', [
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
        ]);
 
     }
@@ -46,18 +49,19 @@ class CategoryController extends Controller
         if (! $category || null == $category) { 
             return redirect()
                 ->route('category.list')
-                ->with('msg', 'Khong tim thay Category'); 
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
         }
 
         return redirect()
             ->route('category.list')
-            ->with('msg', 'Tao thanh cong ');
+            ->with(CommonConstant::MSG, CategoryConstant::MSG['create_success']);
     }
 
-    public function getViewUpdate()
+
+    public function getViewUpdate() 
     {
         return view('category.update', [
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -67,27 +71,34 @@ class CategoryController extends Controller
 
         if (! $category || null == $category) { 
             return redirect()
-                ->back()
-                ->with('msg', 'Khong tim thay Category'); 
+                ->route('category.update')
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
         }
 
         return redirect()
             ->route('category.list')
-            ->with('msg', 'Update thanh cong ');
+            ->with(CommonConstant::MSG, CategoryConstant::MSG['update_success']);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * 
+     * @return void
+     */
     public function delete($id)
     {
         $category = $this->categoryRepo->delete($id);
 
         if (! $category || null == $category) { 
             return redirect()
-                ->back()
-                ->with('msg', 'Khong tim thay Category'); 
+                ->route('category.list')
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
         }
         
         return redirect()
             ->route('category.list')
-            ->with('msg', 'Xoa thanh cong ');
+            ->with(CommonConstant::MSG, CategoryConstant::MSG['delete_success']);
     }
 }

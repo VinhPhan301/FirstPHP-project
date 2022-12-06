@@ -624,7 +624,7 @@ p {
 .buy_now a:hover {
     font-weight: bold;
     background: rgb(185, 0, 0);
-    color: white;
+    color: white !important;
 }
 
 .related_product {

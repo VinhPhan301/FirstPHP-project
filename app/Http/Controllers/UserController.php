@@ -9,18 +9,17 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Http\Requests\SignupFormRequest;
 use App\Repositories\Product\UserRepositoryInterface;
+use App\Constants\CommonConstant;
+use App\Constants\UserConstant;
 
 class UserController extends Controller
 {
 
     protected $userRepo;
-    // protected $currentUser;
 
     public function __construct(UserRepositoryInterface $userRepo)
     {
-        $this->userRepo = $userRepo;
-        // \View::share([ 'user' => $this->currentUser ]);
-       
+        $this->userRepo = $userRepo;    
     }
 
     public function index()
@@ -28,19 +27,21 @@ class UserController extends Controller
         $users = $this->userRepo->getAll();
 
         if (!$users || null === $users) {
-            return redirect()->back();
+            return redirect()
+                ->route('user.viewpage')
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
 
         return view('user.list',[
             'user' => $users,
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
     public function getViewCreate()
     {
         return view('user.create', [
-            'msg' => session()->get('msg') ?? null
+            'msg' => session()->get(CommonConstant::MSG) ?? null
        ]);
     }
 
@@ -48,44 +49,40 @@ class UserController extends Controller
     {    
         $password = Hash::make($request->password);
         $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $password,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'date_of_birth' => $request->date_of_birth,
-            'role' => $request->role,
+            UserConstant::COLUMN['name'] => $request->name,
+            UserConstant::COLUMN['email'] => $request->email,
+            UserConstant::COLUMN['password'] => $password,
+            UserConstant::COLUMN['address'] => $request->address,
+            UserConstant::COLUMN['phone'] => $request->phone,
+            UserConstant::COLUMN['date_of_birth'] => $request->date_of_birth,
+            UserConstant::COLUMN['role'] => $request->role,
         ];
         $user = $this->userRepo->create($data);
 
-        // $userCallback = User::where('email', $request->email)->get();
-
-        // foreach ($userCallback as $item) {
-        //     $userID = $item->id;
-        // }
-        // $cart = Cart::create(['user_id'=> $userID]);
-
         if (!$user || null === $user) {
-            return redirect()->back();
+            return redirect()
+                ->route('user.create')
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
         
         return redirect()
             ->route('user.list')
-            ->with('msg', 'Tao thanh cong '.$request->role.' '.$request->name);
+            ->with(CommonConstant::MSG, UserConstant::MSG['create_success']);
     }
 
     public function delete($id)
     {
         $user = $this->userRepo->delete($id);
 
-
         if (!$user || null === $user) {
-            return redirect()->back();
+            return redirect()
+                ->route('user.list')
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
 
         return redirect()
             ->route('user.list')
-            ->with('msg', 'Xoa thanh cong ');
+            ->with(CommonConstant::MSG, UserConstant::MSG['delete_success']);
     }
 
     public function getViewUpdate($id)
@@ -95,7 +92,7 @@ class UserController extends Controller
         if (! $user || null == $user) { 
             return redirect()
                 ->route('user.list')
-                ->with('msg', 'Khong tim thay user'); 
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']); 
         }
        
         return view('user.update', ['user' => $user]);
@@ -106,12 +103,14 @@ class UserController extends Controller
         $user = $this->userRepo->update($id, $request->toArray());
 
         if (!$user || null === $user) {
-            return redirect()->back();
+            return redirect()
+                ->route('user.list')
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
         
         return redirect()
             ->route('user.list')
-            ->with('msg', 'Update thanh cong ');
+            ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
     }
 
     public function getViewLogin()
@@ -139,26 +138,26 @@ class UserController extends Controller
     {
 
         $login = [
-            'email' => $request->email,
-            'password' => $request->password,
+            UserConstant::COLUMN['email'] => $request->email,
+            UserConstant::COLUMN['password'] => $request->password,
         ];
         
         if (auth()->guard('user')->attempt($login)) {
             $this->currentUser = auth()->guard('user')->user();
             $role = auth()->guard('user')->user()->role;
 
-            if($role == 'admin') {
+            if ( $role == 'admin' ) {
                 return redirect()
-                    ->back();
+                    ->route('user.viewpage');
             }
             else {
                 return redirect()  
-                    ->back();
+                    ->route('shop.view');
             }
            
         } else {
             
-            return redirect()->back()->with('status', 'Email hoặc Password không chính xác');
+            return redirect()->back()->with('status', UserConstant::MSG['login_fail']);
         }
     }
 
