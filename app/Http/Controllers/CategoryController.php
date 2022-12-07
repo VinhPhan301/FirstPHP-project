@@ -58,9 +58,13 @@ class CategoryController extends Controller
     }
 
 
-    public function getViewUpdate() 
+    public function getViewUpdate($id) 
     {
+        $category = $this->categoryRepo->find($id);
+
         return view('category.update', [
+            'categoryName' => $category->name,
+            'categoryThumbnail' => $category->thumbnail,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }

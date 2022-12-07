@@ -1,19 +1,24 @@
 @extends('ViewPage.viewpage')
 @section('content')
-<form action="" method="post" class="update_category_form">
-    <p>Update Category Form</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    @csrf
-    <div class='category_name'>
-        <p>Category Name</p>
-        <input type="text" name="name">
-    </div>
-    <div class='category_image'>
-        <p>Category Image</p>
-        <input type="file" name="thumbnail">
-    </div>
-    <button type="submit">
-        Update
-    </button>
-</form>
+<div class='category_content'>
+    <h1>Update Category Form</h1>
+    <form action="" method="post" class="create_category_form">
+        @csrf
+        <div class='category_name'>
+            <p>Category Name</p>
+            <input type="text" name='name' value='{{ $categoryName }}'>
+        </div>
+        <div class='category_image'>
+            <p>Category Image</p>
+            <label for="upload_image" class="fake_file">
+                <div class="select_file">Select file</div>
+                <input type="text" value='{{ $categoryThumbnail }}'>
+            </label>
+            <input type="file" name="thumbnail" id='upload_image'>
+        </div>
+        <button type="submit" class='category_create'>
+            Update
+        </button>
+    </form>
+</div>
 @endsection

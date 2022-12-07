@@ -24,13 +24,12 @@ class SignupFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:50',
+            'name' => 'min:3|max:50',
             'email' => 'required|email',
-            'phone' => 'required|min:9|max:11',
+            'phone' => 'min:9|max:11',
             'password' => 'min:6|required_with:password_confirm|same:password_confirm',
             'password_confirm' => 'required|min:6',
-            'address' => 'required|min:5',
-            'date_of_birth' => 'required',
+            'address' => 'min:5',
         ];
     }
 

@@ -12,17 +12,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="signup_form_box">
-        <form action="" method='post'>
-            <p>Email</p>
-            <input type="text" name='email'>
-            <p>Password</p>
-            <input type="text" name='password'>
-            <input style="display: none" type="text" name='role' value='user'>
-            <br>
-            <button type="submit">Đăng ký</button>
-        </form>
-    </div>
+    <p class="user_logged" style="display: none">{{ $user }}</p>
     <div class="header" id="header">
         <div class="header_img">
             <img src="{{ asset('picture/blackfriday.png') }}" alt="">
@@ -41,13 +31,13 @@
                 </div>
                 <p><i class="fa-solid fa-store"></i></p>
                 <p><i class="fa-regular fa-heart"></i></p>
-                <p><a><i class="fa-regular fa-circle-user"></i></a></p>
-                <p><a href="{{ route('cartItem.view') }}"><i class="fa-solid fa-bag-shopping"><span class="user_logged" style="display:none">{{ $user }}</span></i></a></p>
+                <p><i class="fa-regular fa-circle-user"></i></p>
+                <p><a href="{{ route('cartItem.view') }}"><i class="fa-solid fa-bag-shopping"></i></a></p>
                 <div id='user_action'>
-                    <p class='undefind'><a href="{{ route('user.login') }}">Đăng nhập</a></p>
-                    <p class='undefind'>Đăng ký</p>
-                    <p class='logged'>Tài khoản</p>
-                    <p class='logged'><a href='{{ route('user.logout') }}'>Đăng xuất</a></p>
+                    <p class='undefind'><a href="{{ route('shop.login') }}"><span id='to_login'>Đăng nhập</span></a></p>
+                    <p class='undefind'><a href="{{ route('shop.signup') }}">Đăng ký</a></p>
+                    <p class='logged'><a href="{{ route('shop.user') }}">Tài khoản</a></p>
+                    <p class='logged'><a href='{{ route('shop.logout') }}'>Đăng xuất</a></p>
                 </div>
             </div>
         </div>

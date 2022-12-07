@@ -21,6 +21,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getProductList()
     {
+        $arrProductName = [];
         $products = Product::all();
         foreach ($products as $product) {
             $arrProductName[] = $product->name;

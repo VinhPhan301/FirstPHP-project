@@ -72,13 +72,17 @@ class ProductController extends Controller
     {
         $product = $this->productRepo->find($id);
 
+
+
         if (! $product || null == $product) { 
             return redirect()
                 ->route('product.list')
                 ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']); 
         }
        
-        return view('product.update', ['product' => $product]);
+        return view('product.update', [
+            'product' => $product
+        ]);
 
     }
 

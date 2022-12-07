@@ -13,8 +13,10 @@ class CartItemController extends Controller
 {
     protected $cartItemRepo;
     protected $productDetailRepo;
+    protected $cartRepo;
 
-    public function __construct(CartItemRepositoryInterface $cartItemRepo, ProductDetailRepositoryInterface $productDetailRepo,
+    public function __construct(CartItemRepositoryInterface $cartItemRepo,
+    ProductDetailRepositoryInterface $productDetailRepo,
     CartRepositoryInterface $cartRepo)
     {
         $this->cartItemRepo = $cartItemRepo;
@@ -45,9 +47,9 @@ class CartItemController extends Controller
         $userID = $request->userID;
 
         $productDetailID = $this->productDetailRepo->getProductDetailID($productID,$color, $size);
-
+        // dd($productDetailID);
         $cartID = $this->cartRepo->getCart($userID);
-
+        dd($cartID);
         $data = [
             'cart_id' =>$cartID,
             'productDetail_id' => $productDetailID,
@@ -55,13 +57,5 @@ class CartItemController extends Controller
         ];
         
         $cartItem = $this->cartItemRepo->create($data);
-
-        return response()->json([
-            'productDetailID' => $productDetailID,
-            'userID' => $userID,
-            'cartID' => $cartID,
-            // 'quantity'=>$quantity,
-        ],200);                            
-     
     }
 }

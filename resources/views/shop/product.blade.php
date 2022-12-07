@@ -1,5 +1,6 @@
 @extends('Viewpage.viewhome')
 @section('home_content')
+<p class="userID_logged" style="display: none"></p>
 <div class="header_category">
     <div class='in_header_category'>
         @foreach($category as $item)
@@ -87,7 +88,7 @@
 </div>
 <div class="success_tocart">
     <p><i class="fa-solid fa-circle-check"></i></p>
-    <p>Bạn đã thêm <span>{{ $product->name }}</span> vào giỏ hàng.</p>
+    <p>Bạn đã thêm <span>{{ $product->name }}{{ $user }}</span>vào giỏ hàng.</p>
 </div>
 @endsection
 @section('script')
@@ -124,7 +125,8 @@
         var color = $('.color_chosen').text();
         var productID = $('.product_id').text();
         var quantity = $('.choose_quantity').text();
-       
+        var userID = $('.userID_logged').text();
+
         if(color === ''){
             $('.undefined_color').css('display','inline')
         }
@@ -132,19 +134,15 @@
             $('.undefined_size').css('display','inline')
         }
         else{ 
-            $.post('{{ route('cartItem.create') }}', 
-                {'color':color, 'productID':productID, 'size':size, 'quantity':quantity}, 
-                function (data) {
-                    console.log(data);
-                    console.log('ok');
-                // $('.success_tocart').css('display','block')
-
-                // setInterval(function() {
-                // $('.success_tocart').slideUp();
-                // },900)
-
-            })
-        }
+            $.get( '{{ route('cart.create') }}',
+                {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
+                function( data ) {
+                if ( data === 'false'){
+                    $('#to_login').click()
+                }
+                }
+            );
+        }    
     })
 
     $('.buy_now').click(function(){
@@ -153,32 +151,33 @@
         var productID = $('.product_id').text();
         var quantity = $('.choose_quantity').text();
         var user = $('.user_logged').text();
+        console.log(user);
         
-        if(color === ''){
-            $('.undefined_color').css('display','inline')
-        }
-        else if(size === ''){
-            $('.undefined_size').css('display','inline')
-        }
-        else if (user === ''){
-            // $('.fa-circle-user').click()
-            console.log('undefind');
-        }
-        else{ 
-            $('.under_bot_infor').append('<p class="userID" style="display:none">{{ $user->id }}</p>')
+        // if(color === ''){
+        //     $('.undefined_color').css('display','inline')
+        // }
+        // else if(size === ''){
+        //     $('.undefined_size').css('display','inline')
+        // }
+        // else if (user === ''){
+        //     // $('.fa-circle-user').click()
+        //     console.log('undefind');
+        // }
+        // else{ 
+            
 
-            var userID = $('.userID').text();
+        //     var userID = $('.userID').text();
   
-            $.post('{{ route('cartItem.create') }}', 
-                {'_token': $('meta[name=csrf-token]').attr('content'),
-                'color':color, 'productID':productID, 'size':size, 'quantity':quantity, 'userID':userID,}, 
-                function (data) {
-                    console.log(data);
-                }
-            )
-            // $('.fa-bag-shopping').click()
+        //     $.post('{{ route('cartItem.create') }}', 
+        //         {'_token': $('meta[name=csrf-token]').attr('content'),
+        //         'color':color, 'productID':productID, 'size':size, 'quantity':quantity, 'userID':userID,}, 
+        //         function (data) {
+        //             console.log(data);
+        //         }
+        //     )
+        //     // $('.fa-bag-shopping').click()
          
-        }
+        // }
     })
 </script>
 @endsection

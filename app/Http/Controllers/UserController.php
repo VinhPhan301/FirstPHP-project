@@ -11,6 +11,7 @@ use App\Http\Requests\SignupFormRequest;
 use App\Repositories\Product\UserRepositoryInterface;
 use App\Constants\CommonConstant;
 use App\Constants\UserConstant;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -98,6 +99,13 @@ class UserController extends Controller
         return view('user.update', ['user' => $user]);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
         $user = $this->userRepo->update($id, $request->toArray());
@@ -129,7 +137,12 @@ class UserController extends Controller
         }
     }
 
-    public function getViewPage()
+    /**
+     * Undocumented function
+     *
+     * @return View
+     */
+    public function getViewPage() : View
     {
         return view('user.viewpage');
     }

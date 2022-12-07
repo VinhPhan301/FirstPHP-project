@@ -69,22 +69,12 @@ class AppServiceProvider extends ServiceProvider
             'product' => $product
         ]);
 
-        
-        // View::share([
-        //     'user' => $user
-        // ]);
-
-        // $user = view()->composer('*', function ($view) use($auth) { 
-        //     dd($auth->user()); 
-        // });
-
         view()->composer('*', function($view) {
-            // dd(auth()->guard('user')->user());
             $user = auth()->guard('user')->user();
+
             view()->share([
                 'user'=> $user
             ]);
-            // $view->with('user', auth()->user()); // does what you expect
         });
     }
 }

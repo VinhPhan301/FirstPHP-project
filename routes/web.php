@@ -95,8 +95,6 @@ Route::prefix('productDetail')->group(function (){
 Route::prefix('shop')->group(function () {
    Route::get('/',[ShopController::class, 'getView'])->name('shop.view');
 
-   Route::post('/',[UserController::class, 'create']);
-
    Route::get('/view', [ShopController::class, 'getView'])->name('shop.view');
 
    Route::get('/viewcate', [ShopController::class, 'getViewCategory'])->name('shop.viewcate');
@@ -105,14 +103,31 @@ Route::prefix('shop')->group(function () {
 
    Route::get('/product', [ShopController::class, 'getViewProduct'])->name('shop.product');
 
+   Route::get('/signup', [ShopController::class, 'getViewCreate'])->name('shop.signup');
+
+   Route::post('/signup', [ShopController::class, 'createAccount']);
+
+   Route::get('/login', [ShopController::class, 'getViewLogin'])->name('shop.login');
+
+   Route::post('/login', [ShopController::class, 'postLogin'])->name('shop.login');
+
+   Route::get('/logout', [ShopController::class, 'getLogout'])->name('shop.logout');
+
+   Route::get('/user', [ShopController::class, 'getViewUser'])->name('shop.user');
+
 });
 
 
 Route::prefix('cartItem')->group(function () {
    Route::get('/',[CartItemController::class, 'getViewCart'])->name('cartItem.view')->middleware('checkLogin');
 
-   Route::post('/create', [CartItemController::class, 'create'])->name('cartItem.create');
-
+   Route::get('/create', [CartItemController::class, 'create'])->name('cartItem.create');
 
 });
 
+Route::prefix('cart')->group(function () {
+   Route::get('/', [CartController::class, 'getViewCart'])->name('cart.view')->middleware('checkLogin');
+
+   Route::get('/create', [CartController::class, 'createCart'])->name('cart.create');
+
+});
