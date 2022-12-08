@@ -15,7 +15,13 @@ class ProductController extends Controller
         $this->productRepo = $productRepo;
     }
 
-    public function index()
+
+    /**
+     * Show Product List function
+     *
+     * @return View
+     */
+    public function index() : View
     {
         $products = $this->productRepo->getAll();
 
@@ -31,13 +37,26 @@ class ProductController extends Controller
         ]);
     }
 
-    public function getViewCreate()
+
+    /**
+     * Show View Create Product function
+     *
+     * @return View
+     */
+    public function getViewCreate() : View
     {      
         return view('product.create',[
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
+
+    /**
+     * Create New Product function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request)
     {
         $product = $this->productRepo->create($request->toArray());
@@ -53,6 +72,13 @@ class ProductController extends Controller
             ->with(CommonConstant::MSG, ProductConstant::MSG['create_success']);
     }
 
+
+    /**
+     * Delete Product By ID function
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id)
     {
         $product = $this->productRepo->delete($id);
@@ -68,11 +94,16 @@ class ProductController extends Controller
             ->with(CommonConstant::MSG, ProductConstant::MSG['delete_success']);
     }
 
-    public function getViewUpdate($id)
+
+    /**
+     * Show View Product Update By ID function
+     *
+     * @param [type] $id
+     * @return View
+     */
+    public function getViewUpdate($id) : View
     {
         $product = $this->productRepo->find($id);
-
-
 
         if (! $product || null == $product) { 
             return redirect()
@@ -83,9 +114,16 @@ class ProductController extends Controller
         return view('product.update', [
             'product' => $product
         ]);
-
     }
 
+
+    /**
+     * Update Product By ID function
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
         $product = $this->productRepo->update($id, $request->toArray());

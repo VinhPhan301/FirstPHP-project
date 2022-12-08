@@ -27,7 +27,14 @@ class ShopController extends Controller
         $this->userRepo = $userRepo;
     }    
 
-    public function getView(Request $request) 
+
+    /**
+     * Show Product in Shop function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getView(Request $request)
     {  
         $type = $request->query('type');
         if (null !== $request->query('type')) {
@@ -54,6 +61,13 @@ class ShopController extends Controller
         ]);
     }
 
+
+    /**
+     * Show Chosen Category in Shop function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function getViewCategory(Request $request)
     {
         $categoryName = $request->query('category');
@@ -80,7 +94,14 @@ class ShopController extends Controller
         ]);
     }
 
-    public function findProduct(Request $request)
+
+    /**
+     * Show chosen Product in Shop function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function findProduct(Request $request) 
     {   
         $categoryName = $request->query('category');
         $type = $request->query('type');
@@ -98,6 +119,13 @@ class ShopController extends Controller
         ]);
     }
 
+
+    /**
+     * Show chosen Product function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function getViewProduct(Request $request)
     {
         $productID = $request->query('id');
@@ -115,11 +143,25 @@ class ShopController extends Controller
         ]);
     }
 
-    public function getViewCreate(Request $request)
+
+    /**
+     * Show SignUp Form for User function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getViewCreate()
     {
         return view('shop.signup');
     }
 
+
+    /**
+     * Create New Account for User function
+     *
+     * @param SignupFormRequest $request
+     * @return void
+     */
     public function createAccount(SignupFormRequest $request)
     {
         $password = Hash::make($request->password);
@@ -142,11 +184,24 @@ class ShopController extends Controller
             ->with(CommonConstant::MSG, UserConstant::MSG['create_success']);
     }
 
+
+    /**
+     * Show Login Form for User function
+     *
+     * @return void
+     */
     public function getViewLogin()
     {
         return view('shop.login');
     }
 
+
+    /**
+     * User login  function
+     *
+     * @param Request $request
+     * @return void
+     */  
     public function postLogin(Request $request)
     {
         $login = [
@@ -166,6 +221,13 @@ class ShopController extends Controller
         }
     }
 
+
+    /**
+     * User Logout function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function getLogout(Request $request) 
     {
         Auth::guard('user')->logout();

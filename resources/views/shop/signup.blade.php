@@ -29,4 +29,14 @@
             của CANIFA</p>
     </form>
 </div>
+<div class="success_signup_box">
+    <div class="success_signup">
+        <p><i class="fa-solid fa-shield-cat"></i></p>
+        <p>Bạn đã đăng ký thành công</p>
+        <div>
+            <button>Đăng nhập</button>
+            <button>Tiếp tục</button>
+        </div>
+    </div>
+</div>
 @endsection

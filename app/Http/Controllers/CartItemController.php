@@ -24,10 +24,15 @@ class CartItemController extends Controller
         $this->productDetailRepo = $productDetailRepo;
     }
 
-    public function getViewCart()
+    /**
+     * ViewAllCart function
+     *
+     * @return void
+     */
+    public function getViewCart() 
     {   
         $cartItems = $this->cartItemRepo->getAll();
-
+        // dd($cartItems);
         if (!$cartItems || null === $cartItems) {
             return redirect()->back();
         }

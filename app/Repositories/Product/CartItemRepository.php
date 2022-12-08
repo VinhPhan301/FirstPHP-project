@@ -13,4 +13,5 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryInt
     {
         return \App\Models\CartItem::class;
     }
+
 }

@@ -19,20 +19,20 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
     public function getProductDetail($id)
     {
-        $productDetail = ProductDetail::where('product_id', $id)->get();
+        $productDetail = $this->model->where('product_id', $id)->get();
 
         return $productDetail;
     }
     
     public function getProductDetailID($productID, $color, $size)
     {
-        $productDetail = ProductDetail::where('product_id', $productID)
+        $productDetail = $this->model->where('product_id', $productID)
             ->where('color', $color)
             ->where('size', $size)
             ->first();
 
         $productDetailID = $productDetail->id;
-        
+
         return $productDetailID;
     }
 
@@ -41,7 +41,7 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
         $arrSize = [];
         $arrColor = [];
         
-        $productDetails = ProductDetail::where('product_id', $productID)->get();
+        $productDetails = $this->model->where('product_id', $productID)->get();
 
         foreach ($productDetails as $productDetail){
             $arrSize[] = $productDetail->size;

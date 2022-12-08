@@ -752,13 +752,60 @@ p {
     margin-left: 10px;
     display: none;
 }
+.success_signup_box {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(239, 239, 239, 0.8);
+    top: 0;
+    z-index: 20;
+}
+.success_signup {
+    position: fixed;
+    padding: 20px 40px 40px 40px;
+    background: #313e49;
+    top: 25%;
+    left: 35%;
+    z-index: 3;
+    border-radius: 10px;
+}
+.success_signup p:first-child {
+    font-size: 50px;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+.success_signup p:nth-child(2) {
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+.success_signup div {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+.success_signup button {
+    background: white;
+    color: black;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 20px;
+    font-weight: bold;
+}
+.success_signup button:hover {
+    background: rgb(0, 115, 255);
+    color: white;
+}
 .success_tocart {
     position: fixed;
     padding: 20px 40px 40px 40px;
     background: white;
     border: 1px solid rgb(127, 127, 127);
-    top: 20%;
-    left: 34%;
+    top: 4%;
+    left: 35%;
     z-index: 3;
     border-radius: 10px;
     display: none;

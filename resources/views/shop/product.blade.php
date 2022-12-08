@@ -88,7 +88,7 @@
 </div>
 <div class="success_tocart">
     <p><i class="fa-solid fa-circle-check"></i></p>
-    <p>Bạn đã thêm <span>{{ $product->name }}{{ $user }}</span>vào giỏ hàng.</p>
+    <p>Bạn đã thêm <span>{{ $product->name }}</span>vào giỏ hàng.</p>
 </div>
 @endsection
 @section('script')
@@ -137,9 +137,16 @@
             $.get( '{{ route('cart.create') }}',
                 {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
                 function( data ) {
-                if ( data === 'false'){
-                    $('#to_login').click()
-                }
+                    if ( data === 'false'){
+                        $('#to_login').click()
+                    }
+                    else {
+                        $('.success_tocart').css('display','block')
+
+                        setInterval(function() {
+                            $('.success_tocart').slideUp();
+                        },800)
+                    }
                 }
             );
         }    
@@ -152,32 +159,7 @@
         var quantity = $('.choose_quantity').text();
         var user = $('.user_logged').text();
         console.log(user);
-        
-        // if(color === ''){
-        //     $('.undefined_color').css('display','inline')
-        // }
-        // else if(size === ''){
-        //     $('.undefined_size').css('display','inline')
-        // }
-        // else if (user === ''){
-        //     // $('.fa-circle-user').click()
-        //     console.log('undefind');
-        // }
-        // else{ 
-            
-
-        //     var userID = $('.userID').text();
-  
-        //     $.post('{{ route('cartItem.create') }}', 
-        //         {'_token': $('meta[name=csrf-token]').attr('content'),
-        //         'color':color, 'productID':productID, 'size':size, 'quantity':quantity, 'userID':userID,}, 
-        //         function (data) {
-        //             console.log(data);
-        //         }
-        //     )
-        //     // $('.fa-bag-shopping').click()
-         
-        // }
+    
     })
 </script>
 @endsection

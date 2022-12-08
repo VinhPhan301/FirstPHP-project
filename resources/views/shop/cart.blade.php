@@ -9,6 +9,8 @@
         @endforeach    
     </div>
 </div>
+
+
 <div class="">
     <div class="cart_body">
         <div class="cart_body_left">
@@ -29,10 +31,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach ($cartItems as $cartItem)
                         <tr>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $cartItem->id }}</td>
+                            <td>{{ $cartItem->productDetail->color }}</td>
                             <td>
                                 <span class='minus'>
                                     <i class="fa-regular fa-square-minus"></i>
@@ -45,7 +47,7 @@
                             <td>1.000.000</td>
                             <td>x</td>
                         </tr>
-                        
+                        @endforeach                        
                     </tbody>
                 </table>
             </div>

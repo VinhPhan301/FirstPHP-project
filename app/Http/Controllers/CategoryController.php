@@ -18,7 +18,12 @@ class CategoryController extends Controller
         $this->categoryRepo = $categoryRepo;
     }
 
-    public function index()
+    /**
+     * Show Category List function
+     *
+     * @return View
+     */
+    public function index() : View
     {
         $category = $this->categoryRepo->getAll();
         
@@ -34,7 +39,12 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function getViewCreate()
+    /**
+     * Show View Create Category function
+     *
+     * @return View
+     */
+    public function getViewCreate() : View
     {
         return view('category.create', [
             'msg' => session()->get(CommonConstant::MSG) ?? null
@@ -42,6 +52,12 @@ class CategoryController extends Controller
 
     }
 
+    /**
+     * Create New Category function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request)
     {
         $category = $this->categoryRepo->create($request->toArray());
@@ -58,7 +74,13 @@ class CategoryController extends Controller
     }
 
 
-    public function getViewUpdate($id) 
+    /**
+     * Show View Update Category function
+     *
+     * @param [type] $id
+     * @return View
+     */
+    public function getViewUpdate($id) : View
     {
         $category = $this->categoryRepo->find($id);
 
@@ -69,6 +91,13 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * Update Category By ID function
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
         $category = $this->categoryRepo->update($id, $request->toArray());
@@ -85,7 +114,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Delete Category By ID function
      *
      * @param [type] $id
      * 

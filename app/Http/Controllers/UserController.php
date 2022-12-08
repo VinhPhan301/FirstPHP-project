@@ -23,7 +23,13 @@ class UserController extends Controller
         $this->userRepo = $userRepo;    
     }
 
-    public function index()
+
+    /**
+     * Show User List function
+     *
+     * @return View
+     */
+    public function index() : View
     {
         $users = $this->userRepo->getAll();
 
@@ -39,13 +45,26 @@ class UserController extends Controller
         ]);
     }
 
-    public function getViewCreate()
+
+    /**
+     * Show User Create Form function
+     *
+     * @return View
+     */
+    public function getViewCreate() : View
     {
         return view('user.create', [
             'msg' => session()->get(CommonConstant::MSG) ?? null
        ]);
     }
 
+
+    /**
+     * Create New User Account function
+     *
+     * @param SignupFormRequest $request
+     * @return void
+     */
     public function create(SignupFormRequest $request)
     {    
         $password = Hash::make($request->password);
@@ -71,6 +90,13 @@ class UserController extends Controller
             ->with(CommonConstant::MSG, UserConstant::MSG['create_success']);
     }
 
+
+    /**
+     * Delete User By ID function
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id)
     {
         $user = $this->userRepo->delete($id);
@@ -86,7 +112,14 @@ class UserController extends Controller
             ->with(CommonConstant::MSG, UserConstant::MSG['delete_success']);
     }
 
-    public function getViewUpdate($id)
+
+    /**
+     * Show User Update Form By ID function
+     *
+     * @param [type] $id
+     * @return View
+     */
+    public function getViewUpdate($id) : View
     {
         $user = $this->userRepo->find($id);
 
@@ -99,8 +132,9 @@ class UserController extends Controller
         return view('user.update', ['user' => $user]);
     }
 
+
     /**
-     * Undocumented function
+     * Update User account By ID function
      *
      * @param Request $request
      * @param [type] $id
@@ -121,7 +155,13 @@ class UserController extends Controller
             ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
     }
 
-    public function getViewLogin()
+
+    /**
+     * Show User Login Form for ADMIN function
+     *
+     * @return View
+     */
+    public function getViewLogin() : View
     {  
         if(Auth::guard('user')->check() == false){
             return view('user.login');
@@ -137,8 +177,9 @@ class UserController extends Controller
         }
     }
 
+
     /**
-     * Undocumented function
+     * Show Admin Mainpage function
      *
      * @return View
      */
@@ -147,9 +188,15 @@ class UserController extends Controller
         return view('user.viewpage');
     }
 
+
+    /**
+     * User Login function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function postLogin(Request $request)
     {
-
         $login = [
             UserConstant::COLUMN['email'] => $request->email,
             UserConstant::COLUMN['password'] => $request->password,
@@ -174,6 +221,13 @@ class UserController extends Controller
         }
     }
 
+
+    /**
+     * User Logout function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function getLogout(Request $request) 
     {
         Auth::guard('user')->logout();
@@ -181,7 +235,13 @@ class UserController extends Controller
         return redirect('user/login');
     }
 
-    public function getViewTest() 
+
+    /**
+     * Show view Test in Admin function
+     *
+     * @return View
+     */
+    public function getViewTest() : View
     {
         return view('user.test');
     }

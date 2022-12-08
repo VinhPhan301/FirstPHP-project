@@ -18,7 +18,14 @@ class ProductDetailController extends Controller
         $this->productRepo = $productRepo;
     }
 
-    public function index($id)
+
+    /**
+     * Show View ProductDetail By ID function
+     *
+     * @param [type] $id
+     * @return View
+     */
+    public function index($id) : View
     {
         $productDetail = $this->productDetailRepo->getProductDetail($id);
         $product = $this->productRepo->find($id);
@@ -36,7 +43,14 @@ class ProductDetailController extends Controller
         ]);
     }
 
-    public function getViewCreate($id)
+
+    /**
+     * Show View Create New ProductDetail By ProductID function
+     *
+     * @param [type] $id
+     * @return View
+     */
+    public function getViewCreate($id) : View
     {
         $product = $this->productRepo->find($id);
 
@@ -46,6 +60,13 @@ class ProductDetailController extends Controller
         ]);
     }
 
+
+    /**
+     * Create New ProductDetail function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request)
     {
 
@@ -61,6 +82,13 @@ class ProductDetailController extends Controller
             ->with(CommonConstant::MSG, ProductConstant::MSG['create_success']);
     }
 
+
+    /**
+     * Delete ProductDetail By ID function
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function delete($id)
     {
         $productDetail = $this->productDetailRepo->delete($id);
@@ -76,7 +104,14 @@ class ProductDetailController extends Controller
             ->with(CommonConstant::MSG, ProductConstant::MSG['delete_success']);
     }
 
-    public function getViewUpdate($id)
+
+    /**
+     * Show View Update ProductDetail By ID function
+     *
+     * @param [type] $id
+     * @return View
+     */
+    public function getViewUpdate($id) : View
     {
         $productDetail = $this->productDetailRepo->find($id);
         $product = $this->productRepo->find($productDetail->product_id);
@@ -94,6 +129,14 @@ class ProductDetailController extends Controller
 
     }
 
+
+    /**
+     * Update ProductDetail By ID function
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function update(Request $request, $id)
     {
         $productDetail = $this->productDetailRepo->update($id, $request->toArray());
