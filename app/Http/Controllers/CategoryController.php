@@ -7,6 +7,7 @@ use App\Repositories\Product\CategoryRepositoryInterface;
 use App\Constants\CommonConstant;
 use App\Constants\CategoryConstant;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -83,7 +84,9 @@ class CategoryController extends Controller
     public function getViewUpdate($id) : View
     {
         $category = $this->categoryRepo->find($id);
-
+        // $slug = Str::slug($category->name);
+        // $compare = $this->model->where('slug', $slug)->first();
+        // dd();
         return view('category.update', [
             'categoryName' => $category->name,
             'categoryThumbnail' => $category->thumbnail,

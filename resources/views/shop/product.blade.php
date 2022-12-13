@@ -13,13 +13,13 @@
 <div class="in_content_product">
     <div class='about_product'>
         <div class='product_thumbnail'>
-            <img src="{{ asset("picture/$product->image") }}" alt="">
+            <img src="{{ asset("picture/$product->image") }}">
         </div>
         <div class='product_infor'>
             <div class='top_infor'>
                 <h3>{{ $product->name }}</h3>
                 <p>Mã sản phẩm: <span class="product_id">{{ $product->id}}</span></p>
-                <h3>{{ number_format($product->price,0,'.','.') }} đ</h3>
+                <h3>{{ number_format($product->price,0,'.','.') }}đ</h3>
             </div>
             <div class='mid_infor'>
                 <p>Màu sắc: <span class='undefined_color'>Vui lòng chọn màu</span></p>
@@ -30,7 +30,7 @@
                 @foreach ($detailSize as $size)
                     <span class="detail_size">{{ $size }}</span>
                 @endforeach
-                <p>Số lượng:</p>
+                <p>Số lượng: <span class='product_storage'></span> <span class='product_storage_text'></span></p>
                 <p class="quantity_tocart">
                     <span class='less'>
                         <i class="fa-regular fa-square-minus"></i>
@@ -38,8 +38,10 @@
                     <span class='choose_quantity'>1</span>
                     <span class='more'>
                         <i class="fa-regular fa-square-plus"></i>
-                    </span>
+                    </span>  
                 </p>
+                <p id='limited_storage'>Giới hạn số lượng trong kho</p>
+                <p id='limited_quantity'>Thêm tối đa <span></span> sản phẩm</p>
             </div>
             <div class='bot_infor'>
                 <p><i class="fa-solid fa-check"></i><span>Fresship toàn bộ đơn hàng</span></p>
@@ -93,21 +95,69 @@
 @endsection
 @section('script')
 <script>
-    $('.detail_size').click(function(){
-        $('.undefined_size').css('display','none')
-        $(this).siblings('.detail_size').removeClass('size_chosen')
-        $(this).addClass('size_chosen');
-    })
-
     $('.detail_color').click(function(){
+        $('.choose_quantity').text('1')
+        $('#limited_storage').css('opacity', '0')  
         $('.undefined_color').css('display','none')
         $(this).siblings('.detail_color').removeClass('color_chosen')
         $(this).addClass('color_chosen')
+
+        if ($('.size_chosen').text() == '') {
+            console.log('not');
+        }
+        else {
+            var productID = $('.product_id').text();
+            var color = $('.color_chosen').text()
+            var size = $('.size_chosen').text()
+      
+            $.get( '{{ route('cart.getStorage') }}',
+                {'color': color, 'size': size, 'productID':productID}, 
+                function( data ) {
+                    $('.product_storage').text(data)
+                    $('.product_storage_text').text('Sản phẩm trong kho')
+                }
+            );
+        }
+        
+    })
+
+    $('.detail_size').click(function(){
+        $('.choose_quantity').text('1')
+        $('#limited_storage').css('opacity', '0')  
+        $('.undefined_size').css('display','none')
+        $(this).siblings('.detail_size').removeClass('size_chosen')
+        $(this).addClass('size_chosen');
+
+        if ($('.color_chosen').text() == '') {
+            console.log('not');
+        }
+        else {
+            var productID = $('.product_id').text();
+            var color = $('.color_chosen').text()
+            var size = $('.size_chosen').text()
+            
+            $.get( '{{ route('cart.getStorage') }}',
+                {'color': color, 'size': size, 'productID':productID}, 
+                function( data ) {
+                    $('.product_storage').text(data)
+                    $('.product_storage_text').text('Sản phẩm trong kho')
+                }
+            );
+        }
     })
 
     $('.more').click(function(){
         var number = $(this).siblings('.choose_quantity').text()*1 + 1;
-        $(this).siblings('.choose_quantity').text(number);
+        var storage = $('.product_storage').text()
+        if(number < storage) {
+            $(this).siblings('.choose_quantity').text(number);
+        }
+        else if (number = storage) {
+            $(this).siblings('.choose_quantity').text(storage);   
+            $('#limited_storage').css('opacity', '1')      
+        }
+        
+        
     })
 
     $('.less').click(function(){
@@ -127,25 +177,29 @@
         var quantity = $('.choose_quantity').text();
         var userID = $('.userID_logged').text();
 
-        if(color === ''){
+        if (color === '') {
             $('.undefined_color').css('display','inline')
         }
-        else if(size === ''){
+        else if (size === '') {
             $('.undefined_size').css('display','inline')
         }
-        else{ 
+        else { 
             $.get( '{{ route('cart.create') }}',
                 {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
                 function( data ) {
                     if ( data === 'false'){
                         $('#to_login').click()
                     }
-                    else {
+                    else if ( data === 'true'){
                         $('.success_tocart').css('display','block')
 
                         setInterval(function() {
                             $('.success_tocart').slideUp();
                         },800)
+                    }
+                    else {
+                        $('#limited_quantity').css('opacity', '1')
+                        $('#limited_quantity span').text(data)
                     }
                 }
             );
@@ -157,9 +211,27 @@
         var color = $('.color_chosen').text();
         var productID = $('.product_id').text();
         var quantity = $('.choose_quantity').text();
-        var user = $('.user_logged').text();
-        console.log(user);
+        var userID = $('.userID_logged').text();
     
+        if (color === '') {
+            $('.undefined_color').css('display','inline')
+        }
+        else if (size === '') {
+            $('.undefined_size').css('display','inline')
+        }
+        else { 
+            $.get( '{{ route('cart.create') }}',
+                {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
+                function( data ) {
+                    if ( data === 'false'){
+                        $('#to_login').click()
+                    }
+                    else {
+                        $('.fa-bag-shopping').click()
+                    }
+                }
+            );
+        } 
     })
 </script>
 @endsection

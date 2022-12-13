@@ -1,5 +1,11 @@
 @extends('Viewpage.viewhome')
 @section('home_content')
+<div class="view_msg">
+    <div>
+        <p class="logout_msg">{{ $msg }}</p>
+        <p><i class="fa-solid fa-otter"></i></p>
+    </div>
+</div>
 <div class="header_category">
     <div class='in_header_category'>
         @foreach($category as $item)
@@ -152,4 +158,17 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    var message = $('.logout_msg').text()
+    if(message === '') {
+        $('.view_msg').css('display','none')
+    } else {
+        $('.view_msg').css('display','block')
+        setInterval(function() {
+            $('.view_msg').slideUp();
+        },800)
+    }
+</script>
 @endsection

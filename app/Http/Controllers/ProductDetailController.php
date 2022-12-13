@@ -23,9 +23,9 @@ class ProductDetailController extends Controller
      * Show View ProductDetail By ID function
      *
      * @param [type] $id
-     * @return View
+     * @return void
      */
-    public function index($id) : View
+    public function index($id) 
     {
         $productDetail = $this->productDetailRepo->getProductDetail($id);
         $product = $this->productRepo->find($id);
@@ -48,9 +48,9 @@ class ProductDetailController extends Controller
      * Show View Create New ProductDetail By ProductID function
      *
      * @param [type] $id
-     * @return View
+     * @return void
      */
-    public function getViewCreate($id) : View
+    public function getViewCreate($id) 
     {
         $product = $this->productRepo->find($id);
 
@@ -109,9 +109,9 @@ class ProductDetailController extends Controller
      * Show View Update ProductDetail By ID function
      *
      * @param [type] $id
-     * @return View
+     * @return void
      */
-    public function getViewUpdate($id) : View
+    public function getViewUpdate($id) 
     {
         $productDetail = $this->productDetailRepo->find($id);
         $product = $this->productRepo->find($productDetail->product_id);
@@ -151,4 +151,5 @@ class ProductDetailController extends Controller
             ->route('productDetail.list',['id' => $id])
             ->with(CommonConstant::MSG, ProductConstant::MSG['update_success']);
     }
+
 }

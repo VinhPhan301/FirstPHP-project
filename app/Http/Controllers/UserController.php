@@ -159,9 +159,9 @@ class UserController extends Controller
     /**
      * Show User Login Form for ADMIN function
      *
-     * @return View
+     * @return void
      */
-    public function getViewLogin() : View
+    public function getViewLogin()
     {  
         if(Auth::guard('user')->check() == false){
             return view('user.login');

@@ -9,6 +9,8 @@ class UserConstant
     public const MSG_UPDATE_SUCCESS = 'Cập nhật tài khoản thành công';
     public const MSG_DELETE_SUCCESS = 'Xóa tài khoản thành công';
     public const MSG_LOGIN_FAIL = 'Email hoặc Password không chính xác';
+    public const MSG_LOGIN_SUCCESS = 'Đăng nhập thành công';
+    public const MSG_LOGOUT_SUCCESS = 'Bạn đã đăng xuất';
 
     public const MSG = [
         'not_found' => self::MSG_NOT_FOUND,
@@ -16,6 +18,8 @@ class UserConstant
         'update_success' => self::MSG_UPDATE_SUCCESS,
         'delete_success' => self::MSG_DELETE_SUCCESS,
         'login_fail' => self::MSG_LOGIN_FAIL,
+        'logout_success' => self::MSG_LOGOUT_SUCCESS,
+        'login_success' => self::MSG_LOGIN_SUCCESS
     ];
 
     public const COLUMN_ID = 'id';

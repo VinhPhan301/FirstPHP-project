@@ -46,7 +46,8 @@ class ShopController extends Controller
                 'products' => $products,
                 'type' => $type,
                 'productList' => $productList,
-                'categoryName' => null // thua
+                'categoryName' => null, // thua
+                'msg' => session()->get(CommonConstant::MSG) ?? null
             ]);
         }
 
@@ -57,7 +58,8 @@ class ShopController extends Controller
             'products' => $products,
             'type' => '',
             'productList' => $productList,
-            'categoryName' => null
+            'categoryName' => null,
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -81,7 +83,8 @@ class ShopController extends Controller
                 'type' => $type,
                 'productList' => $products['productList'],
                 'products' => $products['products'],
-                'categoryName' => $categoryName
+                'categoryName' => $categoryName,
+                'msg' => session()->get(CommonConstant::MSG) ?? null
             ]);
         }
 
@@ -91,6 +94,7 @@ class ShopController extends Controller
             'products' => $products,
             'type' => $type,
             'productList' => [],
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -152,7 +156,9 @@ class ShopController extends Controller
      */
     public function getViewCreate()
     {
-        return view('shop.signup');
+        return view('shop.signup',[
+            'msg' => session()->get(CommonConstant::MSG) ?? null
+        ]);
     }
 
 
@@ -213,11 +219,14 @@ class ShopController extends Controller
             $this->currentUser = auth()->guard('user')->user();
 
             return redirect()
-                ->route('shop.view');
+                ->route('shop.view')
+                ->with(CommonConstant::MSG, UserConstant::MSG['login_success']);
         }
 
         else {
-            return redirect()->back()->with('status', UserConstant::MSG['login_fail']);
+            return redirect()
+                ->back()
+                ->with('status', UserConstant::MSG['login_fail']);
         }
     }
 
@@ -233,11 +242,19 @@ class ShopController extends Controller
         Auth::guard('user')->logout();
         
         return redirect()
-            ->route('shop.view');
+            ->route('shop.view')
+            ->with(CommonConstant::MSG, UserConstant::MSG['logout_success']);
     }
 
     public function getViewUser()
     {
         return view('shop.userinfor');
+    }
+
+    public function getStorage($productID, $color, $size)
+    {
+        $productDetailStorage = $this->productDetailRepo->getStorage($productID, $color, $size);
+
+        
     }
 }

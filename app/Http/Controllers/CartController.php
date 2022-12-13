@@ -50,19 +50,21 @@ class CartController extends Controller
         $quantity = (int)$request->quantity;
 
         $productDetailID = $this->productDetailRepo->getProductDetailID($productID, $color, $size);
-        
-        if(Auth::guard('user')->check() == false){
-            return 'false';
-        }
-        else{
-            $userID = Auth::guard('user')->user()->id;
+        $productDetailPrice = $this->productDetailRepo->getProductDetailPrice($productID, $color, $size); // thua
+        $productDetailStorage = $this->productDetailRepo->getStorage($productID, $color, $size);
+
+        $user = Auth::guard('user')->user();
+
+        if($userID === null) {
+            return false;
+        } else {
+            $userID = $user->id;
             $cartFound = $this->cartRepo->getCart($userID);
 
-            if(count($cartFound) == 0){
-
+            if(count($cartFound) == 0) {
                 $data = [
                     'user_id' => $userID,
-                    'status' => 'active',
+                    'status' => 'active', //constant
                 ];
         
                 $cart = $this->cartRepo->create($data);
@@ -71,21 +73,46 @@ class CartController extends Controller
                     'productDetail_id' => $productDetailID,
                     'quantity' => $quantity,
                     'cart_id' => $cart->id,
+                    'total_price' => $quantity * $productDetailPrice,
                 ];
-                $cartItem = $this->cartItemRepo->create($itemData);
-            }
-            else {
-                foreach ($cartFound as $cart){
-                    $cartId = $cart->id;
-                }
+
+                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetailStorage);
+            } else {
+                $cartID = $cartFound->id;
 
                 $itemData = [
                     'productDetail_id' => $productDetailID,
                     'quantity' => $quantity,
                     'cart_id' => $cartId,
+                    'total_price' => $quantity * $productDetailPrice,
                 ];
-                $cartItem = $this->cartItemRepo->create($itemData);
+                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetailStorage);
+
+                return $cartItem;
             }
         }      
+    }
+
+
+    /**
+     * Get storage number Limited function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getStorage(Request $request) 
+    {
+        $color = $request->color;
+        $size = $request->size;
+        $productID = $request->productID;
+
+        $productDetailStorage = $this->productDetailRepo->getStorage($productID, $color, $size);
+        
+        if (null !== $productDetailStorage){
+            return $productDetailStorage;
+        }
+        else {
+            return 'false';
+        }
     }
 }

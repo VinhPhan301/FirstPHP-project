@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('color');
             $table->integer('size');
             $table->string('thumbnail');
+            $table->string('price');
             $table->integer('storage');
             $table->timestamps();
         });

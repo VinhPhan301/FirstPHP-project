@@ -72,10 +72,10 @@ Route::prefix('product')->group(function (){
    Route::get('/create', [ProductController::class, 'getViewCreate'])->name('product.create')->middleware('checkRole');
    Route::post('/create', [ProductController::class, 'create'])->middleware('checkRole');
 
-   Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+   Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('product.delete')->where('id', '[0-9]+');
 
-   Route::get('/update/{id}', [ProductController::class, 'getViewUpdate'])->name('product.update');
-   Route::post('/update/{id}', [ProductController::class, 'update']);
+   Route::get('/update/{id}', [ProductController::class, 'getViewUpdate'])->name('product.update')->where('id', '[0-9]+');
+   Route::post('/update/{id}', [ProductController::class, 'update'])->where('id', '[0-9]+');
 });
 
 
@@ -121,7 +121,11 @@ Route::prefix('shop')->group(function () {
 Route::prefix('cartItem')->group(function () {
    Route::get('/',[CartItemController::class, 'getViewCart'])->name('cartItem.view')->middleware('checkLogin');
 
-   Route::get('/create', [CartItemController::class, 'create'])->name('cartItem.create');
+   Route::get('/create', [CartItemController::class, 'create'])->name('cartItem.create')->middleware('checkLogin');
+
+   Route::get('/delete', [CartItemController::class, 'delete'])->name('cartItem.delete')->middleware('checkLogin');
+
+   Route::get('/update', [CartItemController::class, 'update'])->name('cartItem.update')->middleware('checkLogin');
 
 });
 
@@ -129,5 +133,7 @@ Route::prefix('cart')->group(function () {
    Route::get('/', [CartController::class, 'getViewCart'])->name('cart.view')->middleware('checkLogin');
 
    Route::get('/create', [CartController::class, 'createCart'])->name('cart.create');
+
+   Route::get('/storage', [CartController::class, 'getStorage'])->name('cart.getStorage');
 
 });

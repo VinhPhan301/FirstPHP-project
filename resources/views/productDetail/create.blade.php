@@ -29,6 +29,10 @@
             <p>Detail storage</p>
             <input type="number" name='storage'>
         </div>
+        <div class='detail_storage'>
+            <p>Detail price</p>
+            <input type="text" name='price' value='{{ $product->price }}'>
+        </div>
         <button type="submit" class="create_detail_btn">
             Create
         </button>

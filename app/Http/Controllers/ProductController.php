@@ -19,9 +19,9 @@ class ProductController extends Controller
     /**
      * Show Product List function
      *
-     * @return View
+     * @return void
      */
-    public function index() : View
+    public function index() 
     {
         $products = $this->productRepo->getAll();
 
@@ -41,9 +41,9 @@ class ProductController extends Controller
     /**
      * Show View Create Product function
      *
-     * @return View
+     * @return void
      */
-    public function getViewCreate() : View
+    public function getViewCreate()
     {      
         return view('product.create',[
             'msg' => session()->get(CommonConstant::MSG) ?? null

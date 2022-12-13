@@ -56,4 +56,28 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
         ];
     }
 
+
+    public function getProductDetailPrice($productID, $color, $size)
+    {
+        $productDetail = $this->model->where('product_id', $productID)
+            ->where('color', $color)
+            ->where('size', $size)
+            ->first();
+        
+        $productDetailPrice = $productDetail->price;
+
+        return $productDetailPrice;
+    }
+
+    public function getStorage($productID, $color, $size)
+    {
+        $productDetail = $this->model->where('product_id', $productID)
+            ->where('color', $color)
+            ->where('size', $size)
+            ->first();
+
+        $productDetailStorage = $productDetail->storage;
+
+        return $productDetailStorage;
+    }
 }

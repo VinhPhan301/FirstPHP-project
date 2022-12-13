@@ -215,7 +215,36 @@ p {
 /**************************************** End Shop Login CSS ********************/
 
 /**************************************** Start Content CSS ********************/
-
+.view_msg {
+    width: 26%;
+    background: white;
+    z-index: 35;
+    position: fixed;
+    padding: 15px 30px;
+    top: 5%;
+    left: 37%;
+    border-radius: 5px;
+}
+.view_msg div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 27px;
+}
+.view_msg div p:nth-child(1) {
+    line-height: 52px;
+}
+.view_msg div p:nth-child(2) {
+    color: white;
+    text-align: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgb(32, 255, 32);
+    font-size: 25px;
+}
+.view_msg div i {
+    line-height: 52px;
+}
 .home_content {
     width: 100%;
 }
@@ -760,6 +789,9 @@ p {
     top: 0;
     z-index: 20;
 }
+.success_msg {
+    display: none;
+}
 .success_signup {
     position: fixed;
     padding: 20px 40px 40px 40px;
@@ -792,11 +824,24 @@ p {
     color: black;
     border-radius: 5px;
     border: none;
-    padding: 5px 20px;
     font-weight: bold;
+}
+.success_signup button:nth-child(2) {
+    padding: 5px 20px;
+}
+.success_signup a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+    padding: 5px 20px;
 }
 .success_signup button:hover {
     background: rgb(0, 115, 255);
+    color: white;
+}
+.success_signup a:hover {
     color: white;
 }
 .success_tocart {
@@ -966,6 +1011,7 @@ table {
 }
 .total_price {
     font-weight: bold;
+    font-size: 18px;
 }
 .cart_right_bottom {
     margin-top: 20px;
@@ -977,5 +1023,78 @@ table {
 }
 .cart_right_bottom img {
     width: 100%;
+}
+.cart_product img {
+    width: 60px;
+}
+.cart_product div:nth-child(1) {
+    display: flex;
+    justify-content: space-evenly;
+}
+.cart_color {
+    width: 24px;
+    border-radius: 50%;
+    border: 3px solid rgb(193, 193, 193);
+}
+.cart_size_color div {
+    display: flex;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.cart_size_color div p:nth-child(2) {
+    margin: 0px 5px;
+}
+.cart_name {
+    font-size: 14px;
+    color: grey;
+}
+.cart_name a {
+    display: block;
+    text-decoration: none;
+    color: rgb(116, 116, 116);
+}
+.cart_product_price {
+    font-weight: bold;
+}
+.cartItem_tr .fa-circle-xmark {
+    display: none;
+}
+.cartItem_tr:hover .fa-circle-xmark {
+    display: block;
+    cursor: pointer;
+}
+.cartItem_tr:hover .cart_name a {
+    text-decoration: underline;
+}
+#product_td {
+    text-align: left;
+}
+.single_price,
+.cart_total_price {
+    display: none;
+}
+.product_storage {
+    font-weight: bold;
+    color: black;
+    font-size: 15px;
+    margin: 0px 10px;
+}
+#limited_storage {
+    color: red;
+    font-weight: bold;
+    font-size: 15px;
+    opacity: 0;
+    margin: 0;
+}
+#limited_quantity {
+    font-size: 15px;
+    color: red;
+    opacity: 0;
+    margin: 0;
+}
+#limited_quantity span {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0 5px;
 }
 /**************************************** End Shop Cart CSS ******************************/

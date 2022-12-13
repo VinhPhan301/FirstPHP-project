@@ -32,7 +32,7 @@ class CartItemController extends Controller
     public function getViewCart() 
     {   
         $cartItems = $this->cartItemRepo->getAll();
-        // dd($cartItems);
+        
         if (!$cartItems || null === $cartItems) {
             return redirect()->back();
         }
@@ -43,24 +43,50 @@ class CartItemController extends Controller
         ]);
     }
 
-    public function create(Request $request)
-    {  
-        $color = $request->color;
-        $size = $request->size;
-        $productID = $request->productID;
-        $quantity = $request->quantity;
-        $userID = $request->userID;
 
-        $productDetailID = $this->productDetailRepo->getProductDetailID($productID,$color, $size);
-        // dd($productDetailID);
-        $cartID = $this->cartRepo->getCart($userID);
-        dd($cartID);
+    /**
+     * Delete CartItem by ID function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function delete(Request $request)
+    {  
+        $id = $request->id;
+        $cartItem = $this->cartItemRepo->delete($id);
+
+        if(true === $cartItem){
+            return 'true';
+        }
+        else {
+            return 'false';
+        }
+    }
+
+
+    /**
+     * Update CartItem By ID function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function update(Request $request)
+    { 
+        $quantity = $request->quantity;
+        $cartItemID = $request->id;
+        $productDetailPrice = $request->productDetailPrice;
+
         $data = [
-            'cart_id' =>$cartID,
-            'productDetail_id' => $productDetailID,
             'quantity' => $quantity,
+            'total_price' => $quantity * $productDetailPrice
         ];
-        
-        $cartItem = $this->cartItemRepo->create($data);
+        $cartItemUpdate = $this->cartItemRepo->update($cartItemID, $data);
+
+        if($cartItemUpdate){
+            return 'true';
+        }
+        else {
+            return 'false';
+        }
     }
 }

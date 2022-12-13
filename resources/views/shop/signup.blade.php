@@ -33,10 +33,25 @@
     <div class="success_signup">
         <p><i class="fa-solid fa-shield-cat"></i></p>
         <p>Bạn đã đăng ký thành công</p>
+        <p class="success_msg">{{ $msg }}</p>
         <div>
-            <button>Đăng nhập</button>
-            <button>Tiếp tục</button>
+            <button><a href="{{ route('shop.login') }}">Đăng nhập</a></button>
+            <button onclick='closeSuccess()'>Tiếp tục</button>
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    var message = $('.success_msg').text()
+    if(message === '') {
+        $('.success_signup_box').css('display','none')
+    } else {
+        $('.success_signup_box').css('display','block')
+    }
+    
+    function closeSuccess(){
+        $('.success_signup_box').css('display','none')
+    }
+</script>
 @endsection
