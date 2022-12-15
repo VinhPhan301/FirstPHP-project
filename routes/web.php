@@ -113,13 +113,16 @@ Route::prefix('shop')->group(function () {
 
    Route::get('/logout', [ShopController::class, 'getLogout'])->name('shop.logout');
 
-   Route::get('/user', [ShopController::class, 'getViewUser'])->name('shop.user');
+   Route::get('/user/{id}', [ShopController::class, 'getViewUser'])->name('shop.user');
+   Route::post('/user/{id}', [ShopController::class, 'update']);
+
+   Route::get('/checkout', [ShopController::class, 'getViewCheckout'])->name('shop.checkout');
 
 });
 
 
 Route::prefix('cartItem')->group(function () {
-   Route::get('/',[CartItemController::class, 'getViewCart'])->name('cartItem.view')->middleware('checkLogin');
+   Route::get('/',[CartItemController::class, 'getViewCart'])->name('cartItem.view');
 
    Route::get('/create', [CartItemController::class, 'create'])->name('cartItem.create')->middleware('checkLogin');
 
@@ -135,5 +138,4 @@ Route::prefix('cart')->group(function () {
    Route::get('/create', [CartController::class, 'createCart'])->name('cart.create');
 
    Route::get('/storage', [CartController::class, 'getStorage'])->name('cart.getStorage');
-
 });

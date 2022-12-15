@@ -7,6 +7,7 @@ use App\Repositories\Product\CartItemRepositoryInterface;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 use App\Repositories\Product\CartRepositoryInterface;
 use App\Constants\CommonConstant;
+use Auth;
 
 
 class CartItemController extends Controller
@@ -31,16 +32,22 @@ class CartItemController extends Controller
      */
     public function getViewCart() 
     {   
-        $cartItems = $this->cartItemRepo->getAll();
-        
-        if (!$cartItems || null === $cartItems) {
-            return redirect()->back();
-        }
+        $user = Auth::guard('user')->user();
+        if(null == $user){
+            return redirect()
+                ->route('shop.login');
+        } else {
+            $cartItems = $this->cartItemRepo->getCartById($user->id);
 
-        return view('shop.cart',[
-            'cartItems' => $cartItems,
-            'msg' => session()->get(CommonConstant::MSG) ?? null
-        ]);
+            if (!$cartItems || null === $cartItems) {
+                return redirect()->back();
+            }
+
+            return view('shop.cart',[
+                'cartItems' => $cartItems,
+                'msg' => session()->get(CommonConstant::MSG) ?? null
+            ]);
+        }  
     }
 
 
@@ -84,8 +91,7 @@ class CartItemController extends Controller
 
         if($cartItemUpdate){
             return 'true';
-        }
-        else {
+        } else {
             return 'false';
         }
     }

@@ -24,16 +24,16 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
         return $productDetail;
     }
     
-    public function getProductDetailID($productID, $color, $size)
+    public function getProductDetailAll($productID, $color, $size)
     {
         $productDetail = $this->model->where('product_id', $productID)
             ->where('color', $color)
             ->where('size', $size)
             ->first();
 
-        $productDetailID = $productDetail->id;
+        $productDetail;
 
-        return $productDetailID;
+        return $productDetail;
     }
 
     public function getSizeColor($productID)
@@ -54,30 +54,5 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
            'sizeUnique' => $sizeUnique, 
            'colorUnique' => $colorUnique
         ];
-    }
-
-
-    public function getProductDetailPrice($productID, $color, $size)
-    {
-        $productDetail = $this->model->where('product_id', $productID)
-            ->where('color', $color)
-            ->where('size', $size)
-            ->first();
-        
-        $productDetailPrice = $productDetail->price;
-
-        return $productDetailPrice;
-    }
-
-    public function getStorage($productID, $color, $size)
-    {
-        $productDetail = $this->model->where('product_id', $productID)
-            ->where('color', $color)
-            ->where('size', $size)
-            ->first();
-
-        $productDetailStorage = $productDetail->storage;
-
-        return $productDetailStorage;
-    }
+    }  
 }

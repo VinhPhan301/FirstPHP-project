@@ -2,7 +2,6 @@
 namespace App\Repositories\Product;
 use App\Models\ProductDetail;
 use App\Models\Cart;
-
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\CartItemRepositoryInterface;
 
@@ -13,6 +12,7 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryInt
     {
         return \App\Models\CartItem::class;
     }
+
 
     public function updateOrCreate($itemData, $productDetailStorage)
     {
@@ -26,22 +26,36 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryInt
 
             return 'true';
         } else {
-            // $id = $cartItem->id;
-            // $quantity = $cartItem->quantity;
             $newQuantity = $itemData['quantity'] + $cartItem->quantity;
 
             if ($newQuantity <= $productDetailStorage){
-                // $newItemDate = [
-                //     'quantity' => $newQuantity,
-                // ];
                 $this->update($cartItem->id, ['quantity' => $newQuantity]);
 
                 return 'true';
             } else {
-                $leftQuantity = $productDetailStorage - $quantity;
-
+                $leftQuantity = $productDetailStorage - $cartItem->quantity;
+    
                 return $leftQuantity;
             }  
         }
+    }
+
+
+    public function getCartById($id) 
+    {
+        $cart = Cart::where('user_id', $id)
+            ->where('status', 'active')
+            ->first();
+        if(null == $cart) {
+
+            return null;
+        } else {
+            $cartItems = $this->model
+            ->where('cart_id',$cart->id)
+            ->get();
+     
+            return $cartItems;
+        }
+        
     }
 }

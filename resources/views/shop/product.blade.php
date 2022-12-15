@@ -47,7 +47,7 @@
                 <p><i class="fa-solid fa-check"></i><span>Fresship toàn bộ đơn hàng</span></p>
                 <p><i class="fa-solid fa-check"></i><span>Đổi trả miễn phí trong vòng 30 ngày kể từ ngày mua</span></p>
                 <div class='to_cart'>Thêm vào giỏ</div>
-                <div class='buy_now'><a >Mua ngay</a></div>
+                <div class='buy_now'>Mua ngay</div>
                 <div>
                     <i class="fa-regular fa-heart"></i>
                     <span>Thêm vào yêu thích</span>
@@ -96,6 +96,7 @@
 @section('script')
 <script>
     $('.detail_color').click(function(){
+        $('#limited_quantity').css('opacity', '0')
         $('.choose_quantity').text('1')
         $('#limited_storage').css('opacity', '0')  
         $('.undefined_color').css('display','none')
@@ -122,6 +123,7 @@
     })
 
     $('.detail_size').click(function(){
+        $('#limited_quantity').css('opacity', '0')
         $('.choose_quantity').text('1')
         $('#limited_storage').css('opacity', '0')  
         $('.undefined_size').css('display','none')
@@ -147,26 +149,52 @@
     })
 
     $('.more').click(function(){
-        var number = $(this).siblings('.choose_quantity').text()*1 + 1;
-        var storage = $('.product_storage').text()
-        if(number < storage) {
-            $(this).siblings('.choose_quantity').text(number);
-        }
-        else if (number = storage) {
-            $(this).siblings('.choose_quantity').text(storage);   
-            $('#limited_storage').css('opacity', '1')      
-        }
-        
-        
+        var size = $('.size_chosen').text();
+        var color = $('.color_chosen').text();
+        if (color === '') {
+
+            $('.undefined_color').css('display','inline')
+
+        } else if (size === '') {
+
+            $('.undefined_size').css('display','inline')
+
+        } else {
+
+            var number = $(this).siblings('.choose_quantity').text()*1 + 1;
+            var storage = $('.product_storage').text()
+
+            if(number < storage) {
+                $(this).siblings('.choose_quantity').text(number);
+            }
+            else if (number = storage) {
+                $(this).siblings('.choose_quantity').text(storage);   
+                $('#limited_storage').css('opacity', '1')      
+            }
+        }  
     })
 
     $('.less').click(function(){
-        var number = $(this).siblings('.choose_quantity').text()*1 - 1;
-        if (number < 1) {
-            $(this).siblings('.choose_quantity').text(1);
-        }
-        else {
-            $(this).siblings('.choose_quantity').text(number);
+        var size = $('.size_chosen').text();
+        var color = $('.color_chosen').text();
+
+        if (color === '') {
+
+            $('.undefined_color').css('display','inline')
+
+        } else if (size === '') {
+
+            $('.undefined_size').css('display','inline')
+
+        } else { 
+
+            var number = $(this).siblings('.choose_quantity').text()*1 - 1;
+            if (number < 1) {
+                $(this).siblings('.choose_quantity').text(1);
+            }
+            else {
+                $(this).siblings('.choose_quantity').text(number);
+            }
         }
     })
 
@@ -187,17 +215,23 @@
             $.get( '{{ route('cart.create') }}',
                 {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
                 function( data ) {
+                    console.log(data);
                     if ( data === 'false'){
+
                         $('#to_login').click()
-                    }
-                    else if ( data === 'true'){
+
+                    } else if ( data === 'true' || data === 'newcart' ){
+
                         $('.success_tocart').css('display','block')
 
                         setInterval(function() {
                             $('.success_tocart').slideUp();
                         },800)
-                    }
-                    else {
+                    } else if ( data === '0' ) {
+                        $('#limited_quantity').text('Đã hết số lượng trong kho');
+                        $('#limited_quantity').css('opacity', '1')
+
+                    } else {
                         $('#limited_quantity').css('opacity', '1')
                         $('#limited_quantity span').text(data)
                     }
@@ -224,10 +258,16 @@
                 {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
                 function( data ) {
                     if ( data === 'false'){
+
                         $('#to_login').click()
-                    }
-                    else {
+
+                    } else if ( data === 'true' || data === 'newcart'){
+
                         $('.fa-bag-shopping').click()
+                    } else {
+                        
+                        $('#limited_quantity').css('opacity', '1')
+                        $('#limited_quantity span').text(data)
                     }
                 }
             );

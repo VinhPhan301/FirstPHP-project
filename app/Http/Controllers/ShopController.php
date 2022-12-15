@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Product\UserRepositoryInterface;
+use App\Repositories\Product\CartItemRepositoryInterface;
 use App\Constants\CommonConstant;
 use Response;
 use Auth;
@@ -19,12 +20,17 @@ class ShopController extends Controller
     protected $productRepo;
     protected $productDetailRepo;
     protected $userRepo;
+    protected $cartItemRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo, ProductDetailRepositoryInterface $productDetailRepo, UserRepositoryInterface $userRepo)
+    public function __construct(ProductRepositoryInterface $productRepo, ProductDetailRepositoryInterface $productDetailRepo,
+    UserRepositoryInterface $userRepo,
+    CartItemRepositoryInterface $cartItemRepo)
+    
     {
         $this->productRepo = $productRepo;
         $this->productDetailRepo = $productDetailRepo;
         $this->userRepo = $userRepo;
+        $this->cartItemRepo = $cartItemRepo;
     }    
 
 
@@ -246,15 +252,57 @@ class ShopController extends Controller
             ->with(CommonConstant::MSG, UserConstant::MSG['logout_success']);
     }
 
+
+    /**
+     * Show user infor function
+     *
+     * @return void
+     */
     public function getViewUser()
     {
-        return view('shop.userinfor');
+        $user = Auth::guard('user')->user();
+
+        return view('shop.userinfor',[
+            'user' => $user
+        ]);
     }
 
-    public function getStorage($productID, $color, $size)
+
+
+    /**
+     * update User function
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
+    public function update(Request $request,$id)
     {
-        $productDetailStorage = $this->productDetailRepo->getStorage($productID, $color, $size);
+        $user = $this->userRepo->update($id, $request->toArray());
+        dd($user);
 
-        
     }
+
+    public function getViewCheckout()
+    {
+        $user = Auth::guard('user')->user();
+
+        if(null == $user){
+            return redirect()
+                ->route('shop.login');
+        } else {
+            $cartItems = $this->cartItemRepo->getCartById($user->id);
+
+            if (!$cartItems || null === $cartItems) {
+                return redirect()->back();
+            }
+
+            return view('shop.checkout',[
+                'user' => $user,
+                'cartItems' => $cartItems,
+                'msg' => session()->get(CommonConstant::MSG) ?? null
+            ]);
+        }
+    }
+    
 }

@@ -44,49 +44,46 @@ class CartController extends Controller
      */
     public function createCart(Request $request)
     {
-        $productID = $request->productID;
-        $color = $request->color;
-        $size = $request->size;
         $quantity = (int)$request->quantity;
 
-        $productDetailID = $this->productDetailRepo->getProductDetailID($productID, $color, $size);
-        $productDetailPrice = $this->productDetailRepo->getProductDetailPrice($productID, $color, $size); // thua
-        $productDetailStorage = $this->productDetailRepo->getStorage($productID, $color, $size);
+        $productDetail = $this->productDetailRepo->getProductDetailAll($request->productID, $request->color, $request->size);
 
         $user = Auth::guard('user')->user();
+        if($user === null) {
 
-        if($userID === null) {
-            return false;
+            return 'false';
         } else {
-            $userID = $user->id;
-            $cartFound = $this->cartRepo->getCart($userID);
-
-            if(count($cartFound) == 0) {
+            $userId = $user->id;
+            $cartFound = $this->cartRepo->getCart($userId);
+            
+            if( null == $cartFound ) {
                 $data = [
-                    'user_id' => $userID,
+                    'user_id' => $userId,
                     'status' => 'active', //constant
                 ];
         
                 $cart = $this->cartRepo->create($data);
 
                 $itemData = [
-                    'productDetail_id' => $productDetailID,
+                    'productDetail_id' => $productDetail->id,
                     'quantity' => $quantity,
                     'cart_id' => $cart->id,
-                    'total_price' => $quantity * $productDetailPrice,
+                    'total_price' => $quantity * $productDetail->price,
                 ];
 
-                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetailStorage);
+                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetail->storage);
+
+                return 'newcart';
             } else {
-                $cartID = $cartFound->id;
+                $cartId = $cartFound->id;
 
                 $itemData = [
-                    'productDetail_id' => $productDetailID,
+                    'productDetail_id' => $productDetail->id,
                     'quantity' => $quantity,
                     'cart_id' => $cartId,
-                    'total_price' => $quantity * $productDetailPrice,
+                    'total_price' => $quantity * $productDetail->price,
                 ];
-                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetailStorage);
+                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetail->storage);
 
                 return $cartItem;
             }
@@ -102,17 +99,13 @@ class CartController extends Controller
      */
     public function getStorage(Request $request) 
     {
-        $color = $request->color;
-        $size = $request->size;
-        $productID = $request->productID;
-
-        $productDetailStorage = $this->productDetailRepo->getStorage($productID, $color, $size);
+        $productDetail = $this->productDetailRepo->getProductDetailAll($request->productID, $request->color, $request->size);
         
-        if (null !== $productDetailStorage){
-            return $productDetailStorage;
+        if (null !== $productDetail->storage){
+            return $productDetail->storage;
         }
         else {
-            return 'false';
+            return false;
         }
     }
 }

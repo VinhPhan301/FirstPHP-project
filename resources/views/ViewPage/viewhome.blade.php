@@ -36,7 +36,7 @@
                 <div id='user_action'>
                     <p class='undefind'><a href="{{ route('shop.login') }}"><span id='to_login'>Đăng nhập</span></a></p>
                     <p class='undefind'><a href="{{ route('shop.signup') }}">Đăng ký</a></p>
-                    <p class='logged'><a href="{{ route('shop.user') }}">Tài khoản</a></p>
+                    <p class='logged'><a href="{{ route('shop.user', ['id' => $user->id]) }}">Tài khoản</a></p>
                     <p class='logged'><a href='{{ route('shop.logout') }}'>Đăng xuất</a></p>
                 </div>
             </div>
