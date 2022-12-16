@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('productDetail_id')->constrained('product_details','id');
             $table->foreignId('order_id')->constrained('orders','id');
+            $table->foreignId('productDetail_id')->constrained('product_details','id');
             $table->integer('quantity');
-            $table->integer('sub_total');
+            $table->string('price');
+            $table->string('total_price');
             $table->timestamps();
         });
     }

@@ -175,6 +175,9 @@
     })
 
     $('.less').click(function(){
+        $('#limited_storage').css('opacity', '0')
+        $('#limited_quantity').css('opacity', '0')
+
         var size = $('.size_chosen').text();
         var color = $('.color_chosen').text();
 

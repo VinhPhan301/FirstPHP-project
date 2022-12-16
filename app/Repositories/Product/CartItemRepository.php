@@ -46,8 +46,8 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryInt
         $cart = Cart::where('user_id', $id)
             ->where('status', 'active')
             ->first();
-        if(null == $cart) {
-
+        if(null === $cart) {
+            
             return null;
         } else {
             $cartItems = $this->model
@@ -56,6 +56,5 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryInt
      
             return $cartItems;
         }
-        
     }
 }

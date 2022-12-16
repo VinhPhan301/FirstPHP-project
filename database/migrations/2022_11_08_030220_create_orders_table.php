@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('phone');
             $table->integer('total');
             $table->string('status');
+            $table->string('payment_method');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

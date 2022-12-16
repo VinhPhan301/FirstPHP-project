@@ -12,6 +12,7 @@
         <input type="password" placeholder="Vui lòng nhập mật khẩu" name="password">
         <span class="opacity">1</span>
         <button type="submit">Đăng nhập</button>
+        <button><a href="{{ route('shop.signup') }}">Đăng ký</a></button>
         <p class='agree'>Bằng việc chọn đăng nhập, bạn đã đồng ý với 
             <span>Điều khoản & Điều kiện</span> cùng 
             <span>Chính sách bảo mật và chia sẻ thông tin</span> 

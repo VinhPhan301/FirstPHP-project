@@ -16,7 +16,8 @@
                 <p><i class="fa-solid fa-truck-fast"></i></p>
                 <p>Miễn phí vận chuyển toàn bộ đơn hàng</p>
             </div>
-            <h3><span>( {{ count($cartItems) }} )</span> sản phẩm</h3>
+            <h3 class="show_cart_number">( <span class='cartItem_number'>{{ count($cartItems) }}</span> ) sản phẩm</h3>
+            <img class='emptycart' src="{{ asset('picture/emptycart2.png') }}" alt="">
             <div class="cart_body_table" id='cart_body_table'>
                 <table>
                     <thead>
@@ -70,7 +71,7 @@
                             </td>
                             <td class='cart_product_price total_paid'>
                                 <span class='cart_total_price'>{{ $cartItem->total_price }}</span>
-                                {{ number_format($cartItem->total_price,0,'.','.')}} đ
+                                {{ number_format($cartItem->total_price,0,'.','.') }} đ
                             </td>
                             <td class='productDetail_storage{{ $cartItem->id }}' style='display:none'>
                                 {{ $cartItem->productDetail->storage }}
@@ -79,7 +80,7 @@
                                 <i class="fa-regular fa-circle-xmark"></i>
                             </td>
                         </tr>
-                        @endforeach                        
+                        @endforeach    
                     </tbody>
                 </table>
             </div>
@@ -109,6 +110,19 @@
 @endsection
 @section('script')
 <script>
+    var cartItemNumber = $('.cartItem_number').text();
+
+    if( cartItemNumber === '0' ){
+        $('.cart_body_table').css('display', 'none');
+        $('.show_cart_number').css('display', 'none');
+        $('.emptycart').css('display', 'block');
+    } else {
+        $('.cart_body_table').css('display', 'block');
+        $('.show_cart_number').css('display', 'block');
+        $('.emptycart').css('display', 'none');
+    }
+
+
     function plus(id){
         var productDetailPrice = $(`.single_price${id}`).text()
         var quantity = $(`.total_number${id}`).text()*1 + 1
@@ -170,6 +184,9 @@
             function( data ) {
                 if ( data === 'true'){
                     $('#cart_body_table').load('{{ route('cartItem.view') }} #cart_body_table');
+                    $('.cartItem_number').load('{{ route('cartItem.view') }} .cartItem_number');
+                    $('.change_price').load('{{ route('cartItem.view') }} .change_price');
+                    $('.change_total_price').load('{{ route('cartItem.view') }} .change_total_price');
                 }
                 else {
                     console.log('false');

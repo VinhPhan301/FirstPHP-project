@@ -7,6 +7,7 @@ use App\Repositories\Product\ProductDetailRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Product\UserRepositoryInterface;
 use App\Repositories\Product\CartItemRepositoryInterface;
+use App\Repositories\Product\OrderRepositoryInterface;
 use App\Constants\CommonConstant;
 use Response;
 use Auth;
@@ -21,16 +22,19 @@ class ShopController extends Controller
     protected $productDetailRepo;
     protected $userRepo;
     protected $cartItemRepo;
+    protected $orderRepo;
 
     public function __construct(ProductRepositoryInterface $productRepo, ProductDetailRepositoryInterface $productDetailRepo,
     UserRepositoryInterface $userRepo,
-    CartItemRepositoryInterface $cartItemRepo)
+    CartItemRepositoryInterface $cartItemRepo,
+    OrderRepositoryInterface $orderRepo)
     
     {
         $this->productRepo = $productRepo;
         $this->productDetailRepo = $productDetailRepo;
         $this->userRepo = $userRepo;
         $this->cartItemRepo = $cartItemRepo;
+        $this->orderRepo = $orderRepo;
     }    
 
 
@@ -261,9 +265,12 @@ class ShopController extends Controller
     public function getViewUser()
     {
         $user = Auth::guard('user')->user();
+        $orders = $this->orderRepo->getOrderByUserId($user->id);
 
         return view('shop.userinfor',[
-            'user' => $user
+            'orders' => $orders,
+            'user' => $user,
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -279,10 +286,19 @@ class ShopController extends Controller
     public function update(Request $request,$id)
     {
         $user = $this->userRepo->update($id, $request->toArray());
-        dd($user);
-
+        
+        return redirect()
+            ->route('shop.user',['id' => $user->id])
+            ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
     }
 
+
+
+    /**
+     * Show Checkout View function
+     *
+     * @return void
+     */
     public function getViewCheckout()
     {
         $user = Auth::guard('user')->user();
@@ -304,5 +320,4 @@ class ShopController extends Controller
             ]);
         }
     }
-    
 }

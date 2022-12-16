@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Product\CartRepository::class,
             \App\Repositories\Product\CartItemRepositoryInterface::class,
             \App\Repositories\Product\CartItemRepository::class,
+            \App\Repositories\Product\OrderRepositoryInterface::class,
+            \App\Repositories\Product\OrderRepository::class,
+            \App\Repositories\Product\OrderItemRepositoryInterface::class,
+            \App\Repositories\Product\OrderItemRepository::class,
         );
     }
 
@@ -41,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
         \App\Repositories\Product\ProductDetailRepositoryInterface::class =>  \App\Repositories\Product\ProductDetailRepository::class,
         \App\Repositories\Product\CartRepositoryInterface::class =>  \App\Repositories\Product\CartRepository::class,
         \App\Repositories\Product\CartItemRepositoryInterface::class =>  \App\Repositories\Product\CartItemRepository::class,
+        \App\Repositories\Product\OrderRepositoryInterface::class =>  \App\Repositories\Product\OrderRepository::class,
+        \App\Repositories\Product\OrderItemRepositoryInterface::class =>  \App\Repositories\Product\OrderItemRepository::class,
            
     ];
 
@@ -71,10 +77,18 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('*', function($view) {
             $user = auth()->guard('user')->user();
-
-            view()->share([
-                'user'=> $user
-            ]);
+            if(null !== $user) {
+                view()->share([
+                    'user'=> $user,
+                    'id' => $user->id
+                ]);
+            } else {
+                view()->share([
+                    'user'=> 'none',
+                    'id' => 0
+                ]);
+            }
+            
         });
     }
 }

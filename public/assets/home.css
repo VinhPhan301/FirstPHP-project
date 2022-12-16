@@ -151,9 +151,9 @@ p {
 }
 .signup_form_box form {
     width: 35%;
-    height: 100%;
+    /* height: 100%; */
     background: rgba(255, 255, 255);
-    padding: 20px 40px;
+    padding: 25px 35px;
     margin-left: 200px;
 }
 .signup_form_box form input {
@@ -163,6 +163,7 @@ p {
     width: 100%;
     padding: 5px 0px;
     font-size: 20px;
+    margin-bottom: 5px;
 }
 .signup_form_box form h2 {
     margin-bottom: 30px;
@@ -173,11 +174,20 @@ p {
 .signup_form_box form button {
     width: 100%;
     border: none;
-    background-color: #27313a;
+    background-color: rgb(12, 154, 255);
     color: white;
     font-weight: bold;
     font-size: 25px;
     padding: 10px 0px;
+}
+.signup_form_box form button:hover {
+    background-color: #27313a;
+}
+.signup_form_box form a {
+    display: block;
+    width: 100%;
+    color: white;
+    text-decoration: none;
 }
 .agree {
     font-size: 13px;
@@ -224,6 +234,7 @@ p {
     top: 5%;
     left: 37%;
     border-radius: 5px;
+    border: 1px solid rgb(32, 255, 32);
 }
 .view_msg div {
     display: flex;
@@ -232,6 +243,7 @@ p {
 }
 .view_msg div p:nth-child(1) {
     line-height: 52px;
+    font-size: 20px;
 }
 .view_msg div p:nth-child(2) {
     color: white;
@@ -636,17 +648,17 @@ p {
 }
 .detail_color {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 29px;
+    height: 29px;
     border-radius: 50%;
-    border: 2.5px solid rgb(206, 206, 206);
+    border: 3.5px solid rgb(206, 206, 206);
     margin-right: 5px;
     font-size: 1px;
     text-align: center;
 }
 .detail_color:hover {
     cursor: pointer;
-    border: 2.5px solid black;
+    border: 3.5px solid black;
 }
 .detail_size {
     display: inline-block;
@@ -761,7 +773,7 @@ p {
     color: white;
 }
 .color_chosen {
-    border: 2.5px solid black;
+    border: 3.5px solid black;
 }
 .undefined_color,
 .undefined_size {
@@ -902,19 +914,19 @@ p {
 }
 .cart_body_left {
     width: 70%;
-    background: #f9f9f9;
+    background: #f7f7f7;
     padding: 30px 40px;
 }
 .cart_body_right {
     width: 29%;
-    background: #f9f9f9;
+    background: #f7f7f7;
 }
 .freeship {
     display: flex;
     justify-content: space-between;
     width: 40%;
     background: white;
-    box-shadow: 2px 5px 5px 1px rgb(184, 184, 184);
+    box-shadow: 3px 3px 3px 3px rgb(227, 227, 227);
     padding: 10px 20px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -1098,12 +1110,16 @@ table {
     font-size: 20px;
     margin: 0 5px;
 }
+.emptycart {
+    width: 65%;
+    margin: 0 auto;
+}
 /**************************************** End Shop Cart CSS ******************************/
 
 /**************************************** Start User Infor CSS ******************************/
 .user_box {
     width: 100%;
-    padding: 40px 40px;
+    padding: 40px 50px;
     display: flex;
     justify-content: space-between;
 }
@@ -1111,7 +1127,7 @@ table {
     font-weight: bold;
 }
 .user_box_left {
-    width: 25%;
+    width: 30%;
     box-shadow: 0px 0px 3px 3px rgb(232, 232, 232);
 }
 .user_name {
@@ -1175,6 +1191,12 @@ table {
     font-weight: bold;
     color: black;
 }
+.user_action a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
 .user_support {
     text-align: center;
     padding: 15px 20px;
@@ -1187,18 +1209,22 @@ table {
     font-size: 13px;
 }
 .user_box_right {
-    width: 70%;
+    width: 65%;
 }
-.user_box_right div {
+.user_box_right form {
+    width: 100%;
+    display: none;
+}
+.user_box_right form div {
     padding: 10px 20px 0px 15px;
     border: 1px solid rgb(56, 192, 255);
     width: 60%;
     margin-bottom: 30px;
 }
-.user_box_right div p {
+.user_box_right form div p {
     font-size: 13px;
 }
-.user_box_right div input {
+.user_box_right form div input {
     border: none;
     width: 100%;
     outline: none;
@@ -1206,7 +1232,7 @@ table {
     font-weight: bold;
     font-size: 18px;
 }
-.user_box_right button {
+.user_box_right form button {
     width: 60%;
     color: white;
     background-color: rgb(56, 192, 255);
@@ -1215,9 +1241,49 @@ table {
     font-weight: bold;
     margin-top: 10px;
 }
-.user_box_right button:hover {
+.user_box_right form button:hover {
     cursor: pointer;
     background: #da291c;
+}
+.userAction1 {
+    width: 100%;
+    box-shadow: 0px 0px 3px 3px rgb(232 232 232);
+    height: 100%;
+    /* display: none; */
+}
+.order_status {
+    display: flex;
+    justify-content: space-around;
+    font-size: 17px;
+    font-weight: bold;
+}
+.order_status p {
+    width: 14%;
+    text-align: center;
+    padding: 10px 0px;
+    border-bottom: 4px solid white;
+}
+.order_status p:hover {
+    border-bottom: 4px solid rgb(56, 192, 255);
+    cursor: pointer;
+}
+.order_content {
+    width: 100%;
+}
+.order_content table {
+    width: 100%;
+    margin-top: 10px;
+}
+.order_content table th {
+    background: #333f48;
+    color: white;
+    padding: 10px 20px;
+    font-size: 15px;
+    text-align: center;
+}
+.order_content table td {
+    text-align: center;
+    padding: 8px 20px;
 }
 /**************************************** End User Infor CSS ******************************/
 
@@ -1225,9 +1291,11 @@ table {
 
 .checkout_container {
     width: 100%;
+    padding: 30px 40px;
+}
+.checkout_container form {
     display: flex;
     justify-content: space-between;
-    padding: 30px 40px;
 }
 .checkout_left {
     width: 68%;
@@ -1242,6 +1310,7 @@ table {
 }
 .order_infor a {
     color: black;
+    text-decoration: none;
 }
 .order_infor a:hover {
     color: rgb(56, 192, 255);
@@ -1256,10 +1325,15 @@ table {
     padding: 5px 10px;
     margin-bottom: 20px;
 }
+.order_infor_input p {
+    font-size: 15px;
+}
 .order_infor_input input {
     border: none;
     outline: none;
     width: 100%;
+    font-weight: bold;
+    font-size: 20px;
 }
 .checkout_left_top {
     padding-bottom: 20px;
@@ -1390,5 +1464,8 @@ table {
     cursor: pointer;
     background: #333f48;
     font-weight: bold;
+}
+#payment_method_input {
+    display: none;
 }
 /**************************************** End Checkout CSS ******************************/

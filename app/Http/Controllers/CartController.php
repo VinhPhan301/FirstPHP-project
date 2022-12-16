@@ -53,12 +53,11 @@ class CartController extends Controller
 
             return 'false';
         } else {
-            $userId = $user->id;
-            $cartFound = $this->cartRepo->getCart($userId);
+            $cartFound = $this->cartRepo->getCart($user->id);
             
             if( null == $cartFound ) {
                 $data = [
-                    'user_id' => $userId,
+                    'user_id' => $user->id,
                     'status' => 'active', //constant
                 ];
         
@@ -68,6 +67,7 @@ class CartController extends Controller
                     'productDetail_id' => $productDetail->id,
                     'quantity' => $quantity,
                     'cart_id' => $cart->id,
+                    'price' => $productDetail->price,
                     'total_price' => $quantity * $productDetail->price,
                 ];
 
@@ -81,6 +81,7 @@ class CartController extends Controller
                     'productDetail_id' => $productDetail->id,
                     'quantity' => $quantity,
                     'cart_id' => $cartId,
+                    'price' => $productDetail->price,
                     'total_price' => $quantity * $productDetail->price,
                 ];
                 $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetail->storage);

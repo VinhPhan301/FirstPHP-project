@@ -40,7 +40,9 @@ class CartItemController extends Controller
             $cartItems = $this->cartItemRepo->getCartById($user->id);
 
             if (!$cartItems || null === $cartItems) {
-                return redirect()->back();
+                return redirect()
+                    ->back()
+                    ->with(CommonConstant::MSG, 'Không có sản phẩm trong giỏ');
             }
 
             return view('shop.cart',[

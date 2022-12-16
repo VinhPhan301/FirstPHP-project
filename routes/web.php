@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckLogin;
 
@@ -117,6 +118,7 @@ Route::prefix('shop')->group(function () {
    Route::post('/user/{id}', [ShopController::class, 'update']);
 
    Route::get('/checkout', [ShopController::class, 'getViewCheckout'])->name('shop.checkout');
+   Route::post('/checkout', [OrderController::class, 'createOrder']);
 
 });
 
