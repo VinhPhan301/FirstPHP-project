@@ -29,7 +29,7 @@ class ProductDetailController extends Controller
     {
         $productDetail = $this->productDetailRepo->getProductDetail($id);
         $product = $this->productRepo->find($id);
-
+        
         if (!$productDetail || null === $productDetail) {
             return redirect()
                 ->route('product.list')
@@ -91,16 +91,17 @@ class ProductDetailController extends Controller
      */
     public function delete($id)
     {
+        $productId = $this->productDetailRepo->find($id)->product_id;
         $productDetail = $this->productDetailRepo->delete($id);
 
         if (!$productDetail || null === $productDetail) {
             return redirect()
-            ->route('productDetail.list',['id' => $id])
+            ->route('productDetail.list',['id' => $productId])
             ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
       }
         
         return redirect()
-            ->route('productDetail.list',['id' => $id])
+            ->route('productDetail.list',['id' => $productId])
             ->with(CommonConstant::MSG, ProductConstant::MSG['delete_success']);
     }
 
@@ -115,7 +116,6 @@ class ProductDetailController extends Controller
     {
         $productDetail = $this->productDetailRepo->find($id);
         $product = $this->productRepo->find($productDetail->product_id);
-
         if (! $productDetail || null == $productDetail) { 
             return redirect()
                 ->route('productDetail.list',['id' => $id])
@@ -148,7 +148,7 @@ class ProductDetailController extends Controller
         }
         
         return redirect()
-            ->route('productDetail.list',['id' => $id])
+            ->route('productDetail.list',['id' => $productDetail->product_id])
             ->with(CommonConstant::MSG, ProductConstant::MSG['update_success']);
     }
 

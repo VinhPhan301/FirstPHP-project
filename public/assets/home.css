@@ -653,8 +653,8 @@ p {
     border-radius: 50%;
     border: 3.5px solid rgb(206, 206, 206);
     margin-right: 5px;
-    font-size: 1px;
-    text-align: center;
+    background-position: center !important;
+    font-size: 0;
 }
 .detail_color:hover {
     cursor: pointer;
@@ -742,6 +742,7 @@ p {
 }
 .related_box img {
     width: 100%;
+    border-radius: 10px;
 }
 .related_box a:nth-child(2) {
     color: black;
@@ -766,6 +767,9 @@ p {
 }
 .related_box:hover .see_detail {
     display: block;
+}
+.related_box:hover .related_name {
+    text-decoration: underline;
 }
 .size_chosen {
     background: black;
@@ -1001,15 +1005,27 @@ table {
     background: #333f48;
     margin-top: 30px;
 }
-.order a {
+.order a,
+#cannot_order,
+#cannot_order2 {
     display: block;
     width: 100%;
     height: 100%;
     padding: 10px 0px;
     color: white;
     text-decoration: none;
+    background: #333f48;
+    text-align: center;
 }
-.order:hover {
+#cannot_order2 {
+    display: none;
+}
+#cannot_order:hover,
+#cannot_order2:hover {
+    background: grey;
+    cursor: no-drop;
+}
+.order a:hover {
     font-weight: bold;
     background: black;
     cursor: pointer;
@@ -1047,6 +1063,7 @@ table {
     width: 24px;
     border-radius: 50%;
     border: 3px solid rgb(193, 193, 193);
+    background-position: center !important;
 }
 .cart_size_color div {
     display: flex;
@@ -1209,11 +1226,10 @@ table {
     font-size: 13px;
 }
 .user_box_right {
-    width: 65%;
+    width: 67%;
 }
 .user_box_right form {
     width: 100%;
-    display: none;
 }
 .user_box_right form div {
     padding: 10px 20px 0px 15px;
@@ -1245,34 +1261,41 @@ table {
     cursor: pointer;
     background: #da291c;
 }
-.userAction1 {
+.order_view {
     width: 100%;
     box-shadow: 0px 0px 3px 3px rgb(232 232 232);
     height: 100%;
-    /* display: none; */
+    display: flex;
+    /* border-left: 1px solid black; */
 }
 .order_status {
-    display: flex;
-    justify-content: space-around;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: bold;
+    width: 10%;
+    padding-top: 42.5px;
+    /* background: #313e49; */
+    background: linear-gradient(0deg, #63b1bc 90%, #313e49 10%);
 }
 .order_status p {
-    width: 14%;
+    width: 100%;
+    height: 20%;
     text-align: center;
-    padding: 10px 0px;
-    border-bottom: 4px solid white;
+    color: white;
+    line-height: 96.8px;
+    background: #63b1bc;
 }
 .order_status p:hover {
-    border-bottom: 4px solid rgb(56, 192, 255);
     cursor: pointer;
+    background-color: #557189;
+}
+.order_status_chosen {
+    background: #557189 !important;
 }
 .order_content {
     width: 100%;
 }
 .order_content table {
     width: 100%;
-    margin-top: 10px;
 }
 .order_content table th {
     background: #333f48;
@@ -1283,7 +1306,193 @@ table {
 }
 .order_content table td {
     text-align: center;
-    padding: 8px 20px;
+    padding: 10px 20px;
+}
+.order_cancelRequest_row td:nth-child(5),
+.order_cancelRequest_row td:nth-child(2) {
+    font-weight: bold;
+    color: red;
+}
+.order_active_row td:nth-child(2),
+.order_active_row td:nth-child(5) {
+    color: rgb(0, 140, 255);
+    font-weight: bold;
+}
+.order_cancel_row {
+    background: rgb(255, 18, 18);
+    color: white;
+    font-weight: bold;
+}
+.order_complete_row td {
+    color: rgb(0, 206, 0);
+    font-weight: bold;
+}
+.order_delivering_row td:nth-child(2),
+.order_delivering_row td:nth-child(5) {
+    color: rgb(255, 117, 32);
+    font-weight: bold;
+}
+.can_cancel,
+.can_receive {
+    padding: 3px 0px;
+}
+.can_cancel {
+    background: rgb(70, 196, 255);
+    color: white;
+    border-radius: 4px;
+}
+.can_receive {
+    background: rgb(15, 255, 39);
+    color: white;
+    border-radius: 4px;
+}
+.can_receive:hover {
+    background: rgb(0, 80, 0);
+    font-weight: bold;
+    cursor: pointer;
+}
+.cannot_cancel {
+    opacity: 0;
+}
+.can_cancel:hover {
+    background: #333f48;
+    font-weight: bold;
+    cursor: pointer;
+}
+.confirm_cancel {
+    background: #63b1bc;
+    position: fixed;
+    z-index: 30;
+    top: 25%;
+    padding: 20px 30px;
+    color: white;
+    display: none;
+}
+.confirm_cancel h3:nth-child(1) {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.confirm_cancel h3:nth-child(2) {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.box_reason input {
+    margin-right: 5px;
+}
+.input_note {
+    width: 100%;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 17px;
+    margin: 10px 0px 20px 0px;
+}
+input[type="checkbox" i] {
+    cursor: pointer;
+}
+.cancel_button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.cancel_button button {
+    padding: 7px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #27313a;
+    color: white;
+}
+.cancel_button button:nth-child(1):hover {
+    background: red;
+    font-weight: bold;
+}
+.cancel_button button:nth-child(2):hover {
+    background: green;
+    font-weight: bold;
+}
+.hiden_orderId,
+.hiden_cancel_orderId {
+    display: none;
+}
+.show_orderItem {
+    width: 56.9%;
+    height: 442px;
+    position: absolute;
+    background: white;
+    top: 33%;
+    display: none;
+    border-bottom: 5px solid #333f48;
+}
+#order_father:hover {
+    background: #cad2d9;
+    cursor: pointer;
+}
+.show_orderItem_header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.show_orderItem_header p {
+    width: 20%;
+    text-align: center;
+    padding: 15px 0px;
+    font-weight: bold;
+    border-bottom: 2px solid #63b1bc;
+}
+.orderItem_big_picture {
+    width: 65px;
+    height: 75px;
+}
+.orderItem_small_picture {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-position: center !important;
+}
+.show_orderItem_item {
+    width: 83%;
+    font-weight: bold;
+    height: 310px;
+    overflow-y: scroll;
+}
+.show_orderItem_item::-webkit-scrollbar {
+    display: none;
+}
+.show_orderItem_item_div div {
+    width: 20%;
+    text-align: center;
+}
+.show_orderItem_item_div {
+    border: 2px solid #63b1bc;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.orderItem_detail {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333f48;
+    padding: 15px 10px;
+}
+.vertical_center {
+    padding-top: 15px;
+}
+.vertical_center a {
+    color: black;
+    text-decoration: none;
+}
+.vertical_center a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.backto_order:hover {
+    cursor: pointer;
+    color: #63b1bc;
+    font-weight: bold;
 }
 /**************************************** End User Infor CSS ******************************/
 

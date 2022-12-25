@@ -32,6 +32,5 @@ class Kernel extends ConsoleKernel
 
     protected $routeMiddleware = [
         'checkrole' => \Illuminate\Auth\Middleware\CheckRole::class,
-
     ]; 
 }

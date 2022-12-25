@@ -6,7 +6,8 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('assets/user.css') }}">
-    <title>Document</title>
+    <link rel = "icon" href ="{{ asset("picture/favicon-16x16.ico") }}" type = "image/x-icon">
+    <title>CNF ADMIN</title>
 </head>
 <header>
     <div class='headerleft'>
@@ -73,13 +74,13 @@
                 <p class="about">Something about me and my life</p>
             </div>
             <div class="dashbar">
-                <h1>DASHBOARDS</h1>
+                <h1>Trang chủ</h1>
             </div>
             <div class='actions'>
                 <div class="actionicon">
                     <div class="fatherlist">
                         <p><i class="fa-regular fa-clipboard"></i></p>
-                        <p>User Action</p>
+                        <p>Tài khoản</p>
                     </div>
                     <div class='childlist'>
                         <ul>
@@ -87,7 +88,7 @@
                                 <a href="{{ route('user.list') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
-                                    User List
+                                    Danh sách
                                     </span>
                                 </a>
                             </li>
@@ -95,7 +96,7 @@
                                 <a href="{{ route('user.create') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
-                                    User Create
+                                    Tạo mới
                                     </span>
                                 </a>
                             </li>
@@ -113,7 +114,7 @@
                 <div class="actionicon">
                     <div class="fatherlist">
                         <p><i class="fa-regular fa-clipboard"></i></p>
-                        <p>Cate Action</p>
+                        <p>Danh mục</p>
                     </div>
                     <div class='childlist'>
                         <ul>
@@ -121,7 +122,7 @@
                                 <a href="{{ route('category.list') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
-                                    Cate List
+                                    Danh sách
                                     </span>
                                 </a>
                             </li>
@@ -129,7 +130,7 @@
                                 <a href="{{ route('category.create') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
-                                    Cate Create
+                                    Thêm mới
                                     </span>
                                 </a>
                             </li>
@@ -148,7 +149,7 @@
                 <div class="actionicon">
                     <div class="fatherlist">
                         <p><i class="fa-regular fa-clipboard"></i></p>
-                        <p>Product Action</p>
+                        <p>Sản phẩm</p>
                     </div>
                     <div class='childlist'>
                         <ul>
@@ -156,7 +157,7 @@
                                 <a href="{{ route('product.list') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
-                                    Product List
+                                    Danh sách
                                     </span>
                                 </a>
                             </li>
@@ -164,7 +165,7 @@
                                 <a href="{{ route('product.create') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
-                                    Product Create
+                                    Thêm mới
                                     </span>
                                 </a>
                             </li>
@@ -186,10 +187,12 @@
             </div>
             <div class='actions'>
                 <div class="actionicon">
-                    <div class="fatherlist">
-                        <p><i class="fa-regular fa-clipboard"></i></p>
-                        <p>Income Money</p>
-                    </div>
+                    <a href="{{ route('order.list') }}">
+                        <div class="fatherlist">
+                            <p><i class="fa-regular fa-clipboard"></i></p>
+                            <p>Đơn hàng</p>
+                        </div>
+                    </a>
                 </div>   
                 <div class="actionicon">
                     <div class="fatherlist">

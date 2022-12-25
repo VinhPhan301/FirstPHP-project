@@ -15,9 +15,10 @@ class CartController extends Controller
     protected $cartItemRepo;
     protected $productDetailRepo;
 
-    public function __construct(CartRepositoryInterface $cartRepo,
-     CartItemRepositoryInterface $cartItemRepo,
-     ProductDetailRepositoryInterface $productDetailRepo
+    public function __construct(
+        CartRepositoryInterface $cartRepo,
+        CartItemRepositoryInterface $cartItemRepo,
+        ProductDetailRepositoryInterface $productDetailRepo
      )
     {
         $this->cartRepo = $cartRepo;
@@ -25,17 +26,8 @@ class CartController extends Controller
         $this->productDetailRepo = $productDetailRepo;
     }
 
-    /**
-     * Shop Cart function
-     *
-     * @return View
-     */
-    public function getViewCart() : View
-    {  
-        return view('shop.cart');
-    }
 
-
+    
     /**
      * Create Cart and CartItem function
      *
@@ -45,50 +37,43 @@ class CartController extends Controller
     public function createCart(Request $request)
     {
         $quantity = (int)$request->quantity;
-
         $productDetail = $this->productDetailRepo->getProductDetailAll($request->productID, $request->color, $request->size);
-
         $user = Auth::guard('user')->user();
+
         if($user === null) {
-
             return 'false';
-        } else {
-            $cartFound = $this->cartRepo->getCart($user->id);
-            
-            if( null == $cartFound ) {
-                $data = [
-                    'user_id' => $user->id,
-                    'status' => 'active', //constant
-                ];
-        
-                $cart = $this->cartRepo->create($data);
+        }
+        $cartFound = $this->cartRepo->getCart($user->id);
+        if(null == $cartFound) {
+            $data = [
+                'user_id' => $user->id,
+                'status' => 'active', //constant
+            ];
+            $cart = $this->cartRepo->create($data);
+            $itemData = [
+                'productDetail_id' => $productDetail->id,
+                'quantity' => $quantity,
+                'cart_id' => $cart->id,
+                'price' => $productDetail->price,
+                'total_price' => $quantity * $productDetail->price,
+            ];
+            $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetail->storage);
 
-                $itemData = [
-                    'productDetail_id' => $productDetail->id,
-                    'quantity' => $quantity,
-                    'cart_id' => $cart->id,
-                    'price' => $productDetail->price,
-                    'total_price' => $quantity * $productDetail->price,
-                ];
+            return 'newcart';
+        }
 
-                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetail->storage);
+        $cartId = $cartFound->id;
 
-                return 'newcart';
-            } else {
-                $cartId = $cartFound->id;
+        $itemData = [
+            'productDetail_id' => $productDetail->id,
+            'quantity' => $quantity,
+            'cart_id' => $cartId,
+            'price' => $productDetail->price,
+            'total_price' => $quantity * $productDetail->price,
+        ];
+        $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetail->storage);
 
-                $itemData = [
-                    'productDetail_id' => $productDetail->id,
-                    'quantity' => $quantity,
-                    'cart_id' => $cartId,
-                    'price' => $productDetail->price,
-                    'total_price' => $quantity * $productDetail->price,
-                ];
-                $cartItem = $this->cartItemRepo->updateOrCreate($itemData, $productDetail->storage);
-
-                return $cartItem;
-            }
-        }      
+        return $cartItem;
     }
 
 
@@ -105,8 +90,7 @@ class CartController extends Controller
         if (null !== $productDetail->storage){
             return $productDetail->storage;
         }
-        else {
-            return false;
-        }
+        
+        return false;
     }
 }

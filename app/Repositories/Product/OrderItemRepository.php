@@ -11,4 +11,12 @@ class OrderItemRepository extends BaseRepository implements OrderItemRepositoryI
         return \App\Models\OrderItem::class;
     }
 
+    public function getOrderItemByOrderId($orderId)
+    {
+        $orderItems = $this->model
+            ->where('order_id', $orderId)
+            ->get();
+
+        return $orderItems;
+    }
 }

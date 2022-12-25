@@ -19,12 +19,12 @@
             <div class='top_infor'>
                 <h3>{{ $product->name }}</h3>
                 <p>Mã sản phẩm: <span class="product_id">{{ $product->id}}</span></p>
-                <h3>{{ number_format($product->price,0,'.','.') }}đ</h3>
+                <h3>{{ number_format($product->price,0,'.','.') }} đ</h3>
             </div>
             <div class='mid_infor'>
                 <p>Màu sắc: <span class='undefined_color'>Vui lòng chọn màu</span></p>
-                @foreach ($detailColor as $color)
-                    <span class="detail_color" style="background:{{ $color }}; color:{{ $color }}">{{ $color }}</span>
+                @foreach ($detailThumbnail as $thumbnail)
+                    <span class="detail_color" style="background: url('{{ asset("picture/$thumbnail") }}')">{{ $thumbnail }}</span>
                 @endforeach
                 <p>Kích cỡ: <span class='undefined_size'>Vui lòng chọn kích cỡ</span></p>
                 @foreach ($detailSize as $size)
@@ -80,7 +80,7 @@
                     <img src="{{ asset("picture/$relatedProduct->image") }}" >
                     <div class='name_price'>
                         <p class='related_name'>{{ $relatedProduct->name }}</p>
-                        <p class='related_price'>{{ $relatedProduct->price }}$</p>
+                        <p class='related_price'>{{ number_format($relatedProduct->price,0,'.','.') }} đ</p>
                     </div>
                 </a>
             </div>
@@ -219,7 +219,7 @@
                 {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
                 function( data ) {
                     console.log(data);
-                    if ( data === 'false'){
+                    if ( data === 'false') {
 
                         $('#to_login').click()
 

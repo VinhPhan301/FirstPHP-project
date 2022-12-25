@@ -49,7 +49,7 @@
                                         <div>
                                             <p>{{ $cartItem->productDetail->size }}</p>
                                             <p>/</p>
-                                            <p class='cart_color' style="background:{{ $cartItem->productDetail->color }}"></p>
+                                            <p class='cart_color' style="background: url('{{ asset("picture/$thumbnail") }}')"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,14 @@
                     <span>Tổng tiền thanh toán</span>
                     <span class='change_total_price'>{{ number_format($sumTotalPrice,0,'.','.') }} đ</span>
                 </p>
-                <p class="order"><a href="{{ route('shop.checkout') }}">ĐẶT HÀNG</a></p>
+                <p class="order">
+                    @if($cartItemNumber == 0)
+                    <p id='cannot_order'>KHÔNG CÓ SẢN PHẨM</p>
+                    @else
+                    <a class="can_order" href="{{ route('shop.checkout') }}">ĐẶT HÀNG</a>
+                    <p id='cannot_order2'>KHÔNG CÓ SẢN PHẨM</p>
+                    @endif
+                </p>
             </div>
             <div class='cart_right_bottom'>
                 <p>Chúng tôi chấp nhận thanh toán:</p>
@@ -174,6 +181,8 @@
         }
         else {
             deleteCartItem(id)
+            $(".can_order").css('display', 'none')
+            $("#cannot_order2").css('display', 'block')
         }
         
     }
@@ -187,12 +196,14 @@
                     $('.cartItem_number').load('{{ route('cartItem.view') }} .cartItem_number');
                     $('.change_price').load('{{ route('cartItem.view') }} .change_price');
                     $('.change_total_price').load('{{ route('cartItem.view') }} .change_total_price');
+                    $(".can_order").css('display', 'none')
+                    $("#cannot_order2").css('display', 'block')     
                 }
                 else {
                     console.log('false');
                 }
             }
-        );
+        )
     }
 </script>
 @endsection

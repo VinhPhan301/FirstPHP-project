@@ -21,7 +21,7 @@
     </div>
     <div id='type{{ $type }}'>
         <div class="new_product" >
-            PRODUCT LIST
+            Danh sách sản phẩm
         </div>
         <div class="choose_product">
             @foreach($productList as $item)
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="new_product">
-        BEST SELLER
+        SẢN PHẨM BÁN CHẠY
     </div>
     <div class='product_slide'>
         <div class="left_slide">
@@ -76,7 +76,7 @@
         <img src="{{ asset('picture/banner5.webp') }}" alt="">
     </div>
     <div class="new_product">
-        FEATURED PRODUCTS
+        SẢN PHẨM NỔI BẬT
     </div>
     <div class='product_slide'>
         <div class="left_slide">

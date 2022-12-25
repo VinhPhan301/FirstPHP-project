@@ -16,9 +16,11 @@ class CartItemController extends Controller
     protected $productDetailRepo;
     protected $cartRepo;
 
-    public function __construct(CartItemRepositoryInterface $cartItemRepo,
-    ProductDetailRepositoryInterface $productDetailRepo,
-    CartRepositoryInterface $cartRepo)
+    public function __construct(
+        CartItemRepositoryInterface $cartItemRepo,
+        ProductDetailRepositoryInterface $productDetailRepo,
+        CartRepositoryInterface $cartRepo
+        )
     {
         $this->cartItemRepo = $cartItemRepo;
         $this->cartRepo = $cartRepo;
@@ -34,18 +36,19 @@ class CartItemController extends Controller
     {   
         $user = Auth::guard('user')->user();
         if(null == $user){
-            return redirect()
-                ->route('shop.login');
+
+            return redirect()->route('shop.login');
         } else {
             $cartItems = $this->cartItemRepo->getCartById($user->id);
-
             if (!$cartItems || null === $cartItems) {
+
                 return redirect()
                     ->back()
                     ->with(CommonConstant::MSG, 'Không có sản phẩm trong giỏ');
             }
 
             return view('shop.cart',[
+                'cartItemNumber' => count($cartItems),
                 'cartItems' => $cartItems,
                 'msg' => session()->get(CommonConstant::MSG) ?? null
             ]);

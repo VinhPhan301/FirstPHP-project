@@ -27,7 +27,7 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
     public function getProductDetailAll($productID, $color, $size)
     {
         $productDetail = $this->model->where('product_id', $productID)
-            ->where('color', $color)
+            ->where('thumbnail', $color)
             ->where('size', $size)
             ->first();
 
@@ -39,20 +39,20 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
     public function getSizeColor($productID)
     {
         $arrSize = [];
-        $arrColor = [];
+        $arrThumbnail = [];
         
         $productDetails = $this->model->where('product_id', $productID)->get();
 
         foreach ($productDetails as $productDetail){
             $arrSize[] = $productDetail->size;
-            $arrColor[] = $productDetail->color;
+            $arrThumbnail[] = $productDetail->thumbnail;
         }
         $sizeUnique = array_unique($arrSize);
-        $colorUnique = array_unique($arrColor);
+        $thumbnailUnique = array_unique($arrThumbnail);
 
         return [
            'sizeUnique' => $sizeUnique, 
-           'colorUnique' => $colorUnique
+           'thumbnailUnique' => $thumbnailUnique
         ];
     }  
 }

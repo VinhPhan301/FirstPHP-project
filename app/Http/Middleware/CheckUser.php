@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
-class CheckLogin
+class CheckUser
 {
     /**
      * Handle an incoming request.
@@ -18,12 +18,13 @@ class CheckLogin
     public function handle(Request $request, Closure $next)
     {
         if(Auth::guard('user')->check() == true){
-            // $role = Auth::guard('user')->user()->role;
-            // if( $role == 'admin' || $role == 'user'){}
-            return redirect('/');
+            $role = Auth::guard('user')->user()->role;
+            if( $role === 'user' ){
+                return $next($request);
+            }  
         }
         else{
-            return redirect('/login');
+            return redirect('user/login');
         }     
     }
 }

@@ -79,16 +79,17 @@
 header {
     width: 81.7%;
     border-radius: 10px;
-    background: black;
+    background: #27313a;
     font-size: 25px;
     display: flex;
     justify-content: space-between;
     padding: 15px 40px;
     border: 2px solid black;
-    color: rgb(98, 0, 219);
+    color: #70c3ce;
     float: right;
     margin-right: 10px;
     margin-top: 7px;
+    /* box-shadow: 0px 0px 3px 3px rgb(217, 217, 217); */
 }
 header p:hover {
     cursor: pointer;
@@ -128,10 +129,11 @@ header p:hover {
     width: 100%;
     height: 35px;
     border-radius: 50px;
-    background: rgb(230, 210, 255);
+    background: #334451;
     padding: 5px 37px;
-    border: 1px solid rgb(181, 181, 181);
+    border: 1px solid #334451;
     font-size: 18px;
+    color: #90b1c9;
 }
 .headermid {
     width: 40%;
@@ -142,7 +144,7 @@ header p:hover {
     top: 9px;
     left: 12px;
     font-size: 15px;
-    color: black;
+    color: #90b1c9;
     opacity: 0.5;
 }
 .headermid,
@@ -160,11 +162,12 @@ header p:hover {
     padding: 7px 0px 7px 5px;
 }
 .sidebar {
-    background: black;
+    background: #27313a;
     padding: 15px;
     margin: 0 auto;
     height: 100%;
     border-radius: 10px;
+    /* box-shadow: 0px 0px 3px 3px rgb(217, 217, 217); */
 }
 .about {
     font-size: 15px;
@@ -192,7 +195,7 @@ header p:hover {
     line-height: 45px;
 }
 .sideleftheader p:hover {
-    color: rgb(98, 0, 219);
+    color: #92b3ca;
     cursor: pointer;
 }
 .logoutchild {
@@ -240,7 +243,7 @@ header p:hover {
     color: rgb(192, 192, 192);
 }
 .dashbar {
-    background: rgb(98, 0, 219);
+    background: #63b1bc;
     padding: 8px 10px;
     border-radius: 5px;
     margin-top: 5px;
@@ -266,7 +269,7 @@ header p:hover {
     width: 82%;
 }
 .actionicon div:first-child:hover {
-    background: rgb(63, 0, 140);
+    background: #92b3ca;
     cursor: pointer;
 }
 .childlist ul {
@@ -286,7 +289,7 @@ header p:hover {
     border-radius: 5px;
 }
 .childlist ul li:hover {
-    background: grey;
+    background: #92b3ca;
     cursor: pointer;
 }
 .childlist ul li span {
@@ -301,7 +304,7 @@ a {
 /******************** Start Content CSS ********************/
 .content {
     padding: 8px;
-    width: 83%;
+    width: 82.7%;
     height: 85.7%;
     position: absolute;
     top: 78px;
@@ -313,7 +316,7 @@ a {
 .list_user_table th,
 .list_user_table tr,
 .list_user_table td {
-    padding: 15px 0;
+    padding: 10px 0;
     text-align: center;
 }
 .list_user_table {
@@ -327,8 +330,8 @@ a {
 }
 .divtablefather {
     height: 104%;
-    border: 2px solid black;
     border-radius: 10px;
+    box-shadow: 0px 0px 3px 3px rgb(217, 217, 217);
 }
 .divtable {
     height: 86%;
@@ -340,15 +343,16 @@ a {
 
 .listmsg {
     width: 25%;
-    background: rgb(113, 255, 113);
+    background: #79c7d1;
     position: fixed;
-    top: 10px;
-    left: 35%;
+    top: 5%;
+    left: 37%;
     border-radius: 5px;
     padding: 20px 30px;
+    color: white;
 }
 .listmsg h3 {
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid white;
     width: fit-content;
     margin-bottom: 10px;
 }
@@ -786,4 +790,297 @@ a {
 }
 /******************** End ProductDetail Create Form CSS ********************/
 
-/******************** Start Category Update Form CSS ********************/
+/******************** Start OrderList CSS ********************/
+.order_status_active p {
+    background: blue;
+}
+.order_status_delivering p {
+    background: rgb(255, 117, 32);
+}
+.order_status_cancelRequest p {
+    background: rgb(255, 30, 30);
+}
+.order_status_cancel p {
+    background: red;
+}
+.order_status_complete p {
+    background: green;
+}
+.order_status p {
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 70%;
+    margin: 0 auto;
+    padding: 8px 0;
+}
+.payment_vnpay {
+    color: blue;
+    font-weight: bold;
+}
+.payment_cod {
+    color: green;
+    font-weight: bold;
+}
+.payment_shoppepay {
+    color: orange;
+    font-weight: bold;
+}
+.order_item {
+    display: block;
+    color: black;
+}
+/******************** End OrderList CSS ********************/
+
+/******************** Start Order Item Admin CSS ********************/
+.orderItem_box {
+    width: 100%;
+}
+.orderItem_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.in_orderItem_header {
+    width: 32.3%;
+    box-shadow: 0px 0px 3px 3px rgb(217, 217, 217);
+    padding: 10px;
+    border-radius: 10px;
+}
+.in_orderItem_header h4,
+.orderItem_body h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.in_orderItem_header h4 i,
+.orderItem_body h4 i {
+    margin-right: 10px;
+    font-size: 20px;
+    color: rgb(56, 192, 255);
+}
+.in_orderItem_header div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.in_orderItem_header div p:nth-child(2) {
+    font-weight: bold;
+}
+.orderItem_body {
+    width: 100%;
+    height: 84%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.orderItem_body_left {
+    width: 77%;
+    box-shadow: 0px 0px 3px 3px rgb(217, 217, 217);
+    padding: 15px;
+    border-radius: 10px;
+}
+.orderItem_body_right {
+    width: 21.5%;
+}
+.orderItem_body_left table {
+    width: 100%;
+    text-align: center;
+}
+.orderItem_body_left table img {
+    width: 60px;
+    height: 70px;
+}
+.orderItem_box_table {
+    width: 100%;
+    height: 250px;
+    overflow-y: scroll;
+}
+.orderItem_box_table::-webkit-scrollbar {
+    display: none;
+}
+.orderItem_color {
+    width: 13px;
+    height: 13px;
+    border: 1px solid black;
+    display: inline-block;
+    border-radius: 50%;
+}
+.create_bill {
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid rgb(223, 223, 223);
+    margin-top: 5px;
+}
+.create_bill_left,
+.create_bill_right {
+    width: 49%;
+    padding: 20px 10px;
+}
+.create_bill_left div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+.create_bill_left div p:nth-child(2) {
+    font-weight: bold;
+    font-size: 18px;
+}
+.create_bill_right button,
+.create_bill_left button {
+    padding: 10px 20px;
+    background: #63b1bc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.create_bill_left button {
+    margin-top: 18px;
+    padding: 0;
+}
+.create_bill_left button a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px 20px;
+}
+.create_bill_left button i {
+    margin-right: 5px;
+}
+.create_bill_left button:hover a,
+.create_bill_right button:hover {
+    background: blue;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+}
+#cancel_bill {
+    background: rgb(255, 67, 67);
+    color: white;
+    border-radius: 5px;
+}
+#cancel_bill:hover {
+    background: rgb(255, 0, 0);
+    color: white;
+    border-radius: 5px;
+}
+#complete_bill {
+    background: rgb(0, 222, 0);
+    color: white;
+    border-radius: 5px;
+}
+#complete_bill:hover {
+    background: rgb(0, 112, 0);
+    color: white;
+    border-radius: 5px;
+}
+#delivering_bill {
+    background: grey;
+    color: black;
+    border-radius: 5px;
+}
+#delivering_bill:hover {
+    background: grey;
+    color: black;
+}
+.create_bill_right textarea {
+    width: 100%;
+    height: 55%;
+}
+.create_bill_right div {
+    display: flex;
+    justify-content: space-between;
+}
+.orderItem_body_right div {
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 3px 3px rgb(217, 217, 217);
+    padding: 20px 15px;
+    border-radius: 10px;
+}
+.orderItem_body_right select {
+    width: 100%;
+    padding: 5px 0px;
+    text-align: center;
+    font-size: 15px;
+}
+.orderItem_body_right option {
+    padding: 5px 0px;
+}
+.district {
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+.user_infor_bill {
+    height: 52.6%;
+}
+.user_infor_bill div {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: none;
+    padding: 0;
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+.user_infor_bill h5 {
+    font-size: 17px;
+}
+textarea {
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+/******************** End Order Item Admin CSS ********************/
+
+/******************** Start Alert Admin CSS ********************/
+.alert_confirm_update,
+.alert_confirm_delete {
+    position: absolute;
+    top: -8%;
+    right: 48%;
+    width: 28%;
+    border: 1px solid black;
+    padding: 15px 30px;
+    background: white;
+    text-align: center;
+    display: none;
+}
+.alert_confirm_update p:nth-child(1),
+.alert_confirm_delete p:nth-child(1) {
+    font-size: 20px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    border: 3px solid black;
+    margin: 0 auto;
+}
+.alert_confirm_update div,
+.alert_confirm_delete div {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+.alert_confirm_update button,
+.alert_confirm_delete button {
+    padding: 5px 20px;
+    border: none;
+    font-size: 18px;
+    background: #63b1bc;
+    color: white;
+    border-radius: 4px;
+}
+.alert_confirm_update button:hover,
+.alert_confirm_delete button:hover {
+    background: #334451;
+    cursor: pointer;
+}
+.p_id_delete,
+.p_id_update {
+    display: none;
+}
+/******************** End Alert Admin CSS ********************/

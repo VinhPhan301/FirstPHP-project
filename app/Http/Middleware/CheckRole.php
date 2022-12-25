@@ -20,12 +20,12 @@ class CheckRole
         if(Auth::guard('user')->check() == true){
             $role = Auth::guard('user')->user()->role;
             if( $role !== 'admin' ){
-            return redirect('user/login');
+            return redirect('admin/login');
             }
             return $next($request);
         }
         else{
-            return redirect('user/login');
+            return redirect('admin/login');
         }     
     }
 }

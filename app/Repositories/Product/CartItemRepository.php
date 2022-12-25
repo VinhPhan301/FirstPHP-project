@@ -22,22 +22,25 @@ class CartItemRepository extends BaseRepository implements CartItemRepositoryInt
             ->first();
 
         if(null === $cartItem) {
-            $this->model->create($itemData);
+            $this->create($itemData);
+
+            return 'true'; //return boolean
+        }
+        
+        $newQuantity = $itemData['quantity'] + $cartItem->quantity;
+        $newTotalprice = $itemData['total_price'] + $cartItem->total_price;
+        if ($newQuantity <= $productDetailStorage){
+            $this->update($cartItem->id, [
+                'quantity' => $newQuantity,
+                'total_price' => $newTotalprice,
+            ]);
 
             return 'true';
-        } else {
-            $newQuantity = $itemData['quantity'] + $cartItem->quantity;
-
-            if ($newQuantity <= $productDetailStorage){
-                $this->update($cartItem->id, ['quantity' => $newQuantity]);
-
-                return 'true';
-            } else {
-                $leftQuantity = $productDetailStorage - $cartItem->quantity;
-    
-                return $leftQuantity;
-            }  
         }
+        
+        $leftQuantity = $productDetailStorage - $cartItem->quantity;
+
+        return $leftQuantity;
     }
 
 

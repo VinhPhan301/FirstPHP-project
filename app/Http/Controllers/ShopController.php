@@ -152,7 +152,7 @@ class ShopController extends Controller
         return view('shop.product',[
             'product' => $product,
             'detailSize' => $getSizeColor['sizeUnique'],
-            'detailColor' => $getSizeColor['colorUnique'],
+            'detailThumbnail' => $getSizeColor['thumbnailUnique'],
             'relatedProducts' => $relatedProducts,
         ]);
     }
@@ -265,15 +265,12 @@ class ShopController extends Controller
     public function getViewUser()
     {
         $user = Auth::guard('user')->user();
-        $orders = $this->orderRepo->getOrderByUserId($user->id);
 
         return view('shop.userinfor',[
-            'orders' => $orders,
             'user' => $user,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
-
 
 
     /**
@@ -288,7 +285,7 @@ class ShopController extends Controller
         $user = $this->userRepo->update($id, $request->toArray());
         
         return redirect()
-            ->route('shop.user',['id' => $user->id])
+            ->route('shop.userinfor',['id' => $user->id])
             ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
     }
 

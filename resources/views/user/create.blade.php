@@ -3,11 +3,11 @@
 @section('content')
     <div class="createbox" style="display:flex">
         <form action="" method='post' class='signup_form'> 
-            <p id='register'>REGISTER</p>
+            <p id='register'>TẠO TÀI KHOẢN MỚI</p>
             @csrf
             <div class='name_form'>
             <div>
-                <p>Name</p>
+                <p>Tên tài khoản</p>
                 <input type="text" placeholder="Enter Name" name="name">
                 <span class='texterror'>
                     1
@@ -20,7 +20,7 @@
             </div>
             </div>
             <div class='email_form'>
-                <p>Email Address</p>
+                <p>Địa chỉ Email</p>
                 <input type="text" placeholder="Enter Email" name="email">
                 <span class='texterror'>
                     1
@@ -33,7 +33,7 @@
             </div>
             <div class='password_form'>
                 <div>
-                    <p>Password</p>
+                    <p>Mật khẩu</p>
                     <input type="password" placeholder="Enter Password" name='password'>
                     <span class='texterror'>
                         1
@@ -45,7 +45,7 @@
                     </span>
                 </div>
                 <div>
-                    <p>Confirm Password</p>
+                    <p>Xác nhận mật khẩu</p>
                     <input type="password" placeholder="Confirm Password" name='password_confirm'>
                     <span class='texterror'>
                         1
@@ -59,7 +59,7 @@
             </div>       
             <div class='phone_date_form'>
                 <div class='dateofbirth'>
-                    <p>Date of Birth</p>
+                    <p>Ngày sinh</p>
                     <input  type="date" name="date_of_birth">
                     <span class='texterror'>
                         1
@@ -71,7 +71,7 @@
                     </span>
                 </div>
                 <div class='phone'>
-                    <p>Phone Number</p>
+                    <p>Số điện thoại</p>
                     <input  type="text" placeholder="Enter Phone Number" name="phone">
                     <span class='texterror'>
                         1
@@ -85,7 +85,7 @@
             </div>
             <div class='address_role_form'>
                 <div class='address'>
-                    <p>Your Address</p>
+                    <p>Địa chỉ</p>
                     <input  type="text" placeholder="Enter Address" name="address">
                     <span class='texterror'>
                         1
@@ -97,14 +97,14 @@
                     </span>
                 </div>
                 <div class='role'>
-                    <p>Role</p>
+                    <p>Quyền</p>
                     <select  name="role" id="">
                         <option value="user">User</option>  
                         <option value="admin">Admin</option>
                     </select>
                 </div>
             </div>
-            <button class="create_btn" type="submit">Submit</button>
+            <button class="create_btn" type="submit">Tạo mới</button>
         </form>
     </div>
 @endsection

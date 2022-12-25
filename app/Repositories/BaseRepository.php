@@ -30,7 +30,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->orderBy('created_at', 'DESC')->get();
     }
 
     public function find($id)

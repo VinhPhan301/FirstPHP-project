@@ -99,9 +99,9 @@ class ProductController extends Controller
      * Show View Product Update By ID function
      *
      * @param [type] $id
-     * @return View
+     * @return void
      */
-    public function getViewUpdate($id) : View
+    public function getViewUpdate($id) 
     {
         $product = $this->productRepo->find($id);
 

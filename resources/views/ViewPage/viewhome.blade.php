@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets/home.css') }}">
-    <title>Document</title>
+    <link rel = "icon" href ="{{ asset("picture/favicon-16x16.ico") }}" type = "image/x-icon">
+    <title>CNF SHOP</title>
 </head>
 <body>
     <p class="user_logged" style="display: none">{{ $user }}</p>
@@ -21,7 +22,9 @@
             <div class='name_type'>
                 <a class="to_main" href="{{ route('shop.view',['category' => $category]) }}"><p>TRANG CHỦ</p></a>
                 @foreach($productType as $item)
-                <a class="to_other" href="{{ route('shop.view',['type' => $item]) }}"><p>{{ strtoupper($item) }}</p></a>
+                <a class="to_other" href="{{ route('shop.view',['type' => $item]) }}">
+                    <p>{{ strtoupper($item) }}</p>
+                </a>
                 @endforeach
             </div>
             <div class='icon_type'>
@@ -36,7 +39,7 @@
                 <div id='user_action'>
                     <p class='undefind'><a href="{{ route('shop.login') }}"><span id='to_login'>Đăng nhập</span></a></p>
                     <p class='undefind'><a href="{{ route('shop.signup') }}">Đăng ký</a></p>
-                    <p class='logged'><a href="{{ route('shop.user', ['id' => $id]) }}">Tài khoản</a></p>
+                    <p class='logged'><a href="{{ route('shop.userinfor', ['id' => $id]) }}">Tài khoản</a></p>
                     <p class='logged'><a href='{{ route('shop.logout') }}'>Đăng xuất</a></p>
                 </div>
             </div>

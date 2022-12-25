@@ -1,70 +1,130 @@
 @extends('ViewPage.viewpage')
 @section('content')
-    <div class="listmsg">
-        <div class="thongbao">
-            <h3>Thong bao:</h3> 
-            <p class="checkadd"><i class="fa-regular fa-circle-check"></i></p>
-        </div>
-        <p><span class="success">{{ $msg }}</span></p>
+<div class="listmsg">
+    <div class="thongbao">
+        <h3>Thông báo:</h3> 
+        <p class="checkadd"><i class="fa-regular fa-circle-check"></i></p>
     </div>
-   <div class='divtablefather'>
-        <div class='divtable'>
-            <table class="list_user_table">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Date of Birth</th>
-                        <th>Role</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                     $index = 1;
-                    ?>
-                @foreach($user as $item)
+    <p><span class="success">{{ $msg }}</span></p>
+</div>
+<div class='divtablefather'>
+    <div class='divtable'>
+        <table class="list_user_table">
+            <thead>
                 <tr>
-                    <td>{{ $index++ }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->email }}</td>
-                    <td>{{ $item->address }}</td>
-                    <td>{{ $item->phone }}</td>
-                    <td>{{ $item->date_of_birth }}</td>
-                    <td>{{ $item->role }}</td>
-                    <td>
-                        <a style="color:black" onclick="return confirm('Xac nhan Sua {{ $item->name }}')" href="{{ route('user.update', ['id' => $item->id]) }}">
-                            <i class="fa-solid fa-screwdriver-wrench"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a style="color:black" onclick="return confirm('Xac nhan xoa {{ $item->name }}')" href="{{ route('user.delete', ['id' => $item->id]) }}">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </a>
-                    </td>
+                    <th>STT</th>
+                    <th>Tên tài khoản</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngày sinh</th>
+                    <th>Quyền</th>
+                    <th>Chỉnh sửa</th>
+                    <th>Xóa</th>
                 </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-        <a id='createbut' style="color:black" href="create">
-            <button class='tocreate_btn'>Create</button>
-        </a>
+            </thead>
+            <tbody>
+                <?php 
+                    $index = 1;
+                ?>
+            @foreach($user as $item)
+            <tr>
+                <td>{{ $index++ }}</td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->email }}</td>
+                <td>{{ $item->address }}</td>
+                <td>{{ $item->phone }}</td>
+                <td>{{ $item->date_of_birth }}</td>
+                <td>{{ $item->role }}</td>
+                <td>
+                    <a style="color:black" onclick="confirmUpdate('{{ $item->id }}','{{ $item->name }}')" >
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </a>
+                    <a href="{{ route('user.update', ['id' => $item->id]) }}">
+                        <span class="to_form_update_{{ $item->id }}"></span>
+                    </a>
+                </td>
+                <td>
+                    <a style="color:black" onclick="confirmDelete('{{ $item->id }}','{{ $item->name }}')">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </a>
+                    <a href="{{ route('user.delete', ['id' => $item->id]) }}">
+                        <span class="to_form_delete_{{ $item->id }}"></span>
+                    </a>
+                </td>
+            </tr>
+            @endforeach
+            </tbody>
+        </table>
     </div>
+    <a id='createbut' style="color:black" href="create">
+        <button class='tocreate_btn'>Tạo mới</button>
+    </a>
     
-    <script>
-       var message = document.querySelector('.success').innerHTML;
-       if(message == ''){
+</div>
+<div class="alert_confirm_update">
+    <p><i class="fa-solid fa-wrench"></i></p>
+    <p>Xác nhận chỉnh sửa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p class="p_id_update"></p>
+    <div>
+        <button onclick="closeAlertUpdate()">Hủy</button>
+        <button onclick="toFormUpdate()">Xác nhận</button>
+    </div>
+</div>
+<div class="alert_confirm_delete">
+    <p><i class="fa-regular fa-trash-can"></i></i></p>
+    <p>Xác nhận xóa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p class="p_id_delete"></p>
+    <div>
+        <button onclick="closeAlertDelete()">Hủy</button>
+        <button onclick="toFormDelete()">Xác nhận</button>
+    </div>
+</div>
+<script>
+    var message = document.querySelector('.success').innerHTML;
+
+    if(message == ''){
         document.querySelector('.listmsg').style.display = 'none';
-       }
-       else{
+    }
+    else{
         setInterval(function() {
-        $('.listmsg').slideUp();
-       },2000)
-       }
-    </script>
+        $('.listmsg').fadeOut(300);
+        },1200)
+    }
+
+    function confirmUpdate(id, name){
+        $('.alert_confirm_update').fadeOut(0)
+        $('.alert_confirm_delete').fadeOut(0)
+        $('.span_name').text(name)
+        $('.p_id_update').text(id)
+        $('.alert_confirm_update').fadeIn(300)
+    }
+
+    function closeAlertUpdate(){
+        $('.alert_confirm_update').fadeOut(300)
+    }
+        
+    function toFormUpdate(){
+        var id = $('.p_id_update').text()
+        $(`.to_form_update_${id}`).click()
+        console.log(id);
+    }
+
+    function confirmDelete(id, name){
+        $('.alert_confirm_delete').fadeOut(0)
+        $('.alert_confirm_update').fadeOut(0)
+        $('.span_name').text(name)
+        $('.p_id_delete').text(id)
+        $('.alert_confirm_delete').fadeIn(300)
+    }
+
+    function closeAlertDelete(){
+        $('.alert_confirm_delete').fadeOut(300)
+    }
+
+    function toFormDelete(){
+        var id = $('.p_id_delete').text()
+        $(`.to_form_delete_${id}`).click()
+    }
+</script>
 @endsection
