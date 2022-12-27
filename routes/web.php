@@ -10,6 +10,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckLogin;
 use App\Http\Middleware\CheckUser;
@@ -91,8 +92,10 @@ Route::prefix('/')->group(function () {
    Route::get('/viewcate', [ShopController::class, 'getViewCategory'])->name('shop.viewcate');
    Route::get('/findProduct', [ShopController::class, 'findProduct'])->name('shop.findProduct');
    Route::get('/product', [ShopController::class, 'getViewProduct'])->name('shop.product');
-   Route::get('/signup', [ShopController::class, 'getViewCreate'])->name('shop.signup')->middleware('checkLogin');
-   Route::post('/signup', [ShopController::class, 'createAccount'])->middleware('checkLogin');
+   Route::get('/favoriteCreate', [FavoriteController::class, 'createFavorite'])->name('shop.favoriteCreate');
+   Route::get('/favoriteDelete', [FavoriteController::class, 'deleteFavorite'])->name('shop.favoriteDelete');
+   Route::get('/signup', [ShopController::class, 'getViewCreate'])->name('shop.signup');
+   Route::post('/signup', [ShopController::class, 'createAccount']);
    Route::get('/login', [ShopController::class, 'getViewLogin'])->name('shop.login');
    Route::post('/login', [ShopController::class, 'postLogin'])->name('shop.login');
    Route::get('/logout', [ShopController::class, 'getLogout'])->name('shop.logout');
@@ -100,6 +103,7 @@ Route::prefix('/')->group(function () {
       Route::get('/infor{id}', [ShopController::class, 'getViewUser'])->name('shop.userinfor');
       Route::post('/infor{id}', [ShopController::class, 'update']);
       Route::get('/order/{id}',[OrderController::class, 'getViewOrder'])->name('shop.userorder');
+      Route::get('/favorite/{id}',[FavoriteController::class, 'getViewFavorite'])->name('shop.userfavorite');
       Route::prefix('cartItem')->group(function () {
          Route::get('/',[CartItemController::class, 'getViewCart'])->name('cartItem.view');     
          Route::get('/create', [CartItemController::class, 'create'])->name('cartItem.create');     

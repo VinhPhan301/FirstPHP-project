@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->string('role');
+            $table->string('status');
             $table->rememberToken();
             $table->timestamps();
         });

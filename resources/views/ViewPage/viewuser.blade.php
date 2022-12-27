@@ -31,7 +31,7 @@
         </div>
         <div class='user_action'>
             <ul>
-                <li>
+                <li class="user_order_ticked">
                     <a href="{{ route('shop.userorder',['id' => $user->id]) }}">
                         <i class="fa-solid fa-box"></i> Đơn hàng của tôi
                     </a>
@@ -39,8 +39,12 @@
                 <li><i class="fa-solid fa-ticket"></i> Khuyến mại</li>
                 <li><i class="fa-solid fa-coins"></i> C-Points</li>
                 <li><i class="fa-solid fa-house"></i> Sổ địa chỉ</li>
-                <li><i class="fa-regular fa-heart"></i> Yêu thích</li>
-                <li>
+                <li class="user_favorite_ticked">
+                    <a href="{{ route('shop.userfavorite',['id' => $user->id ]) }}">
+                        <i class="fa-regular fa-heart"></i> Yêu thích
+                    </a>
+                </li>
+                <li class="user_account_ticked">
                     <a href="{{ route('shop.userinfor',['id' => $user->id ]) }}">
                         <i class="fa-regular fa-circle-user"></i> Tài khoản
                     </a>

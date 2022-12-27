@@ -8,6 +8,8 @@ use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Product\UserRepositoryInterface;
 use App\Repositories\Product\CartItemRepositoryInterface;
 use App\Repositories\Product\OrderRepositoryInterface;
+use App\Repositories\Product\FavoriteRepositoryInterface;
+use App\Repositories\Product\VoucherRepositoryInterface;
 use App\Constants\CommonConstant;
 use Response;
 use Auth;
@@ -23,11 +25,18 @@ class ShopController extends Controller
     protected $userRepo;
     protected $cartItemRepo;
     protected $orderRepo;
+    protected $favoriteRepo;
+    protected $voucherRepo;
 
-    public function __construct(ProductRepositoryInterface $productRepo, ProductDetailRepositoryInterface $productDetailRepo,
+    public function __construct(
+    ProductRepositoryInterface $productRepo, 
+    ProductDetailRepositoryInterface $productDetailRepo,
     UserRepositoryInterface $userRepo,
     CartItemRepositoryInterface $cartItemRepo,
-    OrderRepositoryInterface $orderRepo)
+    OrderRepositoryInterface $orderRepo,
+    FavoriteRepositoryInterface $favoriteRepo,
+    VoucherRepositoryInterface $voucherRepo,
+    )
     
     {
         $this->productRepo = $productRepo;
@@ -35,6 +44,8 @@ class ShopController extends Controller
         $this->userRepo = $userRepo;
         $this->cartItemRepo = $cartItemRepo;
         $this->orderRepo = $orderRepo;
+        $this->favoriteRepo = $favoriteRepo;
+        $this->voucherRepo = $voucherRepo;
     }    
 
 
@@ -142,18 +153,18 @@ class ShopController extends Controller
      */
     public function getViewProduct(Request $request)
     {
-        $productID = $request->query('id');
-        $product = $this->productRepo->find($productID);
+        $productId = $request->query('id');
+        $product = $this->productRepo->find($productId);
 
-        $relatedProducts = $this->productRepo->getRelatedProduct($productID, $product);
-
-        $getSizeColor = $this->productDetailRepo->getSizeColor($productID);
-
+        $relatedProducts = $this->productRepo->getRelatedProduct($productId, $product);
+        $getSizeColor = $this->productDetailRepo->getSizeColor($productId);
+        $getFavorite = $this->favoriteRepo->getFavorite(Auth::guard('user')->user()->id, $productId);
         return view('shop.product',[
             'product' => $product,
             'detailSize' => $getSizeColor['sizeUnique'],
             'detailThumbnail' => $getSizeColor['thumbnailUnique'],
             'relatedProducts' => $relatedProducts,
+            'favorite' => $getFavorite,
         ]);
     }
 
@@ -185,10 +196,12 @@ class ShopController extends Controller
            'email' => $request->email,
            'password' => $password,
            'role' => $request->role,
+           'status' => 'unlock'
         ];
 
         $userAccount = $this->userRepo->create($data);
-
+        $createVoucher = $this->voucherRepo->createFirstVoucher($userAccount->id);
+        
         if (!$userAccount || null === $userAccount) {
             return redirect()
                 ->route('shop.signup')
@@ -299,6 +312,7 @@ class ShopController extends Controller
     public function getViewCheckout()
     {
         $user = Auth::guard('user')->user();
+        $vouchers = $this->voucherRepo->getVoucherByUser($user->id);
 
         if(null == $user){
             return redirect()
@@ -311,6 +325,7 @@ class ShopController extends Controller
             }
 
             return view('shop.checkout',[
+                'vouchers' => $vouchers,
                 'user' => $user,
                 'cartItems' => $cartItems,
                 'msg' => session()->get(CommonConstant::MSG) ?? null

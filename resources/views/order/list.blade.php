@@ -23,14 +23,25 @@
             </thead>
             <tbody>
                 @foreach($orders as $order)
+                @if($order->status !== 'deleted')
                 <p style="display:none">{{ $sumtotal = 0 }}</p>
                 <tr>
                     <td>CNF-DH-{{ $order->id }}</td>
                     <td>{{ $order->user->name }}</td>
                     <td class='order_status_{{ $order->status }} order_status'>
+                        @if ($order->status === 'active')
                         <p>
-                            {{ $order->status }}
+                            <i class="fa-solid fa-cart-shopping"></i> {{ $order->status }}
                         </p>
+                        @elseif ($order->status === 'delivering')
+                        <p>
+                            <i class="fa-solid fa-truck-fast"></i> {{ $order->status }}
+                        </p>
+                        @elseif ($order->status === 'cancel')
+                        <p>
+                            <i class="fa-solid fa-ban"></i> {{ $order->status }}
+                        </p>
+                        @endif
                     </td>
                     <td class='payment_{{ $order->payment_method }}'>{{ $order->payment_method }}</td>
                     <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
@@ -44,7 +55,7 @@
                         {{ number_format($sumtotal,0,'.','.') }} đ
                     </td>
                     @else
-                    <td>
+                    <td style="font-weight: bold">
                         {{ number_format($sumtotal,0,'.','.') }} đ
                     </td>
                     @endif
@@ -54,6 +65,7 @@
                         </a>
                     </td>
                 </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>

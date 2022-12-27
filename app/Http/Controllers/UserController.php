@@ -76,6 +76,7 @@ class UserController extends Controller
             UserConstant::COLUMN['phone'] => $request->phone,
             UserConstant::COLUMN['date_of_birth'] => $request->date_of_birth,
             UserConstant::COLUMN['role'] => $request->role,
+            'status' => 'unlock'
         ];
         $user = $this->userRepo->create($data);
 
@@ -232,7 +233,7 @@ class UserController extends Controller
     {
         Auth::guard('user')->logout();
         
-        return redirect('user/login');
+        return redirect()->route('user.login');
     }
 
 

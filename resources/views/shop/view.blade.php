@@ -17,7 +17,7 @@
 </div>
 <div class="in_content">
     <div class="top_image">
-        <img src="{{ asset('picture/banner1.webp') }}" alt="">
+        <img src="{{ asset('thumbnail/banner1.webp') }}" alt="">
     </div>
     <div id='type{{ $type }}'>
         <div class="new_product" >
@@ -39,13 +39,13 @@
             <div id="carouselExampleInterval" class="carousel slide w-100" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="2000">
-                    <img src="{{ asset('picture/anh4.webp') }}" class="d-block w-100 h-100">
+                    <img src="{{ asset('thumbnail/anh4.webp') }}" class="d-block w-100 h-100">
                     </div>
                     <div class="carousel-item active" data-bs-interval="2000">
-                    <img src="{{ asset('picture/anh5.webp') }}" class="d-block w-100 h-100">
+                    <img src="{{ asset('thumbnail/anh5.webp') }}" class="d-block w-100 h-100">
                     </div>
                     <div class="carousel-item activ" data-bs-interval="2000">
-                    <img src="{{ asset('picture/anh6.webp') }}" class="d-block w-100 h-100">
+                    <img src="{{ asset('thumbnail/anh6.webp') }}" class="d-block w-100 h-100">
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="top_image">
-        <img src="{{ asset('picture/banner5.webp') }}" alt="">
+        <img src="{{ asset('thumbnail/banner5.webp') }}" alt="">
     </div>
     <div class="new_product">
         SẢN PHẨM NỔI BẬT
@@ -83,13 +83,13 @@
             <div id="carouselExampleInterval" class="carousel slide w-100" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="2000">
-                    <img src="{{ asset('picture/anh1.webp') }}" class="d-block w-100 h-100">
+                    <img src="{{ asset('thumbnail/anh1.webp') }}" class="d-block w-100 h-100">
                     </div>
                     <div class="carousel-item active" data-bs-interval="2000">
-                    <img src="{{ asset('picture/anh2.webp') }}" class="d-block w-100 h-100">
+                    <img src="{{ asset('thumbnail/anh2.webp') }}" class="d-block w-100 h-100">
                     </div>
                     <div class="carousel-item activ" data-bs-interval="2000">
-                    <img src="{{ asset('picture/anh3.webp') }}" class="d-block w-100 h-100">
+                    <img src="{{ asset('thumbnail/anh3.webp') }}" class="d-block w-100 h-100">
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@
         </div>
     </div>
     <div class='mid_image'>
-        <img src="{{ asset('picture/banner4.webp')}}" alt="">
+        <img src="{{ asset('thumbnail/banner4.webp')}}" alt="">
     </div>
     <div class='category_bar'>
         <div>

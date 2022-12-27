@@ -55,4 +55,6 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
            'thumbnailUnique' => $thumbnailUnique
         ];
     }  
+
+    
 }

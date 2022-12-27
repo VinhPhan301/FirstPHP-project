@@ -13,7 +13,13 @@
 <div class="in_content_product">
     <div class='about_product'>
         <div class='product_thumbnail'>
-            <img src="{{ asset("picture/$product->image") }}">
+            <img class="main_thumbnail" src="{{ asset("picture/$product->image") }}">
+        </div>
+        <div class='productDetail_thumbnail'>
+            <img onclick="showimg('{{ $product->image }}')" src="{{ asset("picture/$product->image") }}">
+            @foreach($detailThumbnail as $thumbnail)
+            <img onclick="showimg('{{ $thumbnail }}')" src="{{ asset("picture/$thumbnail") }}">
+            @endforeach
         </div>
         <div class='product_infor'>
             <div class='top_infor'>
@@ -48,9 +54,16 @@
                 <p><i class="fa-solid fa-check"></i><span>Đổi trả miễn phí trong vòng 30 ngày kể từ ngày mua</span></p>
                 <div class='to_cart'>Thêm vào giỏ</div>
                 <div class='buy_now'>Mua ngay</div>
-                <div>
-                    <i class="fa-regular fa-heart"></i>
-                    <span>Thêm vào yêu thích</span>
+                <div class="favorite_product">
+                    <p style="display:none" class="count_favorite">{{ count($favorite) }}</p>
+                    <div class="add_to_favorite" onclick="addToFavorite({{ $product->id }})">
+                        <i class="fa-regular fa-heart"></i>
+                        <span>Thêm vào yêu thích</span>
+                    </div>
+                    <div class="remove_from_favorite" onclick="removeFromFavorite({{ $product->id }})">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>Đã yêu thích</span>
+                    </div>
                 </div>
             </div>
             <div class='under_bot_infor'>
@@ -95,6 +108,15 @@
 @endsection
 @section('script')
 <script>
+    var favorite = $('.count_favorite').text();
+    if( favorite === '1'){
+        $(".add_to_favorite").css('display','none')
+        $(".remove_from_favorite").css('display','block')
+    } else {
+        $(".add_to_favorite").css('display','block')
+        $(".remove_from_favorite").css('display','none')
+    }
+    
     $('.detail_color').click(function(){
         $('#limited_quantity').css('opacity', '0')
         $('.choose_quantity').text('1')
@@ -276,6 +298,39 @@
             );
         } 
     })
+
+    function addToFavorite(productId){
+        $.get( '{{ route('shop.favoriteCreate') }}',
+            {'productId': productId}, 
+            function( data ) {
+                if(data){
+                    $(".add_to_favorite").css('display','none')
+                    $(".remove_from_favorite").css('display','block')
+                } else {
+                    console.log(data);
+                }
+            }
+        );
+    }
+
+    function removeFromFavorite(productId){
+        $.get( '{{ route('shop.favoriteDelete') }}',
+            {'productId': productId}, 
+            function( data ) {
+                if(data === '1'){
+                    $(".add_to_favorite").css('display','block')
+                    $(".remove_from_favorite").css('display','none')
+                } else {
+                    console.log(data);
+                }
+            }
+        );
+    }
+
+    function showimg(thumbnail){
+        console.log(thumbnail);
+        $('.main_thumbnail').attr('src',`{{ asset("picture/${thumbnail}") }}`)
+    }
 </script>
 @endsection
 

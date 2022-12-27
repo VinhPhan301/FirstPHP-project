@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets/home.css') }}">
-    <link rel = "icon" href ="{{ asset("picture/favicon-16x16.ico") }}" type = "image/x-icon">
+    <link rel = "icon" href ="{{ asset("thumbnail/favicon-16x16.ico") }}" type = "image/x-icon">
     <title>CNF SHOP</title>
 </head>
 <body>
     <p class="user_logged" style="display: none">{{ $user }}</p>
     <div class="header" id="header">
         <div class="header_img">
-            <img src="{{ asset('picture/blackfriday.png') }}" alt="">
+            <img src="{{ asset('thumbnail/blackfriday.png') }}" alt="">
         </div>
         <div class="header_type">
             <div class='name_type'>
@@ -30,12 +30,20 @@
             <div class='icon_type'>
                 <div class='search'>
                     <p><i class="fa-solid fa-magnifying-glass"></i></p>
-                    <input type="text" value="Bạn tìm gì ...">
+                    <input type="text" placeholder="Bạn tìm gì ...">
                 </div>
                 <p><i class="fa-solid fa-store"></i></p>
-                <p><i class="fa-regular fa-heart"></i></p>
+                <p>
+                    <a href="{{ route('shop.userfavorite', ['id' => $id]) }}">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                </p>
                 <p><i class="fa-regular fa-circle-user"></i></p>
-                <p><a href="{{ route('cartItem.view') }}"><i class="fa-solid fa-bag-shopping"></i></a></p>
+                <p>
+                    <a href="{{ route('cartItem.view') }}">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </a>
+                </p>
                 <div id='user_action'>
                     <p class='undefind'><a href="{{ route('shop.login') }}"><span id='to_login'>Đăng nhập</span></a></p>
                     <p class='undefind'><a href="{{ route('shop.signup') }}">Đăng ký</a></p>
@@ -82,12 +90,12 @@
             </div>
             <div class="side_canifa security_icon">
                 <h3>Chính sách bảo mật</h3>
-                <img class="qrcode" src="{{ asset('picture/bancode.png') }}">
-                <img src="{{ asset('picture/appstore.png') }}">
-                <img src="{{ asset('picture/googleplay.png') }}">
+                <img class="qrcode" src="{{ asset('thumbnail/bancode.png') }}">
+                <img src="{{ asset('thumbnail/appstore.png') }}">
+                <img src="{{ asset('thumbnail/googleplay.png') }}">
                 <h3 class="payway">PHƯƠNG THỨC THANH TOÁN</h3>
-                <p><img class='paywaypic' src="{{ asset('picture/payway.png') }}"></p>
-                <p><img src="{{ asset('picture/bocongthuong.png') }}"></p>
+                <p><img class='paywaypic' src="{{ asset('thumbnail/payway.png') }}"></p>
+                <p><img src="{{ asset('thumbnail/bocongthuong.png') }}"></p>
             </div>
         </div>
         <div class="bot_footer">

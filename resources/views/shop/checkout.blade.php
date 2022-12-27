@@ -24,7 +24,7 @@
                 </div>
                 <div class="order_infor_input">
                     <p>Họ tên <span class="checkout_userId" style="display:none">{{ $user->id }}</span></p>
-                    <input type="text" value="{{ $user->name}}">
+                    <input type="text" value="{{ $user->name}}" name="name">
                 </div>
                 <div class="order_infor_input">
                     <p>Số điện thoại</p>
@@ -49,7 +49,7 @@
                         </p>
                         <p>Thanh toán khi nhận hàng ( COD )</p>
                     </div>
-                    <img src="{{ asset('picture/cast.png') }}" alt="">
+                    <img src="{{ asset('thumbnail/cast.png') }}" alt="">
                 </div>
                 <div class="choose_pay">               
                     <div>
@@ -58,7 +58,7 @@
                         </p>
                         <p>Thanh toán bằng VNPAY</p>
                     </div>
-                    <img src="{{ asset('picture/pay1.png') }}" alt="">
+                    <img src="{{ asset('thumbnail/pay1.png') }}" alt="">
                 </div>
                 <div class="choose_pay">
                     <div>
@@ -67,7 +67,7 @@
                         </p>
                         <p>Thanh toán bằng ShopeePay</p>
                     </div>
-                    <img src="{{ asset('picture/shoppepay.png') }}" alt="">
+                    <img src="{{ asset('thumbnail/shoppepay.png') }}" alt="">
                 </div>
             </div>
             <div class="checkout_left_bot">
@@ -116,14 +116,8 @@
                                         {{ $cartItem->productDetail->price }}
                                     </span>
                                 </td>
-                                <td>
-                                    {{-- <span class='minus' onclick='minus({{ $cartItem->id }})'>
-                                        <i class="fa-regular fa-square-minus"></i>
-                                    </span> --}}
-                                    <span class='total_number{{ $cartItem->id }}'>x{{ $cartItem->quantity }}</span>
-                                    {{-- <span class='plus' onclick='plus({{ $cartItem->id }})'>
-                                        <i class="fa-regular fa-square-plus"></i>
-                                    </span> --}}
+                                <td>                                   
+                                    <span class='total_number{{ $cartItem->id }}'>x{{ $cartItem->quantity }}</span>                                   
                                 </td>
                                 <td class='cart_product_price total_paid'>
                                     <span class='cart_total_price'>{{ $cartItem->total_price }}</span>
@@ -132,9 +126,6 @@
                                 <td class='productDetail_storage{{ $cartItem->id }}' style='display:none'>
                                     {{ $cartItem->productDetail->storage }}
                                 </td>
-                                {{-- <td onclick='deleteCartItem({{ $cartItem->id }})'>
-                                    <i class="fa-regular fa-circle-xmark"></i>
-                                </td> --}}
                             </tr>
                             @endforeach                        
                         </tbody>
@@ -148,14 +139,39 @@
                 <span>Giá gốc</span> 
                 <span class='change_price'>{{ number_format($sumTotalPrice,0,'.','.') }} đ</span>
             </div>
+            <div class="cart_price">
+                @if ($sumTotalPrice < 1000000)
+                <span>Phí vận chuyển</span>
+                <span class='change_price'>30.000 đ</span>
+                @else
+                <span>Phí vận chuyển </span>
+                <span class='change_price'>(Miễn phí vận chuyển)</span>
+                @endif
+            </div>
+            <div class="cart_price">
+                <span>Giảm giá</span>
+                <span>
+                    <span class="discount_put_here">0</span> đ
+                </span>
+            </div>
             <div class='total_price'>
+                @if ($sumTotalPrice < 1000000)
+                <span>Tổng tiền thanh toán</span>
+                <span class='change_total_price'>{{ number_format($sumTotalPrice + 30000,0,'.','.') }} đ</span>
+                @else
                 <span>Tổng tiền thanh toán</span>
                 <span class='change_total_price'>{{ number_format($sumTotalPrice,0,'.','.') }} đ</span>
+                @endif
             </div>
             <div class='discount'>
                 <p>Mã giảm giá / Thẻ quà tặng</p>
                 <div>
-                    <input type="text" placeholder='Nhập mã'>
+                    <select name="discount" id="select_voucher">
+                        <option value="null">Không có</option>
+                        @foreach($vouchers as $voucher)
+                        <option value="{{ $voucher->discount }}">{{ $voucher->name }}</option>
+                        @endforeach
+                    </select>
                     <p>Áp dụng</p>
                 </div>
                 <p style='margin-top: 40px'>Sử dụng C-Point</p>

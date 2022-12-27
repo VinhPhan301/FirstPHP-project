@@ -151,6 +151,9 @@
 @endsection
 @section('script')
 <script>
+    $('.user_order_ticked a').css('color', '#63b1bc');
+    $('.user_order_ticked i').css('color', '#63b1bc');
+
     function orderStatus(status) {
         var url = "{{ route('shop.userorder', ":id") }}?status=" + status;
         url = url.replace(':id', {{ $user->id }});

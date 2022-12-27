@@ -620,22 +620,30 @@ p {
 
 .about_product {
     width: 100%;
-    padding: 40px 50px;
+    padding: 40px 60px;
     display: flex;
     justify-content: space-between;
 }
 .product_thumbnail {
-    width: 60%;
+    width: 55%;
 }
 .product_thumbnail img {
     width: 100%;
 }
+.productDetail_thumbnail {
+    width: 12%;
+    padding: 0px 40px 0px 10px;
+}
+.productDetail_thumbnail img {
+    width: 100%;
+    margin-bottom: 5px;
+}
 .product_infor {
-    width: 30%;
+    width: 33%;
 }
 .top_infor {
     border-bottom: 2px solid rgb(202, 202, 202);
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 }
 .top_infor p {
     margin: 20px 0px;
@@ -676,7 +684,7 @@ p {
     color: white;
 }
 .mid_infor {
-    padding: 30px 0px 0px 0px;
+    padding-top: 20px;
     border-bottom: 2px solid rgb(202, 202, 202);
 }
 .mid_infor p {
@@ -685,7 +693,7 @@ p {
     color: grey;
 }
 .bot_infor {
-    padding: 35px 0px;
+    padding: 35px 0px 30px 0px;
     border-bottom: 2px solid rgb(202, 202, 202);
 }
 .bot_infor p i {
@@ -708,7 +716,7 @@ p {
     background: white;
 }
 .to_cart {
-    margin-top: 40px;
+    margin-top: 30px;
     background: #333f48;
     color: white;
 }
@@ -725,7 +733,19 @@ p {
     background: rgb(185, 0, 0);
     color: white !important;
 }
-
+.favorite_product {
+    width: 70%;
+    font-size: 25px;
+    margin-top: 20px;
+}
+.favorite_product i {
+    color: #63b1bc;
+    margin-right: 5px;
+    font-size: 35px;
+}
+.favorite_product:hover {
+    cursor: pointer;
+}
 .related_product {
     padding: 40px 50px;
     width: 100%;
@@ -759,7 +779,7 @@ p {
     opacity: 0.7;
 }
 .under_bot_infor {
-    padding: 30px 0px;
+    padding-top: 20px;
 }
 .under_bot_infor h5 {
     margin-top: 20px;
@@ -928,7 +948,7 @@ p {
 .freeship {
     display: flex;
     justify-content: space-between;
-    width: 40%;
+    width: 47%;
     background: white;
     box-shadow: 3px 3px 3px 3px rgb(227, 227, 227);
     padding: 10px 20px;
@@ -1145,6 +1165,7 @@ table {
 }
 .user_box_left {
     width: 30%;
+    height: fit-content;
     box-shadow: 0px 0px 3px 3px rgb(232, 232, 232);
 }
 .user_name {
@@ -1206,7 +1227,7 @@ table {
 }
 .user_action ul li:hover i {
     font-weight: bold;
-    color: black;
+    color: #63b1bc;
 }
 .user_action a {
     color: black;
@@ -1216,7 +1237,7 @@ table {
 }
 .user_support {
     text-align: center;
-    padding: 15px 20px;
+    padding: 20px;
 }
 .user_support p:nth-child(1) {
     font-weight: bold;
@@ -1494,6 +1515,14 @@ input[type="checkbox" i] {
     color: #63b1bc;
     font-weight: bold;
 }
+.user_favorite_box {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.favorite_div {
+    width: 23.2%;
+}
 /**************************************** End User Infor CSS ******************************/
 
 /**************************************** Start Checkout CSS ******************************/
@@ -1677,4 +1706,11 @@ input[type="checkbox" i] {
 #payment_method_input {
     display: none;
 }
+#select_voucher {
+    width: 100%;
+}
+#select_voucher option {
+    width: 100%;
+}
+
 /**************************************** End Checkout CSS ******************************/

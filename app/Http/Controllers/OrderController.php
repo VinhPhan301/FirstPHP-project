@@ -7,6 +7,7 @@ use App\Repositories\Product\OrderRepositoryInterface;
 use App\Repositories\Product\OrderItemRepositoryInterface;
 use App\Repositories\Product\CartItemRepositoryInterface;
 use App\Repositories\Product\CartRepositoryInterface;
+use App\Repositories\Product\UserRepositoryInterface;
 use App\Constants\CommonConstant;
 use Auth;
 
@@ -16,17 +17,22 @@ class OrderController extends Controller
     protected $orderItemRepo;
     protected $cartItemRepo;
     protected $cartRepo;
+    protected $userRepo;
 
-    public function __construct(OrderRepositoryInterface $orderRepo,
+    public function __construct(
+    OrderRepositoryInterface $orderRepo,
     CartItemRepositoryInterface $cartItemRepo,
     OrderItemRepositoryInterface $orderItemRepo,
-    CartRepositoryInterface $cartRepo,)
+    CartRepositoryInterface $cartRepo,
+    UserRepositoryInterface $userRepo,
+    )
+
     {
         $this->orderRepo = $orderRepo;
         $this->cartItemRepo = $cartItemRepo;
         $this->cartRepo = $cartRepo;
         $this->orderItemRepo = $orderItemRepo;
-
+        $this->userRepo = $userRepo;
     }
 
 
@@ -68,26 +74,29 @@ class OrderController extends Controller
 
             return $user;
         } else {
-
-            $data =[
+            $data = [
                 'user_id' => $user->id,
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'payment_method' => $request->payment_method,
                 'total' => $request->total,
                 'note' => $request->note,
+                'discount' => $request->discount,
                 'status' => 'active',
             ];
-
+            $userFirstUpdate = $this->userRepo->updateIfNull($user->id,[
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'name' => $request->name,
+            ]);
             $order = $this->orderRepo->create($data);
-            
             $cartItems = $this->cartItemRepo->getCartById($user->id);
 
             foreach ($cartItems as $cartItem) {
                 $cart = $this->cartRepo->find($cartItem->cart_id);
 
                 if(null !== $cart) {
-                    $cart = $this->cartRepo->update($cartItem->cart_id,['status'=>'checkout']);
+                    $cart = $this->cartRepo->update($cartItem->cart_id, ['status' => 'checkout']);
                 }
 
                 $orderItemData = [
@@ -146,9 +155,11 @@ class OrderController extends Controller
 
         if($request->status == 'active'){
             $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'delivering']);
-        } elseif($request->status == 'cancelRequest') {
+        } elseif($request->status == 'cancelRequest' || $request->status == 'soldout') {
             $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'cancel']);
-        } 
+        } elseif ($request->status == 'cancel') {
+            $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'deleted']);
+        }
 
         return redirect()
             ->route('order.list')

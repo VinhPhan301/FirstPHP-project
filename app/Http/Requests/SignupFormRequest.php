@@ -36,7 +36,7 @@ class SignupFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'name' => 'Ten khong hop le',
+            'name.min' => 'Ten khong hop le',
             'email' => 'Email khong hop le',
             'password' => 'Password khong trung nhau',
             'address' => 'Address khong hop le',

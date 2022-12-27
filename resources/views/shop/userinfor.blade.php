@@ -30,6 +30,9 @@
 @endsection
 @section('script')
 <script>
+    $('.user_account_ticked a').css('color', '#63b1bc');
+    $('.user_account_ticked i').css('color', '#63b1bc');
+    
     var message = $('.logout_msg').text()
     if(message === '') {
         $('.view_msg').css('display','none')

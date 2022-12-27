@@ -5,24 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Voucher extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'name',
         'user_id',
-        'address', 
-        'phone',
-        'total',
-        'status',
-        'payment_method',
-        'note',
-        'discount'
+        'discount',
     ];
-
-    public function orderItem()
-    {
-        return $this->hasMany(OrderItem::class, 'order_id', 'id');
-    }
 
     public function user()
     {

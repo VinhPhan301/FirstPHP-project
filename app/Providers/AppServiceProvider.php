@@ -35,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Product\OrderRepository::class,
             \App\Repositories\Product\OrderItemRepositoryInterface::class,
             \App\Repositories\Product\OrderItemRepository::class,
+            \App\Repositories\Product\FavoriteRepositoryInterface::class,
+            \App\Repositories\Product\FavoriteRepository::class,
+            \App\Repositories\Product\VoucherRepositoryInterface::class,
+            \App\Repositories\Product\VoucherRepository::class,
         );
     }
 
@@ -47,6 +51,8 @@ class AppServiceProvider extends ServiceProvider
         \App\Repositories\Product\CartItemRepositoryInterface::class =>  \App\Repositories\Product\CartItemRepository::class,
         \App\Repositories\Product\OrderRepositoryInterface::class =>  \App\Repositories\Product\OrderRepository::class,
         \App\Repositories\Product\OrderItemRepositoryInterface::class =>  \App\Repositories\Product\OrderItemRepository::class,
+        \App\Repositories\Product\FavoriteRepositoryInterface::class =>  \App\Repositories\Product\FavoriteRepository::class,
+        \App\Repositories\Product\VoucherRepositoryInterface::class =>  \App\Repositories\Product\VoucherRepository::class,
            
     ];
 
