@@ -1,7 +1,7 @@
 @extends('Viewpage.viewuser')
 @section('user_content')
 <div class='order_view'>
-    <p class="userId" style="display: none">{{ $user->id }}</p>
+    <p class="userId" style="display: none">{{ $userLogin->id }}</p>
     <div class='order_content'>
         <table>
             <thead>
@@ -26,8 +26,13 @@
                         {{ $sumtotal += (int)$orderItem->total_price }}
                         @endforeach
                     </p>
-                    <td onclick="showOrderItem({{ $order->id }})">
+                    <td onclick="showOrderItem({{ $order->id }})" style="font-weight: bold">
+                        @if ($order->discount !== 'null')
+                        <p style="text-decoration: line-through; font-size: 11px; color:red">{{ number_format($sumtotal,0,'.','.') }} đ</p>
+                        <p style="color:green">{{ number_format(($sumtotal - $sumtotal*$order->discount / 100),0,'.','.') }} đ</p>
+                        @else
                         {{ number_format($sumtotal,0,'.','.') }} đ
+                        @endif
                     </td onclick="showOrderItem({{ $order->id }})">
                     @if ($order->status == 'active')
                     <td onclick="showOrderItem({{ $order->id }})">Đã đặt</td>
@@ -61,7 +66,7 @@
                     <div class="show_orderItem_header">
                         <p>CNF-DH-{{ $order->id }}</p>
                         <p>{{ $order->total }}</p>
-                        <p>{{ number_format($sumtotal,0,'.','.') }} đ</p>
+                        <p>{{ number_format(($sumtotal - $sumtotal * (int)$order->discount / 100),0,'.','.') }} đ</p>
                         <p>
                             @if ($order->status == 'active')
                             <span style="color:rgb(0, 140, 255)">Đã đặt</span>
@@ -156,7 +161,7 @@
 
     function orderStatus(status) {
         var url = "{{ route('shop.userorder', ":id") }}?status=" + status;
-        url = url.replace(':id', {{ $user->id }});
+        url = url.replace(':id', {{ $userLogin->id }});
         $('.order_content').load(`${url} .order_content`)    
 
         $('.order_status p').removeClass('order_status_chosen')

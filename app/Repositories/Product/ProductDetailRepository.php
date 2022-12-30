@@ -1,8 +1,11 @@
 <?php
+
 namespace App\Repositories\Product;
+
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
-use App\Models\ProductDetail;
+use App\Models\OrderItem;
+
 class ProductDetailRepository extends BaseRepository implements ProductDetailRepositoryInterface
 {
     //lấy model tương ứng
@@ -13,7 +16,7 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
     /**
      * @param integer|null $id
-     * 
+     *
      * @return void
      */
 
@@ -23,7 +26,7 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
         return $productDetail;
     }
-    
+
     public function getProductDetailAll($productID, $color, $size)
     {
         $productDetail = $this->model->where('product_id', $productID)
@@ -40,10 +43,10 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
     {
         $arrSize = [];
         $arrThumbnail = [];
-        
+
         $productDetails = $this->model->where('product_id', $productID)->get();
 
-        foreach ($productDetails as $productDetail){
+        foreach ($productDetails as $productDetail) {
             $arrSize[] = $productDetail->size;
             $arrThumbnail[] = $productDetail->thumbnail;
         }
@@ -51,10 +54,27 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
         $thumbnailUnique = array_unique($arrThumbnail);
 
         return [
-           'sizeUnique' => $sizeUnique, 
+           'sizeUnique' => $sizeUnique,
            'thumbnailUnique' => $thumbnailUnique
         ];
-    }  
+    }
 
-    
+    public function updateProductDetailStorage($orderId)
+    {
+        $orderItems = OrderItem::where('order_id', $orderId)->get();
+
+        foreach ($orderItems as $orderItem) {
+            $productDetail = $this->model->find($orderItem->productDetail_id);
+            $newStorage = $productDetail->storage - $orderItem->quantity;
+            if ($newStorage < 0) {
+                return false;
+            }
+            $productDetailUpdate = $this->update($orderItem->productDetail_id, [
+                'sold_out'=>$orderItem->quantity + $productDetail->sold_out,
+                'storage' => $newStorage,
+            ]);
+        }
+
+        return $productDetailUpdate->product_id;
+    }
 }

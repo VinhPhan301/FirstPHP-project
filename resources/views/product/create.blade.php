@@ -18,10 +18,6 @@
         </div>
         <div class='product_image'>
             <p>Hình ảnh</p>
-            <label for="upload_image" class="fake_file">
-                <div class="select_file">Select file</div>
-                <input type="text">
-            </label>
             <input type="file" name="image" id='upload_image'>
         </div>
         <div class='product_price'>

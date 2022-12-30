@@ -9,7 +9,7 @@
 </div>
 <div class='divtablefather'>
     <div class='divtable'>
-        <table class="list_user_table">
+        <table class="list_user_table table-striped table">
             <thead>
                 <tr>
                     <th>STT</th>

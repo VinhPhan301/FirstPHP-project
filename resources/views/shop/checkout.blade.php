@@ -42,7 +42,7 @@
             <div class='checkout_left_mid'>
                 <h3>Phương thức thanh toán</h3>
                 <input type="text" name="payment_method" id="payment_method_input" value="">
-                <div class="choose_pay default_chosen_pay">               
+                <div onclick="cashPay()" class="choose_pay default_chosen_pay">               
                     <div>                   
                         <p class="checkbox">
                             <span class="in_checkbox">cod</span>
@@ -51,7 +51,7 @@
                     </div>
                     <img src="{{ asset('thumbnail/cast.png') }}" alt="">
                 </div>
-                <div class="choose_pay">               
+                <div onclick="showVNPayQr()" class="choose_pay">               
                     <div>
                         <p class="checkbox">
                             <span class="in_checkbox">vnpay</span>
@@ -60,7 +60,7 @@
                     </div>
                     <img src="{{ asset('thumbnail/pay1.png') }}" alt="">
                 </div>
-                <div class="choose_pay">
+                <div onclick="showShopeeQr()" class="choose_pay">
                     <div>
                         <p class="checkbox">
                             <span class="in_checkbox">shoppepay</span>
@@ -105,7 +105,8 @@
                                             <div>
                                                 <p>{{ $cartItem->productDetail->size }}</p>
                                                 <p>/</p>
-                                                <p class='cart_color' style="background:{{ $cartItem->productDetail->color }}"></p>
+                                                <p style="display:none">{{ $detailThumbnail = $cartItem->productDetail->thumbnail }}</p>
+                                                <p class='cart_color' style="background: url('{{ asset("picture/$detailThumbnail") }}')"></p>
                                             </div>
                                         </div>
                                     </div>
@@ -137,51 +138,49 @@
             <h3>Đơn hàng</h3>
             <div class="cart_price">
                 <span>Giá gốc</span> 
-                <span class='change_price'>{{ number_format($sumTotalPrice,0,'.','.') }} đ</span>
+                <span class='change_price'>{{ number_format($sumTotalPrice,0,',',',') }} đ</span>
             </div>
             <div class="cart_price">
-                @if ($sumTotalPrice < 1000000)
-                <span>Phí vận chuyển</span>
-                <span class='change_price'>30.000 đ</span>
-                @else
                 <span>Phí vận chuyển </span>
                 <span class='change_price'>(Miễn phí vận chuyển)</span>
-                @endif
             </div>
             <div class="cart_price">
-                <span>Giảm giá</span>
+                <span>Giảm giá <span class='discount_or_not'></span></span>
                 <span>
                     <span class="discount_put_here">0</span> đ
                 </span>
             </div>
-            <div class='total_price'>
-                @if ($sumTotalPrice < 1000000)
+            <div class='total_price'> 
                 <span>Tổng tiền thanh toán</span>
-                <span class='change_total_price'>{{ number_format($sumTotalPrice + 30000,0,'.','.') }} đ</span>
-                @else
-                <span>Tổng tiền thanh toán</span>
-                <span class='change_total_price'>{{ number_format($sumTotalPrice,0,'.','.') }} đ</span>
-                @endif
+                <span class='change_total_price'>
+                    <span class="totalprice_afterdiscount">
+                        {{ number_format($sumTotalPrice,0,',',',') }}
+                    </span> đ
+                </span>            
             </div>
             <div class='discount'>
                 <p>Mã giảm giá / Thẻ quà tặng</p>
                 <div>
-                    <select name="discount" id="select_voucher">
-                        <option value="null">Không có</option>
+                    <select name="discount" id="select_voucher" value=''>
                         @foreach($vouchers as $voucher)
                         <option value="{{ $voucher->discount }}">{{ $voucher->name }}</option>
                         @endforeach
+                        <option value="null">Không dùng</option>
                     </select>
-                    <p>Áp dụng</p>
-                </div>
-                <p style='margin-top: 40px'>Sử dụng C-Point</p>
-                <div>
-                    <input type="text" placeholder='Nhập số C-Point'>
-                    <p>Áp dụng</p>
+                    <p onclick='useVoucher()'>Áp dụng</p>
                 </div>
             </div>
+            <div class='vnpay_qr_code'>
+                <h3>Quét mã qua ứng dụng Ngân hàng / Ví điện tử</h3>
+                <img src="{{ asset('thumbnail/vnpqrcode.jpg') }}">
+            </div>
+            <div class='shoppe_qr_code'>
+                <h3><i class="fa-solid fa-wallet"></i> ShopeePay</h3>
+                <img src="{{ asset('thumbnail/shopeepayqrcode.png') }}">
+                <h3>Quét và thanh toán</h3>
+            </div>
             <div class='get_bill'>
-                <button type="submit">Thanh toán</button>
+                <button type='submit'>Thanh toán</button>
             </div>
         </div>
     </form>
@@ -205,5 +204,33 @@
         $('#payment_method_input').attr('value', payment)
     })
     
+    function useVoucher() {
+        var sumTotalPrice = JSON.parse("{{ json_encode($sumTotalPrice) }}");
+        if($('#select_voucher').val() !== 'null'){
+            var afterDiscount = sumTotalPrice * $('#select_voucher').val() / 100
+            $('.discount_put_here').text(afterDiscount.toLocaleString())
+            $('.discount_or_not').text(`(${$('#select_voucher').val()}%)`)
+            $('.totalprice_afterdiscount').text((sumTotalPrice - afterDiscount).toLocaleString())
+        } else {
+            var afterDiscount = 0
+            $('.discount_put_here').text(afterDiscount.toLocaleString())
+            $('.totalprice_afterdiscount').text((sumTotalPrice - afterDiscount).toLocaleString())
+        }
+    }
+
+    function showVNPayQr(){
+        $('.vnpay_qr_code').css('display', 'block')
+        $('.shoppe_qr_code').css('display', 'none')
+    }
+
+    function showShopeeQr(){
+        $('.vnpay_qr_code').css('display', 'none')
+        $('.shoppe_qr_code').css('display', 'block')
+    }
+
+    function cashPay(){
+        $('.vnpay_qr_code').css('display', 'none')
+        $('.shoppe_qr_code').css('display', 'none')
+    }
 </script>
 @endsection

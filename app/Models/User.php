@@ -26,6 +26,7 @@ class User extends Authenticatable
         'date_of_birth',
         'role',
         'status',
+        'avatar',
     ];
 
     /**
@@ -46,4 +47,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id');
+    }
 }

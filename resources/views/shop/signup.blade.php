@@ -11,16 +11,21 @@
             {{ $message }}
             @enderror
         </span>
-        <span class="opacity">1</span>
+        <span style="opacity: 0">1</span>
         <input type="password" name='password' placeholder='Vui lòng nhập mật khẩu'>
-        <span class="opacity">1</span>
-        <input type="password" name='password_confirm' placeholder='Xác nhận mật khẩu'>
         <span id='texterror'>
             @error('password')
             {{ $message }}
             @enderror
         </span>
-        <span class="opacity">1</span>
+        <span style="opacity: 0">1</span>
+        <input type="password" name='password_confirm' placeholder='Xác nhận mật khẩu'>
+        <span id='texterror'>
+            @error('password_confirm')
+            {{ $message }}
+            @enderror
+        </span>
+        <span style="opacity: 0">1</span>
         <input style="display: none" type="text" name='role' value='user'>
         <button type="submit">Đăng ký</button>
         <p class='agree'>Bằng việc chọn đăng ký, bạn đã đồng ý với 

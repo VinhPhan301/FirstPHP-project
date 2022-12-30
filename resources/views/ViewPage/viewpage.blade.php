@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/user.css') }}">
     <link rel = "icon" href ="{{ asset("thumbnail/favicon-16x16.ico") }}" type = "image/x-icon">
     <title>CNF ADMIN</title>
@@ -62,16 +63,30 @@
                     <p class="logout"><i class="fa-regular fa-circle-user"></i></p>
                 </div>
                 <div class="logoutchild">
-                    <a href='{{ route('user.logout') }}'>Logout <span><i class="fa-solid fa-arrow-right-from-bracket"></i></span></a>
-                    <a>Setting <span><i class="fa-solid fa-gear"></i></span></a>
+                    <a href='{{ route('user.logout') }}'>Đăng xuất 
+                        <span><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                    </a>
+                    <a href="{{ route('user.update', ['id' => $id]) }}">Tài khoản
+                        <span><i class="fa-solid fa-gear"></i></span></span>
+                    </a>
                     <a>Setting <span><i class="fa-solid fa-gear"></i></span></a>
                     <a>Setting <span><i class="fa-solid fa-gear"></i></span></a>
                 </div>
             </div>
             <div class="sidebaruserpic">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K7I2HBandSavKMZEI0tkyVDztS2ryFViOA&usqp=CAU" alt="">
-                <p class="username">Most Beautiful</p>
-                <p class="about">Something about me and my life</p>
+                <p class="username">{{ $userLogin->name }}</p>
+                <p class="about">
+                    @if ($userLogin->role == 'admin')
+                    Quản trị viên
+                    @elseif($userLogin->role == 'manager') 
+                    Quản lý
+                    @elseif ($userLogin->role == 'staff')
+                    Nhân viên
+                    @endif
+                    : 
+                    {{ $userLogin->email }}
+                </p>
             </div>
             <div class="dashbar">
                 <h1>Trang chủ</h1>
@@ -99,15 +114,7 @@
                                     Tạo mới
                                     </span>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="test">
-                                    <i class="fa-solid fa-users"></i> 
-                                    <span>
-                                    User Test
-                                    </span>
-                                </a>
-                            </li>
+                            </li>                           
                         </ul>
                     </div>
                 </div>
@@ -133,15 +140,7 @@
                                     Thêm mới
                                     </span>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="test">
-                                    <i class="fa-solid fa-users"></i> 
-                                    <span>
-                                    Cate Test
-                                    </span>
-                                </a>
-                            </li>
+                            </li>                        
                         </ul>
                     </div>
                 
@@ -168,15 +167,7 @@
                                     Thêm mới
                                     </span>
                                 </a>
-                            </li>
-                            <li>
-                                <a>
-                                    <i class="fa-solid fa-users"></i> 
-                                    <span>
-                                    Product Detail
-                                    </span>
-                                </a>
-                            </li>
+                            </li>                   
                         </ul>
                     </div>
                 
@@ -215,7 +206,7 @@
     
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
    <script>
     $('.disbookmark').click(function(){
         $(this).fadeOut(1);

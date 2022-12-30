@@ -13,7 +13,7 @@
     <title>CNF SHOP</title>
 </head>
 <body>
-    <p class="user_logged" style="display: none">{{ $user }}</p>
+    <p class="user_logged" style="display: none">{{ $userLogin }}</p>
     <div class="header" id="header">
         <div class="header_img">
             <img src="{{ asset('thumbnail/blackfriday.png') }}" alt="">

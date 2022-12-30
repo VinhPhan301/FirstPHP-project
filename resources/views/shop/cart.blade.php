@@ -14,7 +14,7 @@
         <div class="cart_body_left">
             <div class='freeship'>
                 <p><i class="fa-solid fa-truck-fast"></i></p>
-                <p>Miễn phí vận chuyển Đơn hàng trị giá từ 1 triệu đồng</p>
+                <p>Miễn phí vận chuyển với mọi đơn hàng</p>
             </div>
             <h3 class="show_cart_number">( <span class='cartItem_number'>{{ count($cartItems) }}</span> ) sản phẩm</h3>
             <img class='emptycart' src="{{ asset('thumbnail/emptycart2.png') }}" alt="">

@@ -24,11 +24,11 @@ class SignupFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'min:3|max:50',
-            'email' => 'required|email',
-            'phone' => 'min:9|max:11',
-            'password' => 'min:6|required_with:password_confirm|same:password_confirm',
-            'password_confirm' => 'required|min:6',
+            'name' => 'required|min:3|max:50',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|min:9|max:11|unique:users',
+            'password' => 'required|min:6|required_with:password_confirm|same:password_confirm',
+            'password_confirm' => 'required|min:6|required_with:password|same:password',
             'address' => 'min:5',
         ];
     }
@@ -36,12 +36,7 @@ class SignupFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.min' => 'Ten khong hop le',
-            'email' => 'Email khong hop le',
-            'password' => 'Password khong trung nhau',
-            'address' => 'Address khong hop le',
-            'phone' => 'Phone khong hop le',
-            'date_of_birth' => 'Date of Birth khong hop le',
+            'password_confirm.same' => 'Mật khẩu không trùng nhau'
         ];
     }
 }

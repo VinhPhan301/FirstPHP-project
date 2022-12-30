@@ -85,12 +85,12 @@ class AppServiceProvider extends ServiceProvider
             $user = auth()->guard('user')->user();
             if(null !== $user) {
                 view()->share([
-                    'user'=> $user,
+                    'userLogin'=> $user,
                     'id' => $user->id
                 ]);
             } else {
                 view()->share([
-                    'user'=> 'none',
+                    'userLogin'=> 'none',
                     'id' => 0
                 ]);
             }

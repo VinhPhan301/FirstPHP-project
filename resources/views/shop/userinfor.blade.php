@@ -6,24 +6,30 @@
         <p><i class="fa-solid fa-otter"></i></p>
     </div>
 </div>
-<form action="" method='post' class='userAction6 userAction'>
+<form action="" method='post' class='user_update_account'>
     @csrf
     <h3>Thông tin tài khoản</h3>
     <div>
         <p>Họ tên</p>
-        <input type="text" name='name' value="{{ $user->name }}">
+        <input type="text" name='name' value="{{ $user->name }}" @error('name') placeholder="{{ $message }}" @enderror>
     </div>
     <div>
         <p>Email</p>
-        <input type="text" name='email' value="{{ $user->email }}">
+        <p style="font-size: 20px; font-weight: bold;">{{ $user->email }}</p>
     </div>
     <div>
         <p>Số điện thoại</p>
-        <input type="text" name='phone' value="{{ $user->phone}}">
+        <input type="text" name='phone' value="{{ $user->phone}}" @error('phone') placeholder="{{ $message }}" @enderror> 
     </div>
     <div>
         <p>Ngày sinh</p>
         <input type="date" name='date_of_birth' value="{{ $user->date_of_birth}}">
+        <p>
+            @error('date_of_birth')
+            <span style="color:red; font-size:13px; font-weight:bold">{{ $message }}</span>
+            @enderror
+            <span style="opacity: 0">1</span>
+        </p>
     </div>
     <button type="submit" class="save_user_infor">Lưu thông tin</button>
 </form>

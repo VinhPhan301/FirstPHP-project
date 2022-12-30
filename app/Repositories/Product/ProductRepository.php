@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Repositories\Product;
+
 use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Models\Category;
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
@@ -15,7 +18,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     /**
      * @param integer|null $id
-     * 
+     *
      * @return void
      */
 
@@ -31,14 +34,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
     public function getProductName($type)
-    {      
-        $arrProductName = []; 
+    {
+        $arrProductName = [];
         $products = Product::where('type', $type)->get();
 
         foreach ($products as $product) {
-            $productNameSplit = explode(' ', $product->name);    
+            $productNameSplit = explode(' ', $product->name);
             $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1];
-            $arrProductName[] = $productNameJoin;               
+            $arrProductName[] = $productNameJoin;
         }
         $productList = array_unique($arrProductName);
 
@@ -46,7 +49,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
     public function getProductType($type)
-    { 
+    {
         $products = Product::where('type', $type)->get();
 
         return $products;
@@ -57,37 +60,24 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $arrProductName = [];
 
         $category = Category::where('name', $categoryName)->first(); //check lai logic query
-        // if (null !== $category) {
-        //     $products = $this->model->where('category_id', $category->id);
-
-        //     if(null !== $type) {
-        //         $products .= $products->where('type', $type);
-        //     }
-
-        //     if(null !== $price) {
-        //         $products .= $products->where('price', $price);
-        //     }
-
-        //     $products->get();
-        // }
-        if (null !== $category && null !== $type) {  //check lai dieu kien
+        if (null !== $category && null !== $type) {
             $products = $this->model
                 ->where('type', $type)
                 ->where('category_id', $category->id)
                 ->get();
         }
-        if (null !== $category && null === $type){
+        if (null !== $category && null === $type) {
             $products = $this->model
                 ->where('category_id', $category->id)
                 ->get();
         }
-        
+
         foreach ($products as $product) {
             $productNameSplit = explode(' ', $product->name);
             $productNameJoin = $productNameSplit[0]." ".$productNameSplit[1];
             $arrProductName[] = $productNameJoin;
         }
-        $productList = array_unique($arrProductName); 
+        $productList = array_unique($arrProductName);
 
         return [
             'products' => $products,
@@ -97,15 +87,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function findProduct($categoryName, $type, $productName)
     {
-
         $allCategories = Category::all();
         $allProducts = Product::all();
 
-        $category = Category::where('name','=',$categoryName)
+        $category = Category::where('name', '=', $categoryName)
             ->first();
 
         if (null !== $type && null !== $categoryName) {
-        
             $categoryID = $category->id;
 
             $dataFound = Product::where('category_id', $categoryID)
@@ -114,23 +102,21 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 ->get();
         }
         if (null !== $type && null === $categoryName) {
-
             $dataFound = Product::where('type', $type)
             ->where('name', 'like', '%'.$productName.'%')
             ->get();
-        }  
+        }
 
         return [
             'dataFound' => $dataFound,
-            'allCategories' => $allCategories, 
+            'allCategories' => $allCategories,
             'allProducts' => $allProducts
         ];
     }
 
     public function getRelatedProduct($productID, $product)
     {
-
-        $relatedProducts = Product::where('id', '!=' ,$productID)
+        $relatedProducts = Product::where('id', '!=', $productID)
             ->where('type', $product->type)
             ->where('category_id', $product->category_id)
             ->take(4)
@@ -139,6 +125,25 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $relatedProducts;
     }
 
+    public function updateProductSoldout($id)
+    {
+        $productDetails = ProductDetail::where('product_id', $id)->get();
+        $sum = 0;
+        foreach ($productDetails as $productDetail) {
+            $sum += $productDetail->sold_out;
+        }
+        $productUpdateSolout = $this->update($id, ['sold_out' => $sum]);
+
+        return $productUpdateSolout;
+    }
+
+    public function productOutStock()
+    {
+        $productOutStock = $this->model
+            ->orderBy('sold_out', 'DESC')
+            ->take(3)
+            ->get();
+
+        return $productOutStock;
+    }
 }
-
-

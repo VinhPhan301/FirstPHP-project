@@ -9,7 +9,7 @@
 </div>
 <div class='divtablefather'>
     <div class='divtable'>
-        <table class="list_user_table">
+        <table class="list_user_table table-striped table">
             <thead>
                 <tr>
                     <th>STT</th>
@@ -20,7 +20,7 @@
                     <th>Ngày sinh</th>
                     <th>Quyền</th>
                     <th>Chỉnh sửa</th>
-                    <th>Xóa</th>
+                    <th>Trạng thái</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,22 +35,49 @@
                 <td>{{ $item->address }}</td>
                 <td>{{ $item->phone }}</td>
                 <td>{{ $item->date_of_birth }}</td>
-                <td>{{ $item->role }}</td>
                 <td>
-                    <a style="color:black" onclick="confirmUpdate('{{ $item->id }}','{{ $item->name }}')" >
-                        <i class="fa-solid fa-screwdriver-wrench"></i>
-                    </a>
-                    <a href="{{ route('user.update', ['id' => $item->id]) }}">
-                        <span class="to_form_update_{{ $item->id }}"></span>
-                    </a>
+                    @if ($item->role == 'admin')
+                    Quản trị viên
+                    @elseif ($item->role == 'staff')
+                    Nhân viên
+                    @elseif ($item->role == 'manager')
+                    Quản lý
+                    @else
+                    Người dùng
+                    @endif                    
                 </td>
                 <td>
-                    <a style="color:black" onclick="confirmDelete('{{ $item->id }}','{{ $item->name }}')">
-                        <i class="fa-regular fa-trash-can"></i>
+                    <a style="color:black" href="{{ route('user.account', ['id' => $item->id]) }}">
+                        <i class="fa-solid fa-eye"></i>
                     </a>
-                    <a href="{{ route('user.delete', ['id' => $item->id]) }}">
-                        <span class="to_form_delete_{{ $item->id }}"></span>
+                </td>
+                <td id='hover_lock'>
+                    @if(
+                    ($userLogin->role == 'manager' && ($item->role == 'staff' || $item->role == 'user')) || 
+                    ($userLogin->role == 'staff' && $item->role == 'user') || 
+                    ($userLogin->role == 'admin' && $item->role !== 'admin')
+                    )   
+                        @if($item->status == 'locked')
+                        <a style="color:black" onclick="confirmDelete('{{ $item->id }}','{{ $item->name }}')">
+                            <i class="fa-solid fa-lock"></i>
+                        </a>
+                        <a href="{{ route('user.delete', ['id' => $item->id]) }}">
+                            <span class="to_form_delete_{{ $item->id }}"></span>
+                        </a>
+                        @else
+                        <a style="color:black" onclick="confirmUpdate('{{ $item->id }}','{{ $item->name }}')">
+                            <i class="fa-solid fa-lock-open"></i>
+                        </a>
+                        <a href="{{ route('user.delete', ['id' => $item->id]) }}">
+                            <span class="to_form_update_{{ $item->id }}"></span>
+                        </a>
+                        @endif
+                    @else   
+                    <a style="color:black" href="#" data-toggle="tooltip" data-placement="left" title="Không thể khóa">
+                        <i class="fa-solid fa-ban"></i>
                     </a>
+
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -64,7 +91,7 @@
 </div>
 <div class="alert_confirm_update">
     <p><i class="fa-solid fa-wrench"></i></p>
-    <p>Xác nhận chỉnh sửa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p>Xác nhận khóa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
     <p class="p_id_update"></p>
     <div>
         <button onclick="closeAlertUpdate()">Hủy</button>
@@ -73,7 +100,7 @@
 </div>
 <div class="alert_confirm_delete">
     <p><i class="fa-regular fa-trash-can"></i></i></p>
-    <p>Xác nhận xóa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p>Xác nhận mở khóa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
     <p class="p_id_delete"></p>
     <div>
         <button onclick="closeAlertDelete()">Hủy</button>
@@ -126,5 +153,9 @@
         var id = $('.p_id_delete').text()
         $(`.to_form_delete_${id}`).click()
     }
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
 </script>
 @endsection

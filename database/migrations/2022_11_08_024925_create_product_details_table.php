@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->string('price');
             $table->integer('storage');
+            $table->string('sold_out')->nullable();
             $table->timestamps();
         });
     }

@@ -7,8 +7,8 @@ class UserConstant
     public const MSG_NOT_FOUND = 'Không tìm thấy tài khoản';
     public const MSG_CREATE_SUCCESS = 'Thêm tài khoản thành công';
     public const MSG_UPDATE_SUCCESS = 'Cập nhật tài khoản thành công';
-    public const MSG_DELETE_SUCCESS = 'Xóa tài khoản thành công';
-    public const MSG_LOGIN_FAIL = 'Email hoặc Password không chính xác';
+    public const MSG_DELETE_SUCCESS = 'Thay đổi trạng thái thành công';
+    public const MSG_LOGIN_FAIL = 'Password không chính xác';
     public const MSG_LOGIN_SUCCESS = 'Đăng nhập thành công';
     public const MSG_LOGOUT_SUCCESS = 'Bạn đã đăng xuất';
 

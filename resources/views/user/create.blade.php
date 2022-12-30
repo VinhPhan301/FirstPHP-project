@@ -51,7 +51,7 @@
                         1
                     </span>
                     <span id='texterror'>
-                        @error('name')
+                        @error('password_confirm')
                         {{ $message }}
                         @enderror
                     </span>
@@ -73,13 +73,13 @@
                 <div class='phone'>
                     <p>Số điện thoại</p>
                     <input  type="text" placeholder="Enter Phone Number" name="phone">
-                    <span class='texterror'>
-                        1
-                    </span>
                     <span id='texterror'>
                         @error('phone')
                         {{ $message }}
                         @enderror
+                    </span>
+                    <span class='texterror'>
+                        1
                     </span>
                 </div>
             </div>

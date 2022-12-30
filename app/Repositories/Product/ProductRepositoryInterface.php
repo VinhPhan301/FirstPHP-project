@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Product;
 
 use App\Repositories\BaseRepositoryInterface;
@@ -16,5 +17,5 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
     public function findProduct($categoryName, $type, $productName);
 
     public function getRelatedProduct($productID, $product);
-
+    public function updateProductSoldout($id);
 }

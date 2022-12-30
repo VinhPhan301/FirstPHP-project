@@ -10,7 +10,7 @@ use App\Repositories\Product\CartItemRepositoryInterface;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 
 class CartController extends Controller
-{   
+{
     protected $cartRepo;
     protected $cartItemRepo;
     protected $productDetailRepo;
@@ -19,15 +19,14 @@ class CartController extends Controller
         CartRepositoryInterface $cartRepo,
         CartItemRepositoryInterface $cartItemRepo,
         ProductDetailRepositoryInterface $productDetailRepo
-     )
-    {
+    ) {
         $this->cartRepo = $cartRepo;
         $this->cartItemRepo = $cartItemRepo;
         $this->productDetailRepo = $productDetailRepo;
     }
 
 
-    
+
     /**
      * Create Cart and CartItem function
      *
@@ -40,11 +39,11 @@ class CartController extends Controller
         $productDetail = $this->productDetailRepo->getProductDetailAll($request->productID, $request->color, $request->size);
         $user = Auth::guard('user')->user();
 
-        if($user === null) {
+        if ($user === null) {
             return 'false';
         }
         $cartFound = $this->cartRepo->getCart($user->id);
-        if(null == $cartFound) {
+        if (null == $cartFound) {
             $data = [
                 'user_id' => $user->id,
                 'status' => 'active', //constant
@@ -83,14 +82,14 @@ class CartController extends Controller
      * @param Request $request
      * @return void
      */
-    public function getStorage(Request $request) 
+    public function getStorage(Request $request)
     {
         $productDetail = $this->productDetailRepo->getProductDetailAll($request->productID, $request->color, $request->size);
-        
-        if (null !== $productDetail->storage){
+
+        if (null !== $productDetail->storage) {
             return $productDetail->storage;
         }
-        
+
         return false;
     }
 }

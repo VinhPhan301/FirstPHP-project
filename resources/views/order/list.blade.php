@@ -2,14 +2,14 @@
 @section('content')
 <div class="listmsg">
     <div class="thongbao">
-        <h3>Thong bao:</h3> 
+        <h3>Thông báo:</h3> 
         <p class="checkadd"><i class="fa-regular fa-circle-check"></i></p>
     </div>
     <p><span class="success">{{ $msg }}</span></p>
 </div>
 <div class='divtablefather'>
     <div class='divtable'>
-        <table class="list_user_table">
+        <table class="list_user_table table-striped table">
             <thead>
                 <tr>
                     <th>Mã đơn</th>
@@ -31,15 +31,23 @@
                     <td class='order_status_{{ $order->status }} order_status'>
                         @if ($order->status === 'active')
                         <p>
-                            <i class="fa-solid fa-cart-shopping"></i> {{ $order->status }}
+                            <i class="fa-solid fa-cart-shopping"></i> Đã đặt
                         </p>
                         @elseif ($order->status === 'delivering')
                         <p>
-                            <i class="fa-solid fa-truck-fast"></i> {{ $order->status }}
+                            <i class="fa-solid fa-truck-fast"></i> Đang giao
                         </p>
                         @elseif ($order->status === 'cancel')
                         <p>
-                            <i class="fa-solid fa-ban"></i> {{ $order->status }}
+                            <i class="fa-solid fa-ban"></i> Đã hủy
+                        </p>
+                        @elseif ($order->status === 'complete')
+                        <p>
+                            <i class="fa-regular fa-circle-check"></i> Đã hoàn thành
+                        </p>
+                        @else
+                        <p>
+                            <i class="fa-regular fa-trash-can"></i> Yêu cầu hủy
                         </p>
                         @endif
                     </td>
@@ -50,9 +58,10 @@
                         {{ $sumtotal += (int)$orderItem->total_price }}
                         @endforeach
                     </p>
-                    @if ($order->status == 'cancel')
-                    <td style="text-decoration: line-through">
-                        {{ number_format($sumtotal,0,'.','.') }} đ
+                    @if ($order->discount !== 'null')
+                    <td>
+                        <p style="font-size:11px; text-decoration: line-through; color:red; font-weight:bold">{{  number_format($sumtotal,0,'.','.')  }} đ</p>
+                        <p style="font-size:17px; font-weight: bold">{{  number_format(($sumtotal-$sumtotal*$order->discount / 100 ),0,'.','.')  }} đ</p>
                     </td>
                     @else
                     <td style="font-weight: bold">

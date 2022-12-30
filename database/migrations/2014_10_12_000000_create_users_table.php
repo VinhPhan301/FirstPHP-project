@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('date_of_birth')->nullable();
             $table->string('role');
             $table->string('status');
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

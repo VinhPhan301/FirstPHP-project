@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Repositories\Product;
+
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\OrderRepositoryInterface;
+use App\Models\OrderItem;
 
 class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 {
@@ -28,7 +31,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->where('status', $status)
             ->orderBy('created_at', 'DESC')
             ->get();
-    
+
         return $orders;
     }
 
@@ -36,11 +39,38 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         $arrStatus = [];
         $orders = $this->model->all();
-        foreach ($orders as $order){
+        foreach ($orders as $order) {
             $arrStatus[] = $order->status;
         }
 
         return array_unique($arrStatus);
     }
 
+    public function getOrderCancel($userId)
+    {
+        $orderCancels = $this->model
+            ->where('user_id', $userId)
+            ->where('status', 'cancel')
+            ->get();
+
+        return $orderCancels;
+    }
+
+    public function getBoughtTotalPrice($userId)
+    {
+        $orderCompletes = $this->model
+            ->where('user_id', $userId)
+            ->where('status', 'complete')
+            ->get();
+
+        $boughtTotal = 0;
+        foreach ($orderCompletes as $orderComplete) {
+            $orderItems = OrderItem::where('order_id', $orderComplete->id)->get();
+            foreach ($orderItems as $orderItem) {
+                $boughtTotal += $orderItem->total_price;
+            }
+        }
+
+        return $boughtTotal;
+    }
 }

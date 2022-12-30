@@ -163,7 +163,6 @@ p {
     width: 100%;
     padding: 5px 0px;
     font-size: 20px;
-    margin-bottom: 5px;
 }
 .signup_form_box form h2 {
     margin-bottom: 30px;
@@ -189,6 +188,10 @@ p {
     color: white;
     text-decoration: none;
 }
+.signup_form_box span {
+    color: red;
+    font-size: 13px;
+}
 .agree {
     font-size: 13px;
     margin-top: 20px;
@@ -198,12 +201,6 @@ p {
 }
 .agree span:hover {
     cursor: pointer;
-}
-.opacity {
-    opacity: 0;
-}
-#texterror {
-    color: red;
 }
 /**************************************** End Shop Signup CSS ********************/
 
@@ -219,8 +216,15 @@ p {
     width: 100%;
     margin: 10px 0px;
 }
+.loginform input:focus::-webkit-input-placeholder {
+    opacity: 0;
+}
 .loginform button {
     margin-top: 10px;
+}
+.login_shop_error {
+    font-size: 13px;
+    color: red;
 }
 /**************************************** End Shop Login CSS ********************/
 
@@ -948,7 +952,7 @@ p {
 .freeship {
     display: flex;
     justify-content: space-between;
-    width: 47%;
+    width: 40%;
     background: white;
     box-shadow: 3px 3px 3px 3px rgb(227, 227, 227);
     padding: 10px 20px;
@@ -1265,7 +1269,6 @@ table {
     border: none;
     width: 100%;
     outline: none;
-    padding-bottom: 10px;
     font-weight: bold;
     font-size: 18px;
 }
@@ -1510,6 +1513,9 @@ input[type="checkbox" i] {
     text-decoration: underline;
     cursor: pointer;
 }
+.backto_order {
+    z-index: 50;
+}
 .backto_order:hover {
     cursor: pointer;
     color: #63b1bc;
@@ -1522,6 +1528,13 @@ input[type="checkbox" i] {
 }
 .favorite_div {
     width: 23.2%;
+}
+.user_update_account input::-webkit-input-placeholder {
+    font-size: 13px;
+    color: red;
+}
+.user_update_account input:focus::-webkit-input-placeholder {
+    opacity: 0;
 }
 /**************************************** End User Infor CSS ******************************/
 
@@ -1692,17 +1705,19 @@ input[type="checkbox" i] {
 }
 .get_bill button {
     width: 100%;
-    border: none;
     background: rgb(56, 192, 255);
     color: white;
     font-size: 20px;
     padding: 10px;
+    text-align: center;
+    border: none;
 }
 .get_bill button:hover {
     cursor: pointer;
     background: #333f48;
     font-weight: bold;
 }
+
 #payment_method_input {
     display: none;
 }
@@ -1712,5 +1727,29 @@ input[type="checkbox" i] {
 #select_voucher option {
     width: 100%;
 }
-
+.vnpay_qr_code {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    display: none;
+}
+.vnpay_qr_code img {
+    width: 100%;
+}
+.shoppe_qr_code {
+    width: 100%;
+    text-align: center;
+    background: orangered;
+    color: white;
+    padding: 10px 0px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    display: none;
+}
+.shoppe_qr_code h3 {
+    margin: 10px 0px;
+}
+.shoppe_qr_code img {
+    width: 60%;
+}
 /**************************************** End Checkout CSS ******************************/

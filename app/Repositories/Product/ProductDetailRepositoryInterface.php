@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Product;
 
 use App\Repositories\BaseRepositoryInterface;
@@ -11,4 +12,5 @@ interface ProductDetailRepositoryInterface extends BaseRepositoryInterface
 
     public function getSizeColor($productID);
 
+    public function updateProductDetailStorage($orderId);
 }

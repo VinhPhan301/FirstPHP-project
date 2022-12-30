@@ -9,18 +9,22 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Http\Requests\SignupFormRequest;
 use App\Repositories\Product\UserRepositoryInterface;
+use App\Repositories\Product\OrderRepositoryInterface;
 use App\Constants\CommonConstant;
 use App\Constants\UserConstant;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
-
     protected $userRepo;
+    protected $orderRepo;
 
-    public function __construct(UserRepositoryInterface $userRepo)
-    {
-        $this->userRepo = $userRepo;    
+    public function __construct(
+        UserRepositoryInterface $userRepo,
+        OrderRepositoryInterface $orderRepo,
+    ) {
+        $this->userRepo = $userRepo;
+        $this->orderRepo = $orderRepo;
     }
 
 
@@ -29,7 +33,7 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function index() : View
+    public function index(): View
     {
         $users = $this->userRepo->getAll();
 
@@ -39,7 +43,7 @@ class UserController extends Controller
                 ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
 
-        return view('user.list',[
+        return view('user.list', [
             'user' => $users,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
@@ -51,7 +55,7 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function getViewCreate() : View
+    public function getViewCreate(): View
     {
         return view('user.create', [
             'msg' => session()->get(CommonConstant::MSG) ?? null
@@ -66,7 +70,7 @@ class UserController extends Controller
      * @return void
      */
     public function create(SignupFormRequest $request)
-    {    
+    {
         $password = Hash::make($request->password);
         $data = [
             UserConstant::COLUMN['name'] => $request->name,
@@ -85,7 +89,7 @@ class UserController extends Controller
                 ->route('user.create')
                 ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
-        
+
         return redirect()
             ->route('user.list')
             ->with(CommonConstant::MSG, UserConstant::MSG['create_success']);
@@ -98,11 +102,16 @@ class UserController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function delete($id)
+    public function updateStatus($id)
     {
-        $user = $this->userRepo->delete($id);
+        $user = $this->userRepo->find($id);
+        if ($user->status == 'unlock') {
+            $userChange = $this->userRepo->update($id, ['status' => 'locked']);
+        } elseif ($user->status == 'locked') {
+            $userChange = $this->userRepo->update($id, ['status' => 'unlock']);
+        }
 
-        if (!$user || null === $user) {
+        if (!$userChange || null === $userChange) {
             return redirect()
                 ->route('user.list')
                 ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
@@ -120,16 +129,16 @@ class UserController extends Controller
      * @param [type] $id
      * @return View
      */
-    public function getViewUpdate($id) : View
+    public function getViewUpdate($id): View
     {
         $user = $this->userRepo->find($id);
 
-        if (! $user || null == $user) { 
+        if (! $user || null == $user) {
             return redirect()
                 ->route('user.list')
-                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']); 
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
-       
+
         return view('user.update', ['user' => $user]);
     }
 
@@ -150,7 +159,7 @@ class UserController extends Controller
                 ->route('user.list')
                 ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
-        
+
         return redirect()
             ->route('user.list')
             ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
@@ -163,16 +172,14 @@ class UserController extends Controller
      * @return void
      */
     public function getViewLogin()
-    {  
-        if(Auth::guard('user')->check() == false){
+    {
+        if (Auth::guard('user')->check() == false) {
             return view('user.login');
-        }
-        else{
+        } else {
             $role = Auth::guard('user')->user()->role;
-            if($role == 'admin'){
+            if ($role == 'admin') {
                 return redirect()->route('user.viewpage');
-            }
-            else{
+            } else {
                 return redirect()->route('shop.view');
             }
         }
@@ -184,7 +191,7 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function getViewPage() : View
+    public function getViewPage(): View
     {
         return view('user.viewpage');
     }
@@ -196,29 +203,26 @@ class UserController extends Controller
      * @param Request $request
      * @return void
      */
-    public function postLogin(Request $request)
+    public function postLogin(LoginRequest $request)
     {
         $login = [
             UserConstant::COLUMN['email'] => $request->email,
             UserConstant::COLUMN['password'] => $request->password,
         ];
-        
+
         if (auth()->guard('user')->attempt($login)) {
             $this->currentUser = auth()->guard('user')->user();
             $role = auth()->guard('user')->user()->role;
 
-            if ( $role == 'admin' ) {
+            if ($role === 'admin' || $role === 'staff' || $role === 'manager') {
                 return redirect()
                     ->route('user.viewpage');
-            }
-            else {
-                return redirect()  
+            } else {
+                return redirect()
                     ->route('shop.view');
             }
-           
         } else {
-            
-            return redirect()->back()->with('status', UserConstant::MSG['login_fail']);
+            return redirect()->back()->with('message', UserConstant::MSG['login_fail']);
         }
     }
 
@@ -229,10 +233,10 @@ class UserController extends Controller
      * @param Request $request
      * @return void
      */
-    public function getLogout(Request $request) 
+    public function getLogout(Request $request)
     {
         Auth::guard('user')->logout();
-        
+
         return redirect()->route('user.login');
     }
 
@@ -242,9 +246,35 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function getViewTest() : View
+    public function getViewTest(): View
     {
         return view('user.test');
     }
 
+
+
+    /**
+     * Show user account in admin function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function getUserAccount($id)
+    {
+        $user = $this->userRepo->find($id);
+        $orderCancel = $this->orderRepo->getOrderCancel($id);
+        $totalPriceBought = $this->orderRepo->getBoughtTotalPrice($id);
+        if (! $user || null == $user) {
+            return redirect()
+                ->route('user.list')
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
+        }
+
+        return view('user.account', [
+            'boughtTotal' => $totalPriceBought,
+            'cancelOrder' => $orderCancel,
+            'account' => $user,
+            'msg' => session()->get(CommonConstant::MSG) ?? null
+        ]);
+    }
 }

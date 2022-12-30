@@ -8,6 +8,8 @@ use App\Repositories\Product\OrderItemRepositoryInterface;
 use App\Repositories\Product\CartItemRepositoryInterface;
 use App\Repositories\Product\CartRepositoryInterface;
 use App\Repositories\Product\UserRepositoryInterface;
+use App\Repositories\Product\ProductDetailRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use App\Constants\CommonConstant;
 use Auth;
 
@@ -18,21 +20,25 @@ class OrderController extends Controller
     protected $cartItemRepo;
     protected $cartRepo;
     protected $userRepo;
+    protected $productDetailRepo;
+    protected $productRepo;
 
     public function __construct(
-    OrderRepositoryInterface $orderRepo,
-    CartItemRepositoryInterface $cartItemRepo,
-    OrderItemRepositoryInterface $orderItemRepo,
-    CartRepositoryInterface $cartRepo,
-    UserRepositoryInterface $userRepo,
-    )
-
-    {
+        OrderRepositoryInterface $orderRepo,
+        CartItemRepositoryInterface $cartItemRepo,
+        OrderItemRepositoryInterface $orderItemRepo,
+        CartRepositoryInterface $cartRepo,
+        UserRepositoryInterface $userRepo,
+        ProductDetailRepositoryInterface $productDetailRepo,
+        ProductRepositoryInterface $productRepo,
+    ) {
         $this->orderRepo = $orderRepo;
         $this->cartItemRepo = $cartItemRepo;
         $this->cartRepo = $cartRepo;
         $this->orderItemRepo = $orderItemRepo;
         $this->userRepo = $userRepo;
+        $this->productDetailRepo = $productDetailRepo;
+        $this->productRepo = $productRepo;
     }
 
 
@@ -44,7 +50,7 @@ class OrderController extends Controller
     public function getViewOrder(Request $request)
     {
         $user = Auth::guard('user')->user();
-        
+
         if ($request->status === null || $request->status === 'all') {
             $orders = $this->orderRepo->getOrderByUserId($user->id);
         } else {
@@ -52,14 +58,14 @@ class OrderController extends Controller
         }
         $orderStatus = $this->orderRepo->getOrderStatus();
 
-        return view('shop.userorder',[
+        return view('shop.userorder', [
             'orderStatus' => $orderStatus,
             'orders' => $orders,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
-    
+
 
     /**
      * Create new order function
@@ -71,7 +77,6 @@ class OrderController extends Controller
     {
         $user = Auth::guard('user')->user();
         if (!$user || null === $user) {
-
             return $user;
         } else {
             $data = [
@@ -84,7 +89,7 @@ class OrderController extends Controller
                 'discount' => $request->discount,
                 'status' => 'active',
             ];
-            $userFirstUpdate = $this->userRepo->updateIfNull($user->id,[
+            $userFirstUpdate = $this->userRepo->updateIfNull($user->id, [
                 'address' => $request->address,
                 'phone' => $request->phone,
                 'name' => $request->name,
@@ -95,7 +100,7 @@ class OrderController extends Controller
             foreach ($cartItems as $cartItem) {
                 $cart = $this->cartRepo->find($cartItem->cart_id);
 
-                if(null !== $cart) {
+                if (null !== $cart) {
                     $cart = $this->cartRepo->update($cartItem->cart_id, ['status' => 'checkout']);
                 }
 
@@ -108,7 +113,7 @@ class OrderController extends Controller
                 ];
 
                 $cartItemDelete = $this->cartItemRepo->delete($cartItem->id);
-                $orderItem = $this->orderItemRepo->create($orderItemData);  
+                $orderItem = $this->orderItemRepo->create($orderItemData);
             }
 
             return redirect()
@@ -117,13 +122,13 @@ class OrderController extends Controller
         }
     }
 
-    
 
-    public function getViewAdminOrder() 
+
+    public function getViewAdminOrder()
     {
         $orders = $this->orderRepo->getAll();
 
-        return view('order.list',[
+        return view('order.list', [
             'orders' => $orders,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
@@ -135,7 +140,7 @@ class OrderController extends Controller
         $order = $this->orderRepo->find($id);
         $orderItems = $this->orderItemRepo->getOrderItemByOrderId($id);
 
-        return view('order.item',[
+        return view('order.item', [
             'order' => $order,
             'orderItems' => $orderItems,
             'msg' => session()->get(CommonConstant::MSG) ?? null
@@ -146,24 +151,31 @@ class OrderController extends Controller
     public function updateCancel(Request $request)
     {
         $orderCancel = $this->orderRepo->update($request->id, ['status' => 'cancelRequest']);
-        
+
         return $orderCancel;
     }
 
     public function updateDelivering(Request $request)
     {
-
-        if($request->status == 'active'){
+        if ($request->status == 'active') {
+            $productDetails = $this->productDetailRepo->updateProductDetailStorage($request->id);
+            if ($productDetails === false) {
+                return redirect()
+                    ->route('order.item', ['id' => $request->id])
+                    ->with(CommonConstant::MSG, 'Không đủ số lượng');
+            }
+            $productUpdate = $this->productRepo->updateProductSoldout($productDetails);
             $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'delivering']);
-        } elseif($request->status == 'cancelRequest' || $request->status == 'soldout') {
+        } elseif ($request->status == 'cancelRequest' || $request->status == 'soldout') {
             $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'cancel']);
         } elseif ($request->status == 'cancel') {
             $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'deleted']);
+        } elseif ($request->status == 'delivering') {
+            $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'complete']);
         }
 
         return redirect()
             ->route('order.list')
             ->with(CommonConstant::MSG, 'Xác nhận đơn hàng thành công');
     }
-
 }

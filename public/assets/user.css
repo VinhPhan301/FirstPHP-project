@@ -4,7 +4,11 @@
     margin: 0;
     font-family: "Roboto";
 }
-
+* h1,
+* p,
+* ul {
+    margin: 0;
+}
 /******************** Start Up date form *******************/
 .updateform {
     width: 30%;
@@ -39,39 +43,63 @@
 /******************** Login form ********************/
 .loginform {
     width: 30%;
-    background: rgb(58, 157, 255);
+    border: 3px solid rgb(58, 157, 255);
     margin: 20px auto;
     padding: 20px 25px;
     border-radius: 5px;
 }
-.loginform input {
+.div_input {
     width: 100%;
-    padding: 10px 15px;
-    font-size: 18px;
+    background: white;
+    margin-bottom: 10px;
+    padding: 10px 20px 0px 15px;
+    border: 1px solid rgb(58, 157, 255);
     border-radius: 5px;
-    border: none;
-    margin-bottom: 15px;
 }
-.loginform p {
+.div_input input {
+    padding: 5px 0px;
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.div_input input:focus {
+    outline: none;
+}
+.div_input input::placeholder {
+    font-size: 14px;
+    color: red;
+    opacity: 0.7;
+}
+.div_input input:focus::-webkit-input-placeholder {
+    opacity: 0;
+}
+.login_paw {
     font-size: 60px;
-    color: white;
+    color: rgb(58, 157, 255);
     width: 100%;
     text-align: center;
     margin-bottom: 15px;
 }
 .loginform button {
-    background: pink;
+    background: rgb(106, 181, 255);
     font-size: 18px;
     border-radius: 5px;
     border: none;
     width: 30%;
     padding: 10px 0;
     color: black;
+    font-weight: bold;
 }
 .loginform button:hover {
     color: white;
-    background: rgb(218, 0, 36);
+    background: rgb(0, 101, 203);
     cursor: pointer;
+}
+.div_button {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
 }
 /********************* End login form *********************/
 
@@ -172,7 +200,9 @@ header p:hover {
 .about {
     font-size: 15px;
     opacity: 0.8;
-    color: grey;
+    color: rgb(147, 147, 147);
+    margin: 5px 0px;
+    font-weight: bold;
 }
 .sidebarheader {
     color: rgb(0, 170, 255);
@@ -316,8 +346,36 @@ a {
 .list_user_table th,
 .list_user_table tr,
 .list_user_table td {
-    padding: 10px 0;
+    padding: 10px 0px;
     text-align: center;
+}
+.list_user_table th {
+    font-size: 18px;
+    padding: 20px;
+    background: #63b1bc;
+    color: white;
+}
+.list_user_table th:nth-child(1) {
+    border-top-left-radius: 10px;
+}
+.list_user_table th:last-child {
+    border-top-right-radius: 10px;
+}
+.list_user_table td {
+    font-weight: bold;
+    color: #347881 !important;
+    vertical-align: middle;
+}
+.list_user_table td i {
+    border: 1px solid rgb(253, 253, 253, 0);
+    padding: 5px;
+    border-radius: 50%;
+}
+.list_user_table td i:hover {
+    cursor: pointer;
+    border: 1px solid black;
+    background: black !important;
+    color: #63b1bc !important;
 }
 .list_user_table {
     width: 100%;
@@ -367,7 +425,9 @@ a {
     top: 0;
     right: 0;
 }
-
+#hover_lock:hover {
+    cursor: pointer;
+}
 /******************** End User List CSS ********************/
 
 /******************** Start User Create  CSS ********************/
@@ -544,17 +604,11 @@ a {
 }
 .create_category_form {
     width: 40%;
-    border-radius: 10px;
     padding: 10px 30px 20px 30px;
     height: fit-content;
-    background: rgba(0, 0, 0, 0.7);
-    margin-top: 20px;
-}
-.create_category_form p {
-    margin: 10px 0px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
+    background: white;
+    border: 2px solid #63b1bc;
+    margin: 40px auto;
 }
 .category_content h1 {
     width: 100%;
@@ -567,19 +621,27 @@ a {
 .create_category_form div {
     width: 100%;
 }
+.category_name {
+    width: 100%;
+    border: 1px solid #63b1bc;
+    padding: 5px 10px 0px 10px;
+    margin-bottom: 30px;
+}
+.category_name p {
+    font-size: 15px;
+}
 .category_name input {
     width: 100%;
-    border-radius: 10px;
-    padding: 10px 20px;
+    padding: 5px 0px;
     border: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.category_name input:focus {
+    outline: none;
 }
 .category_image input {
     width: 100%;
-}
-#upload_image {
-    opacity: 0;
-    z-index: -1;
-    display: none;
 }
 .fake_file {
     width: 100%;
@@ -614,7 +676,6 @@ a {
 .category_create {
     background: rgb(110, 199, 255);
     padding: 10px 20px;
-    border-radius: 10px;
     border: none;
     margin-top: 20px;
     font-size: 20px;
@@ -868,7 +929,7 @@ a {
 }
 .orderItem_body {
     width: 100%;
-    height: 84%;
+    height: 83%;
     margin-top: 15px;
     display: flex;
     justify-content: space-between;
@@ -876,8 +937,9 @@ a {
 .orderItem_body_left {
     width: 77%;
     box-shadow: 0px 0px 3px 3px rgb(217, 217, 217);
-    padding: 15px;
+    padding: 15px 15px 10px 15px;
     border-radius: 10px;
+    height: fit-content;
 }
 .orderItem_body_right {
     width: 21.5%;
@@ -895,15 +957,27 @@ a {
     height: 250px;
     overflow-y: scroll;
 }
+.in_orderItem_table thead tr {
+    background: #63b1bc;
+    color: white;
+    font-size: 18px;
+}
+.in_orderItem_table td {
+    vertical-align: middle;
+    padding: 2px 0;
+    font-size: 15px;
+    font-weight: bold;
+}
 .orderItem_box_table::-webkit-scrollbar {
     display: none;
 }
-.orderItem_color {
+#orderItem_color {
     width: 13px;
     height: 13px;
     border: 1px solid black;
     display: inline-block;
     border-radius: 50%;
+    background-position: center !important;
 }
 .create_bill {
     display: flex;
@@ -914,12 +988,11 @@ a {
 .create_bill_left,
 .create_bill_right {
     width: 49%;
-    padding: 20px 10px;
+    padding: 20px 10px 0px 10px;
 }
 .create_bill_left div {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
     font-size: 16px;
 }
 .create_bill_left div p:nth-child(2) {
@@ -1014,7 +1087,12 @@ a {
     font-size: 14px;
 }
 .user_infor_bill {
-    height: 52.6%;
+    height: 73.5%;
+    padding-top: 10px;
+}
+.user_infor_bill h5 {
+    font-size: 17px;
+    font-weight: bold;
 }
 .user_infor_bill div {
     display: flex;
@@ -1022,7 +1100,7 @@ a {
     box-shadow: none;
     padding: 0;
     font-size: 15px;
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 0;
 }
 .user_infor_bill h5 {
@@ -1032,6 +1110,11 @@ textarea {
     padding: 5px;
     font-size: 20px;
     font-weight: bold;
+}
+.delivering_and_complete {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 /******************** End Order Item Admin CSS ********************/
 
@@ -1084,3 +1167,169 @@ textarea {
     display: none;
 }
 /******************** End Alert Admin CSS ********************/
+
+/******************** Start User Acount Admin CSS ********************/
+.userAcount_box {
+    width: 100%;
+    height: 97%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.userAcount_box_left {
+    width: 32%;
+    border-radius: 10px;
+    height: fit-content;
+    padding: 30px 20px;
+    box-shadow: 0px 0px 3px 3px rgb(187, 187, 187);
+}
+.userAcount_box_right {
+    width: 66%;
+    box-shadow: 0px 0px 3px 3px rgb(187, 187, 187);
+    border-radius: 10px;
+    height: 100%;
+}
+.account_avatar {
+    width: 100%;
+    text-align: center;
+}
+.account_avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.account_role {
+    text-align: center;
+    margin-top: 20px;
+}
+.account_role p:nth-child(1) {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+.account_status {
+    width: 100%;
+    margin-top: 15px;
+}
+.account_status p {
+    padding: 7px 20px;
+    background: white;
+    border: 2px solid #63b1bc;
+    border-radius: 20px;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: bold;
+    color: #2a808b;
+}
+.account_chart {
+    margin-top: 70px;
+    width: 100%;
+}
+.account_chart p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    border: 1px solid #63b1bc;
+    padding: 7px 10px;
+    border-radius: 4px;
+}
+.account_id {
+    padding: 15px;
+    border-bottom: 2px solid #63b1bc;
+    font-size: 22px;
+    font-weight: bold;
+}
+.account_name_email {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+.account_name_email div {
+    width: 49%;
+}
+.account_name_email div p:nth-child(1) {
+    font-size: 16px;
+    margin-left: 5px;
+}
+.account_name_email div p:nth-child(2) {
+    width: 100%;
+    padding: 7px 15px;
+    border: 2px solid #63b1bc;
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.account_address {
+    padding: 15px;
+}
+.account_address div p:nth-child(1) {
+    font-size: 16px;
+    margin-left: 5px;
+}
+.account_address div p:nth-child(2) {
+    width: 100%;
+    padding: 7px 15px;
+    border: 2px solid #63b1bc;
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.account_change_role {
+    width: 100%;
+    padding: 15px;
+}
+.account_change_role div p:nth-child(1) {
+    font-size: 16px;
+    margin-left: 5px;
+}
+.change_role_div form {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+.change_role_div select {
+    width: 65%;
+    padding: 7px 15px;
+    border: 2px solid #63b1bc;
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.change_role_div button {
+    padding: 11px 10px;
+    height: fit-content;
+    margin-top: 5px;
+    font-weight: bold;
+    background: white;
+    border: 2px solid #63b1bc;
+}
+.change_role_div button:hover {
+    background: #63b1bc;
+    color: white;
+    cursor: pointer;
+}
+.account_change_role div p:nth-child(1) {
+    font-size: 16px;
+    margin-left: 5px;
+}
+.account_change_role div p:nth-child(2) {
+    width: 30%;
+    padding: 7px 15px;
+    border: 2px solid #63b1bc;
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#lock_change_status {
+    background: black;
+    border: none;
+    color: white;
+}
+#unlock_change_status:hover {
+    background: #63b1bc;
+    color: white;
+}
+/******************** End User Acount Admin CSS ********************/

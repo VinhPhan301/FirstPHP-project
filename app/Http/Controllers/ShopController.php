@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserSignupRequest;
+use App\Http\Requests\UserUpdateAccountRequest;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Product\UserRepositoryInterface;
@@ -18,7 +21,6 @@ use App\Constants\UserConstant;
 use App\Http\Requests\SignupFormRequest;
 
 class ShopController extends Controller
-
 {
     protected $productRepo;
     protected $productDetailRepo;
@@ -29,16 +31,14 @@ class ShopController extends Controller
     protected $voucherRepo;
 
     public function __construct(
-    ProductRepositoryInterface $productRepo, 
-    ProductDetailRepositoryInterface $productDetailRepo,
-    UserRepositoryInterface $userRepo,
-    CartItemRepositoryInterface $cartItemRepo,
-    OrderRepositoryInterface $orderRepo,
-    FavoriteRepositoryInterface $favoriteRepo,
-    VoucherRepositoryInterface $voucherRepo,
-    )
-    
-    {
+        ProductRepositoryInterface $productRepo,
+        ProductDetailRepositoryInterface $productDetailRepo,
+        UserRepositoryInterface $userRepo,
+        CartItemRepositoryInterface $cartItemRepo,
+        OrderRepositoryInterface $orderRepo,
+        FavoriteRepositoryInterface $favoriteRepo,
+        VoucherRepositoryInterface $voucherRepo,
+    ) {
         $this->productRepo = $productRepo;
         $this->productDetailRepo = $productDetailRepo;
         $this->userRepo = $userRepo;
@@ -46,7 +46,7 @@ class ShopController extends Controller
         $this->orderRepo = $orderRepo;
         $this->favoriteRepo = $favoriteRepo;
         $this->voucherRepo = $voucherRepo;
-    }    
+    }
 
 
     /**
@@ -56,14 +56,13 @@ class ShopController extends Controller
      * @return void
      */
     public function getView(Request $request)
-    {  
+    {
         $type = $request->query('type');
         if (null !== $request->query('type')) {
-
             $products = $this->productRepo->getProductType($type);
             $productList = $this->productRepo->getProductName($type);
 
-            return view('shop.view',[
+            return view('shop.view', [
                 'products' => $products,
                 'type' => $type,
                 'productList' => $productList,
@@ -75,7 +74,7 @@ class ShopController extends Controller
         $products = $this->productRepo->getAll();
         $productList = $this->productRepo->getProductList();
 
-        return view('shop.view',[
+        return view('shop.view', [
             'products' => $products,
             'type' => '',
             'productList' => $productList,
@@ -96,11 +95,10 @@ class ShopController extends Controller
         $categoryName = $request->query('category');
         $type = $request->query('type');
 
-        if ($categoryName && $type){
-            
+        if ($categoryName && $type) {
             $products = $this->productRepo->getViewCategory($type, $categoryName);
 
-            return view('shop.view',[
+            return view('shop.view', [
                 'type' => $type,
                 'productList' => $products['productList'],
                 'products' => $products['products'],
@@ -109,9 +107,9 @@ class ShopController extends Controller
             ]);
         }
 
-        $products = $this->productRepo->getAll();
+        $products = $this->productRepo->getViewCategory($type, $categoryName);
 
-        return view('shop.view',[
+        return view('shop.view', [
             'products' => $products,
             'type' => $type,
             'productList' => [],
@@ -126,8 +124,8 @@ class ShopController extends Controller
      * @param Request $request
      * @return void
      */
-    public function findProduct(Request $request) 
-    {   
+    public function findProduct(Request $request)
+    {
         $categoryName = $request->query('category');
         $type = $request->query('type');
         $productName =$request->query('productName');
@@ -135,7 +133,7 @@ class ShopController extends Controller
         $findProduct = $this->productRepo->findProduct($categoryName, $type, $productName);
         // dd($findProduct);
 
-        return view('shop.findProduct',[
+        return view('shop.findProduct', [
             'dataFound' => $findProduct['dataFound'],
             'type' => $type,
             'categoryName' => $categoryName,
@@ -158,13 +156,24 @@ class ShopController extends Controller
 
         $relatedProducts = $this->productRepo->getRelatedProduct($productId, $product);
         $getSizeColor = $this->productDetailRepo->getSizeColor($productId);
-        $getFavorite = $this->favoriteRepo->getFavorite(Auth::guard('user')->user()->id, $productId);
-        return view('shop.product',[
+        if (Auth::guard('user')->user() !== null) {
+            $getFavorite = $this->favoriteRepo->getFavorite(Auth::guard('user')->user()->id, $productId);
+
+            return view('shop.product', [
+                'product' => $product,
+                'detailSize' => $getSizeColor['sizeUnique'],
+                'detailThumbnail' => $getSizeColor['thumbnailUnique'],
+                'relatedProducts' => $relatedProducts,
+                'favorite' => $getFavorite,
+            ]);
+        }
+
+        return view('shop.product', [
             'product' => $product,
             'detailSize' => $getSizeColor['sizeUnique'],
             'detailThumbnail' => $getSizeColor['thumbnailUnique'],
             'relatedProducts' => $relatedProducts,
-            'favorite' => $getFavorite,
+            'favorite' => [],
         ]);
     }
 
@@ -177,7 +186,7 @@ class ShopController extends Controller
      */
     public function getViewCreate()
     {
-        return view('shop.signup',[
+        return view('shop.signup', [
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
@@ -189,7 +198,7 @@ class ShopController extends Controller
      * @param SignupFormRequest $request
      * @return void
      */
-    public function createAccount(SignupFormRequest $request)
+    public function createAccount(UserSignupRequest $request)
     {
         $password = Hash::make($request->password);
         $data = [
@@ -201,13 +210,13 @@ class ShopController extends Controller
 
         $userAccount = $this->userRepo->create($data);
         $createVoucher = $this->voucherRepo->createFirstVoucher($userAccount->id);
-        
+
         if (!$userAccount || null === $userAccount) {
             return redirect()
                 ->route('shop.signup')
                 ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
         }
-        
+
         return redirect()
             ->route('shop.signup')
             ->with(CommonConstant::MSG, UserConstant::MSG['create_success']);
@@ -230,8 +239,8 @@ class ShopController extends Controller
      *
      * @param Request $request
      * @return void
-     */  
-    public function postLogin(Request $request)
+     */
+    public function postLogin(LoginRequest $request)
     {
         $login = [
             UserConstant::COLUMN['email'] => $request->email,
@@ -244,9 +253,7 @@ class ShopController extends Controller
             return redirect()
                 ->route('shop.view')
                 ->with(CommonConstant::MSG, UserConstant::MSG['login_success']);
-        }
-
-        else {
+        } else {
             return redirect()
                 ->back()
                 ->with('status', UserConstant::MSG['login_fail']);
@@ -260,10 +267,10 @@ class ShopController extends Controller
      * @param Request $request
      * @return void
      */
-    public function getLogout(Request $request) 
+    public function getLogout(Request $request)
     {
         Auth::guard('user')->logout();
-        
+
         return redirect()
             ->route('shop.view')
             ->with(CommonConstant::MSG, UserConstant::MSG['logout_success']);
@@ -279,7 +286,7 @@ class ShopController extends Controller
     {
         $user = Auth::guard('user')->user();
 
-        return view('shop.userinfor',[
+        return view('shop.userinfor', [
             'user' => $user,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
@@ -293,12 +300,12 @@ class ShopController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function update(Request $request,$id)
+    public function update(UserUpdateAccountRequest $request, $id)
     {
         $user = $this->userRepo->update($id, $request->toArray());
-        
+
         return redirect()
-            ->route('shop.userinfor',['id' => $user->id])
+            ->route('shop.userinfor', ['id' => $user->id])
             ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
     }
 
@@ -314,7 +321,7 @@ class ShopController extends Controller
         $user = Auth::guard('user')->user();
         $vouchers = $this->voucherRepo->getVoucherByUser($user->id);
 
-        if(null == $user){
+        if (null == $user) {
             return redirect()
                 ->route('shop.login');
         } else {
@@ -324,7 +331,7 @@ class ShopController extends Controller
                 return redirect()->back();
             }
 
-            return view('shop.checkout',[
+            return view('shop.checkout', [
                 'vouchers' => $vouchers,
                 'user' => $user,
                 'cartItems' => $cartItems,

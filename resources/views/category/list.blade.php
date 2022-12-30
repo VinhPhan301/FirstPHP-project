@@ -9,13 +9,13 @@
 </div>
 <div class='divtablefather'>
     <div class='divtable'>
-        <table class="list_user_table">
+        <table class="list_user_table table-striped table">
             <thead>
                 <tr>
                     <th>STT</th>
                     <th>Tên danh mục</th>
                     <th>Hình ảnh</th>
-                    <td>Ngày tạo</td>
+                    <th>Ngày tạo</th>
                     <th>Chỉnh sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -58,7 +58,7 @@
 </div>
 <div class="alert_confirm_update">
     <p><i class="fa-solid fa-wrench"></i></p>
-    <p>Xác nhận chỉnh sửa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p>Xác nhận chỉnh sửa danh mục <span class="span_name" style="font-weight: bold"></span></p>
     <p class="p_id_update"></p>
     <div>
         <button onclick="closeAlertUpdate()">Hủy</button>
@@ -67,7 +67,7 @@
 </div>
 <div class="alert_confirm_delete">
     <p><i class="fa-regular fa-trash-can"></i></p>
-    <p>Xác nhận xóa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p>Xác nhận xóa danh mục <span class="span_name" style="font-weight: bold"></span></p>
     <p class="p_id_delete"></p>
     <div>
         <button onclick="closeAlertDelete()">Hủy</button>

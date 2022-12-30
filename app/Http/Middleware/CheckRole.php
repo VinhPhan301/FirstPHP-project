@@ -17,15 +17,14 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::guard('user')->check() == true){
+        if (Auth::guard('user')->check() == true) {
             $role = Auth::guard('user')->user()->role;
-            if( $role !== 'admin' ){
-            return redirect('admin/login');
+            if ($role == 'user') {
+                return redirect('admin/login');
             }
             return $next($request);
-        }
-        else{
+        } else {
             return redirect('admin/login');
-        }     
+        }
     }
 }

@@ -75,15 +75,6 @@
 <div class="orderItem_body">
     <div class="orderItem_body_right">
         <div>
-            <h4><i class="fa-solid fa-warehouse"></i> Kho xuất hàng</h4>
-            <select name="" >
-                <option value="">CANIFA - 24 Nguyễn Hữu Thọ</option>
-                <option value="">CANIFA - 38 Kim Đồng, Hà Nội</option>
-                <option value="">CANIFA - TTTM Royal city</option>
-                <option value="">CANIFA - Times City</option>
-            </select>
-        </div>
-        <div>
             <h4><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h4>
             <input class="district" type="text" value="{{ $order->address }}">
         </div>
@@ -110,7 +101,7 @@
     <div class="orderItem_body_left">
         <h4><i class="fa-solid fa-cart-shopping"></i> Chi tiết đơn hàng</h4>
         <div class="orderItem_box_table">
-            <table>
+            <table class="table table-striped in_orderItem_table">
                 <thead>
                     <tr>
                         <th>Hình ảnh</th>
@@ -132,7 +123,8 @@
                         </td>
                         <td>
                             <p>{{ $orderItem->productDetail->product->name }}</p>
-                            <span class="orderItem_color"style="background:{{ $orderItem->productDetail->color }}"></span>
+                            <p style="display:none">{{ $img = $orderItem->productDetail->thumbnail }}</p>
+                            <span id="orderItem_color"  style="background: url('{{ asset("picture/$img") }}')"></span>
                             <span>/</span>
                             {{ $orderItem->productDetail->size }}
                         </td>
@@ -156,17 +148,12 @@
                     <p>{{ number_format($sum,0,'.','.') }} đ</p>
                 </div>
                 <div>
-                    @if($sum >= 1000000)
                     <p>Phí vận chuyển</p>
                     <p>0 đ</p>
-                    @else
-                    <p>Phí vận chuyển (Đơn dưới 1 triệu)</p>
-                    <p>30.000 đ</p>
-                    @endif
                 </div>
                 <div>
                     @if($order->discount !== 'null')
-                    <p>Giảm giá (voucher)</p>
+                    <p>Giảm giá ({{ $order->discount }}%)</p>
                     <p style="color: red">                       
                         {{ number_format(($sum * $order->discount)/100,0,'.','.') }} đ               
                     </p>
@@ -181,17 +168,9 @@
                     <p>Tổng giá trị đơn hàng</p>
                     <p>
                         @if ($order->discount !== 'null')
-                            @if($sum >= 1000000)
                             {{ number_format($sum - ($sum * $order->discount)/100,0,'.','.') }} đ
-                            @else
-                            {{ number_format($sum + 30000 - (($sum * $order->discount)/100) ,0,'.','.') }} đ
-                            @endif
                         @elseif ($order->discount === 'null')
-                            @if($sum >= 1000000)
                             {{ number_format($sum,0,'.','.') }} đ
-                            @else
-                            {{ number_format($sum + 30000,0,'.','.') }} đ
-                            @endif
                         @endif
                     </p>
                 </div>
@@ -214,12 +193,12 @@
                                 </a>
                             </a>                          
                         @elseif ($order->status == 'delivering')
-                        <a id="delivering_bill" href="">
-                            <i class="fa-solid fa-truck"></i> Đơn hàng đã xuất
-                        </a>
+                            <a id="complete_bill" href="{{ route('order.adminUpdate',['id' => $order->id, 'status' => $order->status]) }}">
+                                <i class="fa-solid fa-money-bill-1-wave"></i> Hoàn tất đơn hàng
+                            </a>                       
                         @elseif ($order->status == 'complete')
-                        <a id="complete_bill" href="{{ route('order.adminUpdate',['id' => $order->id, 'status' => $order->status]) }}">
-                            <i class="fa-solid fa-money-bill-1-wave"></i> Hoàn tất đơn hàng
+                        <a id="complete_bill" href="">
+                            <i class="fa-solid fa-money-bill-1-wave"></i> Đơn hàng đã hoàn thành
                         </a>
                         @elseif ($order->status == 'cancelRequest')
                         <a id="cancel_bill" href="{{ route('order.adminUpdate',['id' => $order->id, 'status' => $order->status]) }}">

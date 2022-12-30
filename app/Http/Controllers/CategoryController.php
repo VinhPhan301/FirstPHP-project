@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 use App\Repositories\Product\CategoryRepositoryInterface;
 use App\Constants\CommonConstant;
 use App\Constants\CategoryConstant;
@@ -11,7 +12,6 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-
     protected $categoryRepo;
 
     public function __construct(CategoryRepositoryInterface $categoryRepo)
@@ -24,14 +24,14 @@ class CategoryController extends Controller
      *
      * @return View
      */
-    public function index() : View
+    public function index(): View
     {
         $category = $this->categoryRepo->getAll();
-        
-        if (! $category || null == $category) { 
+
+        if (! $category || null == $category) {
             return redirect()
                 ->route('user.viewpage')
-                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']);
         }
 
         return view('category.list', [
@@ -45,12 +45,11 @@ class CategoryController extends Controller
      *
      * @return View
      */
-    public function getViewCreate() : View
+    public function getViewCreate(): View
     {
         return view('category.create', [
             'msg' => session()->get(CommonConstant::MSG) ?? null
        ]);
-
     }
 
     /**
@@ -59,14 +58,18 @@ class CategoryController extends Controller
      * @param Request $request
      * @return void
      */
-    public function create(Request $request)
+    public function create(CategoryRequest $request)
     {
-        $category = $this->categoryRepo->create($request->toArray());
-
-        if (! $category || null == $category) { 
+        $file = $request->file('thumbnail');
+        $file->move('picture', $file->getClientOriginalName());
+        $category = $this->categoryRepo->create([
+            'name' => $request->name,
+            'thumbnail' => $file->getClientOriginalName()
+        ]);
+        if (! $category || null == $category) {
             return redirect()
                 ->route('category.list')
-                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']);
         }
 
         return redirect()
@@ -81,7 +84,7 @@ class CategoryController extends Controller
      * @param [type] $id
      * @return View
      */
-    public function getViewUpdate($id) : View
+    public function getViewUpdate($id): View
     {
         $category = $this->categoryRepo->find($id);
         // $slug = Str::slug($category->name);
@@ -105,10 +108,10 @@ class CategoryController extends Controller
     {
         $category = $this->categoryRepo->update($id, $request->toArray());
 
-        if (! $category || null == $category) { 
+        if (! $category || null == $category) {
             return redirect()
                 ->route('category.update')
-                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']);
         }
 
         return redirect()
@@ -120,19 +123,19 @@ class CategoryController extends Controller
      * Delete Category By ID function
      *
      * @param [type] $id
-     * 
+     *
      * @return void
      */
     public function delete($id)
     {
         $category = $this->categoryRepo->delete($id);
 
-        if (! $category || null == $category) { 
+        if (! $category || null == $category) {
             return redirect()
                 ->route('category.list')
-                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']); 
+                ->with(CommonConstant::MSG, CategoryConstant::MSG['not_found']);
         }
-        
+
         return redirect()
             ->route('category.list')
             ->with(CommonConstant::MSG, CategoryConstant::MSG['delete_success']);
