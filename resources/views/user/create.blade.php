@@ -6,101 +6,53 @@
             <p id='register'>TẠO TÀI KHOẢN MỚI</p>
             @csrf
             <div class='name_form'>
-            <div>
-                <p>Tên tài khoản</p>
-                <input type="text" placeholder="Enter Name" name="name">
-                <span class='texterror'>
-                    1
-                </span>
-                <span id='texterror'>
-                    @error('name')
-                    {{ $message }}
-                    @enderror
-                </span>
+            <div class='signup_form_div'>
+                <p>Tên tài khoản: @error('name') <span>{{ $message }}</span> @enderror</p>
+                <input type="text" name="name">
             </div>
             </div>
-            <div class='email_form'>
-                <p>Địa chỉ Email</p>
-                <input type="text" placeholder="Enter Email" name="email">
-                <span class='texterror'>
-                    1
-                </span>
-                <span id='texterror'>
-                    @error('email')
-                    {{ $message }}
-                    @enderror
-                </span>
+            <div class='email_form signup_form_div'>
+                <p>Địa chỉ Email: @error('email') <span>{{ $message }}</span> @enderror</p>
+                <input type="text"  name="email">           
             </div>
-            <div class='password_form'>
-                <div>
-                    <p>Mật khẩu</p>
-                    <input type="password" placeholder="Enter Password" name='password'>
-                    <span class='texterror'>
-                        1
-                    </span>
-                    <span id='texterror'>
-                        @error('password')
-                        {{ $message }}
-                        @enderror
-                    </span>
+            <div class='password_form '>
+                <div class='signup_form_div'>
+                    <p>Mật khẩu: @error('password') <span>{{ $message }}</span> @enderror</p>
+                    <input type="password" name='password'>
                 </div>
-                <div>
-                    <p>Xác nhận mật khẩu</p>
-                    <input type="password" placeholder="Confirm Password" name='password_confirm'>
-                    <span class='texterror'>
-                        1
-                    </span>
-                    <span id='texterror'>
-                        @error('password_confirm')
-                        {{ $message }}
-                        @enderror
-                    </span>
+                <div class='signup_form_div'>
+                    <p>Xác nhận mật khẩu: @error('password_confirm') <span>{{ $message }}</span> @enderror</p>
+                    <input type="password" name='password_confirm' >
                 </div>
             </div>       
             <div class='phone_date_form'>
-                <div class='dateofbirth'>
-                    <p>Ngày sinh</p>
+                <div class='dateofbirth signup_form_div'>
+                    <p>Ngày sinh: @error('date_of_birth') <span>{{ $message }}</span> @enderror</p>
                     <input  type="date" name="date_of_birth">
-                    <span class='texterror'>
-                        1
-                    </span>
-                    <span id='texterror'>
-                        @error('date_of_birth')
-                        {{ $message }}
-                        @enderror
-                    </span>
                 </div>
-                <div class='phone'>
-                    <p>Số điện thoại</p>
-                    <input  type="text" placeholder="Enter Phone Number" name="phone">
-                    <span id='texterror'>
-                        @error('phone')
-                        {{ $message }}
-                        @enderror
-                    </span>
-                    <span class='texterror'>
-                        1
-                    </span>
+                <div class='phone signup_form_div'>
+                    <p>Số điện thoại: @error('phone') <span>{{ $message }}</span> @enderror</p>
+                    <input  type="text" name="phone">
                 </div>
             </div>
             <div class='address_role_form'>
-                <div class='address'>
-                    <p>Địa chỉ</p>
-                    <input  type="text" placeholder="Enter Address" name="address">
-                    <span class='texterror'>
-                        1
-                    </span>
-                    <span id='texterror'>
-                        @error('address')
-                        {{ $message }}
-                        @enderror
-                    </span>
+                <div class='address signup_form_div'>
+                    <p>Địa chỉ: @error('address') <span>{{ $message }}</span> @enderror</p>
+                    <input  type="text" name="address">
                 </div>
-                <div class='role'>
+                <div class='role signup_form_div'>
                     <p>Quyền</p>
                     <select  name="role" id="">
-                        <option value="user">User</option>  
-                        <option value="admin">Admin</option>
+                        @if ($userLogin->role == 'admin')
+                        <option value="user">Người dùng</option>  
+                        <option value="staff">Nhân viên</option>  
+                        <option value="manager">Quản lý</option>
+                        @elseif ($userLogin->role == 'manager')
+                        <option value="user">Người dùng</option>  
+                        <option value="staff">Nhân viên</option> 
+                        @else 
+                        <option value="user">Người dùng</option>
+                        @endif
                     </select>
                 </div>
             </div>

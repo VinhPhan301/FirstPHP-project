@@ -10,6 +10,7 @@ use App\Repositories\Product\CartRepositoryInterface;
 use App\Repositories\Product\UserRepositoryInterface;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Product\VoucherRepositoryInterface;
 use App\Constants\CommonConstant;
 use Auth;
 
@@ -22,6 +23,7 @@ class OrderController extends Controller
     protected $userRepo;
     protected $productDetailRepo;
     protected $productRepo;
+    protected $voucherRepo;
 
     public function __construct(
         OrderRepositoryInterface $orderRepo,
@@ -31,6 +33,7 @@ class OrderController extends Controller
         UserRepositoryInterface $userRepo,
         ProductDetailRepositoryInterface $productDetailRepo,
         ProductRepositoryInterface $productRepo,
+        VoucherRepositoryInterface $voucherRepo,
     ) {
         $this->orderRepo = $orderRepo;
         $this->cartItemRepo = $cartItemRepo;
@@ -39,6 +42,7 @@ class OrderController extends Controller
         $this->userRepo = $userRepo;
         $this->productDetailRepo = $productDetailRepo;
         $this->productRepo = $productRepo;
+        $this->voucherRepo = $voucherRepo;
     }
 
 
@@ -171,6 +175,7 @@ class OrderController extends Controller
         } elseif ($request->status == 'cancel') {
             $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'deleted']);
         } elseif ($request->status == 'delivering') {
+            $voucherDelete = $this->voucherRepo->deleteVoucher($request->id);
             $orderDelivering = $this->orderRepo->update($request->id, ['status' => 'complete']);
         }
 

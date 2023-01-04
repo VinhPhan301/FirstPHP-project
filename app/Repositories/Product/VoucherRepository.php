@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Repositories\Product;
+
 use App\Models\Voucher;
+use App\Models\Order;
 use App\Repositories\BaseRepository;
 use App\Repositories\Product\VoucherRepositoryInterface;
 
@@ -15,7 +18,7 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
     public function getVoucherByUser($userId)
     {
         $voucher = $this->model->where('user_id', $userId)->get();
-        
+
         return $voucher;
     }
 
@@ -34,5 +37,17 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
         ]);
 
         return true;
+    }
+
+    public function deleteVoucher($orderId)
+    {
+        $orderFound = Order::where('id', $orderId)->first();
+        $voucherFound = $this->model
+            ->where('user_id', $orderFound->user_id)
+            ->where('discount', $orderFound->discount)
+            ->first();
+        $voucherDelete = $this->delete($voucherFound->id);
+
+        return  $voucherDelete;
     }
 }

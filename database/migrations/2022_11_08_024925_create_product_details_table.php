@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('storage');
             $table->string('sold_out')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

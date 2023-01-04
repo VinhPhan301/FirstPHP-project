@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Repositories\Product\CategoryRepositoryInterface;
 use App\Constants\CommonConstant;
 use App\Constants\CategoryConstant;
@@ -104,9 +105,14 @@ class CategoryController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        $category = $this->categoryRepo->update($id, $request->toArray());
+        $file = $request->file('thumbnail');
+        $file->move('picture', $file->getClientOriginalName());
+        $category = $this->categoryRepo->update($id, [
+            'name' => $request->name,
+            'thumbnail' => $file->getClientOriginalName()
+        ]);
 
         if (! $category || null == $category) {
             return redirect()

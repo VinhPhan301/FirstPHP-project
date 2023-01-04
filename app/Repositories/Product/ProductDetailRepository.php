@@ -77,4 +77,25 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
         return $productDetailUpdate->product_id;
     }
+
+    public function updateOrCreate($attributes = [])
+    {
+        $existProductDetail = $this->model
+            ->where('color', $attributes['color'])
+            ->where('size', $attributes['size'])
+            ->where('thumbnail', $attributes['thumbnail'])
+            ->first();
+
+        if ($existProductDetail) {
+            $updateProductDetail = $this->update($existProductDetail->id, [
+                'price' => $attributes['price'],
+                'storage' => $existProductDetail->storage + $attributes['storage']
+            ]);
+
+            return $updateProductDetail;
+        }
+        $createProductDetail = $this->create($attributes);
+
+        return $createProductDetail;
+    }
 }

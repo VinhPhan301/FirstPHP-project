@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductCreateRequest;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Constants\CommonConstant;
 use App\Constants\ProductConstant;
@@ -21,7 +23,7 @@ class ProductController extends Controller
      *
      * @return void
      */
-    public function index() 
+    public function index()
     {
         $products = $this->productRepo->getAll();
 
@@ -44,8 +46,8 @@ class ProductController extends Controller
      * @return void
      */
     public function getViewCreate()
-    {      
-        return view('product.create',[
+    {
+        return view('product.create', [
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
@@ -57,14 +59,14 @@ class ProductController extends Controller
      * @param Request $request
      * @return void
      */
-    public function create(Request $request)
+    public function create(ProductCreateRequest $request)
     {
-        $product = $this->productRepo->create($request->toArray());
+        $product = $this->productRepo->createOrUpdate($request->toArray());
 
         if (!$product || null === $product) {
             return redirect()
                 ->route('product.create')
-                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']); 
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
 
         return redirect()
@@ -88,7 +90,7 @@ class ProductController extends Controller
                 ->route('product.list')
                 ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
-        
+
         return redirect()
             ->route('product.list')
             ->with(CommonConstant::MSG, ProductConstant::MSG['delete_success']);
@@ -101,16 +103,16 @@ class ProductController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function getViewUpdate($id) 
+    public function getViewUpdate($id)
     {
         $product = $this->productRepo->find($id);
 
-        if (! $product || null == $product) { 
+        if (! $product || null == $product) {
             return redirect()
                 ->route('product.list')
-                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']); 
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
-       
+
         return view('product.update', [
             'product' => $product
         ]);
@@ -124,7 +126,7 @@ class ProductController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function update(Request $request, $id)
+    public function update(ProductCreateRequest $request, $id)
     {
         $product = $this->productRepo->update($id, $request->toArray());
 
@@ -133,14 +135,9 @@ class ProductController extends Controller
                 ->route('product.list')
                 ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
-        
+
         return redirect()
             ->route('product.list')
             ->with(CommonConstant::MSG, ProductConstant::MSG['update_success']);
     }
-
-    
 }
-
-
-

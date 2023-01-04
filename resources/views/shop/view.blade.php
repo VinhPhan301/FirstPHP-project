@@ -26,7 +26,7 @@
         <div class="choose_product">
             @foreach($productList as $item)
             <div>
-                <a href="{{ route('shop.findProduct',['productName' => $item ,'type' => $type, 'category' => $categoryName]) }}"><p>{{ $item }}</p></a>
+                <a href="{{ route('shop.findProduct',['productName' => $item ,'type' => $type,'category' => $categoryName]) }}"><p>{{ $item }}</p></a>
             </div>
             @endforeach
         </div>

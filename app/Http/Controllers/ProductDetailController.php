@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductDetailRequest;
 use App\Repositories\Product\ProductDetailRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Constants\CommonConstant;
@@ -25,11 +27,11 @@ class ProductDetailController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function index($id) 
+    public function index($id)
     {
         $productDetail = $this->productDetailRepo->getProductDetail($id);
         $product = $this->productRepo->find($id);
-        
+
         if (!$productDetail || null === $productDetail) {
             return redirect()
                 ->route('product.list')
@@ -50,7 +52,7 @@ class ProductDetailController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function getViewCreate($id) 
+    public function getViewCreate($id)
     {
         $product = $this->productRepo->find($id);
 
@@ -67,10 +69,10 @@ class ProductDetailController extends Controller
      * @param Request $request
      * @return void
      */
-    public function create(Request $request)
+    public function create(ProductDetailRequest $request)
     {
+        $productDetail = $this->productDetailRepo->updateOrCreate($request->toArray());
 
-        $productDetail = $this->productDetailRepo->create($request->toArray());
         if (!$productDetail || null === $productDetail) {
             return redirect()
                 ->route('product.list')
@@ -96,12 +98,12 @@ class ProductDetailController extends Controller
 
         if (!$productDetail || null === $productDetail) {
             return redirect()
-            ->route('productDetail.list',['id' => $productId])
+            ->route('productDetail.list', ['id' => $productId])
             ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
-      }
-        
+        }
+
         return redirect()
-            ->route('productDetail.list',['id' => $productId])
+            ->route('productDetail.list', ['id' => $productId])
             ->with(CommonConstant::MSG, ProductConstant::MSG['delete_success']);
     }
 
@@ -112,21 +114,20 @@ class ProductDetailController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function getViewUpdate($id) 
+    public function getViewUpdate($id)
     {
         $productDetail = $this->productDetailRepo->find($id);
         $product = $this->productRepo->find($productDetail->product_id);
-        if (! $productDetail || null == $productDetail) { 
+        if (! $productDetail || null == $productDetail) {
             return redirect()
-                ->route('productDetail.list',['id' => $id])
-                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']); 
+                ->route('productDetail.list', ['id' => $id])
+                ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
-       
+
         return view('productDetail.update', [
             'productDetail' => $productDetail,
             'product' => $product,
         ]);
-
     }
 
 
@@ -137,19 +138,18 @@ class ProductDetailController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function update(Request $request, $id)
+    public function update(ProductDetailRequest $request, $id)
     {
         $productDetail = $this->productDetailRepo->update($id, $request->toArray());
 
         if (!$productDetail || null === $productDetail) {
             return redirect()
-                ->route('productDetail.list',['id' => $id])
+                ->route('productDetail.list', ['id' => $id])
                 ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
-        
+
         return redirect()
-            ->route('productDetail.list',['id' => $productDetail->product_id])
+            ->route('productDetail.list', ['id' => $productDetail->product_id])
             ->with(CommonConstant::MSG, ProductConstant::MSG['update_success']);
     }
-
 }

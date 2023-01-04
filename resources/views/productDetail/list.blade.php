@@ -7,19 +7,18 @@
     </div>
     <p><span class="success">{{ $msg }}</span></p>
 </div>
-<div class="productname_in_detail">
-    <p>{{ $product->name }} + {{ $product->type }}</p>
-</div>
 <div class='divtablefather' id='detail_divtablefather'>
     <div class='divtable' id='detail_table'>
-        <table class="list_user_table">
+        <table class="list_user_table table table-striped">
             <thead>
                 <tr>
                     <th>STT</th>
                     <th>Màu sắc</th>
                     <th>Kích cỡ</th>
                     <th>Hình ảnh</th>
-                    <th>Số lượng kho</th>
+                    <th>Đơn giá</th>
+                    <th>Tồn kho</th>
+                    <th>Đã bán</th>
                     <th>Chỉnh sửa</th>
                     <th>Xóa</th>
                 </tr>
@@ -34,7 +33,15 @@
                     <td>{{ $item->color }}</td>
                     <td>{{ $item->size }}</td>
                     <td><img src="{{ asset("picture/$item->thumbnail") }}" alt=""></td>
+                    <td>{{ number_format($item->price,0,'.','.') }} đ</td>
                     <td>{{ $item->storage }}</td>
+                    <td>
+                        @if ($item->sold_out == null)
+                        0
+                        @else
+                        {{ $item->sold_out }}
+                        @endif
+                    </td>
                     <td>
                         <a style="color:black" onclick="confirmUpdate('{{ $item->id }}','{{ $item->product->name }}')">
                             <i class="fa-solid fa-screwdriver-wrench"></i>
@@ -57,7 +64,7 @@
         </table>
     </div>
     <a id='createbut' style="color:black" href="{{ route('productDetail.create', ['id' => $product->id]) }}">
-        <button class='tocreate_btn'>Tạo mới</button>
+        <button class='tocreate_btn'>Tạo mới {{ $product->name }}</button>
     </a>
 </div>
 <div class="alert_confirm_update">

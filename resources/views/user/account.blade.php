@@ -18,8 +18,10 @@
             <p>Quản trị viên</p>
             @elseif($account->role == 'manager')
             <p>Quản lý</p>
-            @else
+            @elseif ($account->role == 'staff')
             <p>Nhân viên</p>
+            @else
+            <p>Người dùng</p>
             @endif
             <p>{{ $account->email }}</p>
         </div>
@@ -114,7 +116,8 @@
         </div>
         <div class="account_change_role">
             <div>
-                @if( ($userLogin->role === 'admin' && ($account->role === 'admin' || $account->role === 'manager')) || ($userLogin->role === 'manager' && ($account->role === 'manager' || $account->role === 'admin')) || $userLogin->role === 'staff')
+                @if( ($userLogin->role === 'admin' && $account->role === 'admin') || 
+                ($userLogin->role === 'manager' && ($account->role === 'manager' || $account->role === 'admin')) || $userLogin->role === 'staff')
                 <p>Quyền</p>
                     @if($account->role === 'admin')
                     <p>Admin</p>
@@ -130,6 +133,7 @@
                 <div class="change_role_div">
                     <form action="" method="post">
                         @csrf
+                        @if($userLogin->role !== 'admin')
                         <select name="role" value='{{ $account->role }}'>
                             @if($account->role == 'staff')
                             <option value="staff">Nhân viên</option>
@@ -139,6 +143,23 @@
                             <option value="staff">Nhân viên</option>
                             @endif
                         </select>
+                        @else
+                        <select name="role" value='{{ $account->role }}'>
+                            @if($account->role == 'staff')
+                            <option value="staff">Nhân viên</option>
+                            <option value="user">Người dùng</option>
+                            <option value="manager">Quản lý</option>
+                            @elseif ($account->role == 'user')
+                            <option value="user">Người dùng</option>
+                            <option value="staff">Nhân viên</option>
+                            <option value="manager">Quản lý</option>
+                            @else 
+                            <option value="manager">Quản lý</option>
+                            <option value="user">Người dùng</option>
+                            <option value="staff">Nhân viên</option>
+                            @endif
+                        </select>
+                        @endif
                         <button type="submit">Chỉnh sửa quyền</button>
                     </form>
                 </div>   

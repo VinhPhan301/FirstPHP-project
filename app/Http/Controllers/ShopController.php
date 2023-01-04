@@ -94,7 +94,6 @@ class ShopController extends Controller
     {
         $categoryName = $request->query('category');
         $type = $request->query('type');
-
         if ($categoryName && $type) {
             $products = $this->productRepo->getViewCategory($type, $categoryName);
 
@@ -110,9 +109,10 @@ class ShopController extends Controller
         $products = $this->productRepo->getViewCategory($type, $categoryName);
 
         return view('shop.view', [
-            'products' => $products,
             'type' => $type,
-            'productList' => [],
+            'productList' => $products['productList'],
+            'products' => $products['products'],
+            'categoryName' => $categoryName,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }

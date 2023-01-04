@@ -335,7 +335,7 @@ a {
 .content {
     padding: 8px;
     width: 82.7%;
-    height: 85.7%;
+    height: 89%;
     position: absolute;
     top: 78px;
     right: 0;
@@ -387,7 +387,7 @@ a {
     height: 70px;
 }
 .divtablefather {
-    height: 104%;
+    height: 100%;
     border-radius: 10px;
     box-shadow: 0px 0px 3px 3px rgb(217, 217, 217);
 }
@@ -437,8 +437,20 @@ a {
     height: 100%;
     padding: 15px 30px;
     border-radius: 10px;
-    color: white;
-    background-color: rgba(52, 52, 52, 0.8);
+    box-shadow: 0px 0px 3px 3px rgb(177, 177, 177);
+}
+.signup_form span {
+    font-size: 15px;
+    color: red;
+}
+.signup_form_div {
+    padding: 8px 10px 0px 10px;
+    border: 2px solid #63b1bc;
+    margin-bottom: 10px;
+}
+.signup_form_div p {
+    font-weight: normal;
+    font-size: 15px;
 }
 .name_pass_form,
 .phone_date_form,
@@ -447,17 +459,21 @@ a {
     display: flex;
     justify-content: space-between;
 }
-.signup_form p {
-    margin-left: 6px;
-    font-size: 15px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-.signup_form div input {
-    border-radius: 5px;
-    padding: 5px 15px;
+.signup_form_div input {
+    padding: 5px 0px;
     border: none;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.signup_form_div input::placeholder {
+    font-size: 16px;
+    color: red;
+}
+.signup_form_div input:focus::-webkit-input-placeholder {
+    opacity: 0;
+}
+.signup_form_div input:focus {
+    outline: none;
 }
 .name_pass_form div {
     width: 49%;
@@ -491,6 +507,9 @@ a {
 .address {
     width: 81%;
 }
+.address_update {
+    width: 100%;
+}
 .address input {
     width: 100%;
 }
@@ -501,7 +520,6 @@ a {
     width: 100%;
     padding: 0 10px;
     height: 32px;
-    border-radius: 5px;
 }
 .role option {
     padding: 5px 10px;
@@ -544,7 +562,7 @@ a {
 #createbut {
     position: absolute;
     left: 20px;
-    bottom: 0px;
+    bottom: 20px;
 }
 
 .tocreate_btn:hover {
@@ -553,9 +571,9 @@ a {
     cursor: pointer;
 }
 .createbox {
-    background-image: url(https://img.freepik.com/free-photo/liquid-purple-art-painting-abstract-colorful-background-with-color-splash-paints-modern-art_1258-97771.jpg?w=2000);
     border-radius: 10px;
     width: 100%;
+    height: 100%;
 }
 
 #texterror {
@@ -571,25 +589,55 @@ a {
 .name_form input {
     width: 100%;
 }
+#under_register {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #63b1bc;
+}
+#register {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0px;
+    font-weight: bold;
+    background: #63b1bc;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
 .update_form_box {
     width: 100%;
     height: 100%;
-    background: url(https://img.jakpost.net/c/2017/03/15/2017_03_15_23480_1489559147._large.jpg);
-    background-repeat: no-repeat;
     border-radius: 10px;
 }
 .update_form {
-    padding: 30px 20px;
+    padding: 20px;
     width: 100%;
-    color: white;
     height: 100%;
-    background: rgba(28, 28, 28, 0.6);
-}
-.update_form input {
-    margin-bottom: 15px;
 }
 .update_btn {
     margin-top: 20px;
+}
+.update_form_div {
+    border: 2px solid #63b1bc;
+    padding: 8px 0px 0px 10px;
+    margin-bottom: 10px;
+}
+.update_form_div input {
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 0px;
+}
+.update_form_div input:focus {
+    outline: none;
+}
+.update_form_div span {
+    color: red;
+    font-size: 15px;
+}
+.admi_update_form_left {
+    width: 60%;
 }
 /******************** End Update  CSS ********************/
 
@@ -598,9 +646,9 @@ a {
 .category_content {
     width: 100%;
     height: 100%;
-    background: url(https://s35764.pcdn.co/wp-content/uploads/2022/08/Featured-Image-33.png);
     border-radius: 10px;
     padding: 20px 30px;
+    box-shadow: 0px 0px 3px 3px rgb(185, 185, 185);
 }
 .create_category_form {
     width: 40%;
@@ -614,9 +662,9 @@ a {
     width: 100%;
     text-align: center;
     color: white;
-    background-color: rgb(98, 0, 219);
-    padding: 20px 0;
-    border-radius: 10px;
+    background-color: #63b1bc;
+    border-radius: 5px;
+    padding: 10px;
 }
 .create_category_form div {
     width: 100%;
@@ -625,7 +673,7 @@ a {
     width: 100%;
     border: 1px solid #63b1bc;
     padding: 5px 10px 0px 10px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .category_name p {
     font-size: 15px;
@@ -639,6 +687,12 @@ a {
 }
 .category_name input:focus {
     outline: none;
+}
+.category_name span {
+    font-size: 13px;
+    font-weight: bold;
+    color: red;
+    margin-left: 10px;
 }
 .category_image input {
     width: 100%;
@@ -701,55 +755,62 @@ a {
     height: 100%;
     border-radius: 10px;
     padding: 20px 30px;
-    background: url(https://www.edesk.com/wp-content/uploads/2021/03/find-trending-products-sell-ecommerce.png);
+    box-shadow: 0px 0px 3px 3px rgb(185, 185, 185);
+}
+#create_product_box {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 85%;
 }
 .create_product_form {
-    width: 40%;
-    padding: 10px 30px;
-    border: 1px solid black;
-    border-radius: 10px;
+    width: 45%;
     margin-top: 15px;
-    background: rgb(6, 6, 6, 0.7);
 }
 .create_product_box h1 {
     padding: 10px 20px;
-    background: rgb(98, 0, 219);
+    background: #63b1bc;
     text-align: center;
     border-radius: 10px;
     color: white;
 }
-.create_product_form p {
-    margin: 5px 0;
-    font-size: 15px;
-    color: white;
-}
-.category_type_name {
-    padding: 10px 20px;
-    width: fit-content;
-    background: rgb(98, 0, 219);
-    color: white;
-    border-radius: 10px;
-    font-weight: bold;
-}
-.category_type_name span {
-    color: rgb(20, 255, 20);
-    margin-left: 20px;
-    font-size: 25px;
-    font-weight: bold;
-}
-.create_product_form input,
-.category_id select,
-.product_type select {
-    padding: 5px 20px;
+.create_product_form div {
     width: 100%;
-    border: none;
-    font-size: 17px;
+    border: 2px solid #63b1bc;
+    margin-bottom: 15px;
+    padding-top: 8px;
 }
-.product_price input,
-.product_name input,
-.category_id select,
-.product_type select {
-    border-radius: 10px;
+.create_product_form div span {
+    font-size: 13px;
+    color: red;
+    margin-left: 10px;
+    font-weight: bold;
+}
+.create_product_form div p {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+.create_product_form div select {
+    border: none;
+    border-top: 3px solid #27313a;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 0px;
+    text-align: center;
+}
+.create_product_form div select:focus {
+    outline: none;
+}
+.create_product_form div input {
+    border: none;
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.create_product_form div input:focus {
+    outline: none;
 }
 .create_product_form button {
     padding: 10px 20px;
@@ -758,50 +819,79 @@ a {
     font-size: 18px;
     font-weight: bold;
     background: rgb(106, 193, 255);
-    margin-top: 20px;
 }
 .create_product_form button:hover {
     color: white;
     background: blue;
     cursor: pointer;
 }
-
+.preview_picture {
+    width: 50%;
+    background: rgb(235, 235, 235);
+    border: 4px dashed rgb(173, 173, 173);
+    height: 99%;
+    margin-top: 25px;
+    text-align: center;
+    position: relative;
+}
+.preview_picture img {
+    height: 100%;
+}
+.preview_picture p {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: fit-content;
+    font-size: 150px;
+    color: rgb(194, 194, 194);
+}
 /******************** End Product Create Form CSS ********************/
 
 /******************** Start ProductDetail Create Form CSS ********************/
 .create_detail_box {
     width: 100%;
     height: 100%;
-    background: rgb(147, 147, 147);
     border-radius: 10px;
     padding: 10px 30px;
 }
 .create_detail_box h1 {
     width: 100%;
-    padding: 10px 0px;
+    padding: 12px 0px;
     text-align: center;
-    background: rgb(98, 0, 219);
+    background: #63b1bc;
     color: white;
-    font-size: 20px;
+    font-size: 27px;
     border-radius: 10px;
 }
 .create_detail_form {
     width: 40%;
-    background: green;
     margin-top: 10px;
     border-radius: 10px;
     padding: 10px 20px;
 }
-.create_detail_form p {
-    color: white;
-    margin: 10px 0px 3px 10px;
-}
-.create_detail_form input {
+.create_detail_form_div {
     width: 100%;
-    border-radius: 10px;
-    padding: 5px 20px;
+    border: 2px solid #63b1bc;
+    padding: 8px 0px 0px 10px;
+    margin-bottom: 15px;
+}
+.create_detail_form_div input {
+    width: 100%;
     border: none;
     font-size: 20px;
+    font-weight: bold;
+}
+.create_detail_form_div input:focus {
+    outline: none;
+}
+.create_detail_form_div span {
+    font-weight: bold;
+    font-size: 13px;
+    color: red;
+    margin-left: 10px;
 }
 .detail_thumbnail input {
     border-radius: 0px;
@@ -814,7 +904,6 @@ a {
     border: none;
     font-size: 15px;
     font-weight: bold;
-    margin-top: 20px;
     background: rgb(138, 187, 255);
 }
 .create_detail_btn:hover {
@@ -835,17 +924,16 @@ a {
     font-weight: bold;
 }
 #detail_divtablefather {
-    height: 97%;
+    height: 100%;
 }
 .product_default_id {
     display: none;
 }
 #for_default_id {
-    background: rgb(98, 0, 219);
-    width: fit-content;
-    padding: 5px 10px;
+    width: 100%;
+    padding: 5px 0px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 20px;
     border-radius: 5px;
     margin: 0;
 }
@@ -1171,7 +1259,7 @@ textarea {
 /******************** Start User Acount Admin CSS ********************/
 .userAcount_box {
     width: 100%;
-    height: 97%;
+    height: 92%;
     margin-top: 15px;
     display: flex;
     justify-content: space-between;
@@ -1179,7 +1267,7 @@ textarea {
 .userAcount_box_left {
     width: 32%;
     border-radius: 10px;
-    height: fit-content;
+    height: 100%;
     padding: 30px 20px;
     box-shadow: 0px 0px 3px 3px rgb(187, 187, 187);
 }
@@ -1299,7 +1387,7 @@ textarea {
     font-weight: bold;
 }
 .change_role_div button {
-    padding: 11px 10px;
+    padding: 11px 7px;
     height: fit-content;
     margin-top: 5px;
     font-weight: bold;

@@ -236,32 +236,37 @@
         else if (size === '') {
             $('.undefined_size').css('display','inline')
         }
-        else { 
-            $.get( '{{ route('cart.create') }}',
-                {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
-                function( data ) {
-                    console.log(data);
-                    if ( data === 'false') {
+        else {
+            if($('.product_storage').text() !== '0') {
+                $.get( '{{ route('cart.create') }}',
+                    {'color': color, 'size': size, 'quantity': quantity, 'productID':productID}, 
+                    function( data ) {
+                        console.log(data);
+                        if ( data === 'false') {
 
-                        $('#to_login').click()
+                            $('#to_login').click()
 
-                    } else if ( data === 'true' || data === 'newcart' ){
+                        } else if ( data === 'true' || data === 'newcart' ){
 
-                        $('.success_tocart').css('display','block')
+                            $('.success_tocart').css('display','block')
 
-                        setInterval(function() {
-                            $('.success_tocart').slideUp();
-                        },800)
-                    } else if ( data === '0' ) {
-                        $('#limited_quantity').text('Đã hết số lượng trong kho');
-                        $('#limited_quantity').css('opacity', '1')
+                            setInterval(function() {
+                                $('.success_tocart').slideUp();
+                            },800)
+                        } else if ( data === '0' ) {
+                            $('#limited_quantity').text('Đã hết số lượng trong kho');
+                            $('#limited_quantity').css('opacity', '1')
 
-                    } else {
-                        $('#limited_quantity').css('opacity', '1')
-                        $('#limited_quantity span').text(data)
+                        } else {
+                            $('#limited_quantity').css('opacity', '1')
+                            $('#limited_quantity span').text(data)
+                        }
                     }
-                }
-            );
+                );
+            }
+            else {
+                console.log(123);
+            }
         }    
     })
 

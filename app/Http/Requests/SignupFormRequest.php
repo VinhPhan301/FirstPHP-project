@@ -29,14 +29,16 @@ class SignupFormRequest extends FormRequest
             'phone' => 'required|min:9|max:11|unique:users',
             'password' => 'required|min:6|required_with:password_confirm|same:password_confirm',
             'password_confirm' => 'required|min:6|required_with:password|same:password',
-            'address' => 'min:5',
+            'address' => 'required|min:5',
+            'date_of_birth' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'password_confirm.same' => 'Mật khẩu không trùng nhau'
+            'password_confirm.same' => 'Mật khẩu không trùng nhau',
+            'password_confirm.required' => 'Mật khẩu không trùng nhau'
         ];
     }
 }

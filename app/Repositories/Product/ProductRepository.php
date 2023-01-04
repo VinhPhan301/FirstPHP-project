@@ -58,8 +58,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function getViewCategory($type, $categoryName)
     {
         $arrProductName = [];
-
-        $category = Category::where('name', $categoryName)->first(); //check lai logic query
+        $category = Category::where('name', $categoryName)->first();
         if (null !== $category && null !== $type) {
             $products = $this->model
                 ->where('type', $type)
@@ -145,5 +144,23 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->get();
 
         return $productOutStock;
+    }
+
+
+    public function createOrUpdate($attribute = [])
+    {
+        $existProduct = $this->model
+            ->where('name', $attribute['name'])
+            ->where('image', $attribute['image'])
+            ->first();
+        if ($existProduct) {
+            $updateProduct = $this->update($existProduct->id, ['price' => $attribute['price']]);
+
+            return $updateProduct;
+        }
+
+        $createProduct = $this->create($attribute);
+
+        return $createProduct;
     }
 }

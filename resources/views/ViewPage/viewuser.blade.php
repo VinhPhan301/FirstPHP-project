@@ -37,7 +37,6 @@
                     </a>
                 </li>
                 <li><i class="fa-solid fa-ticket"></i> Khuyến mại</li>
-                <li><i class="fa-solid fa-coins"></i> C-Points</li>
                 <li><i class="fa-solid fa-house"></i> Sổ địa chỉ</li>
                 <li class="user_favorite_ticked">
                     <a href="{{ route('shop.userfavorite',['id' => $userLogin->id ]) }}">

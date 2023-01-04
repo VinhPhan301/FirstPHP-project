@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -150,7 +151,7 @@ class UserController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $user = $this->userRepo->update($id, $request->toArray());
 
@@ -165,6 +166,29 @@ class UserController extends Controller
             ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
     }
 
+
+
+    /**
+     * User Account update role function
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
+    public function updateAccountRole(Request $request, $id)
+    {
+        $user = $this->userRepo->update($id, $request->toArray());
+
+        if (!$user || null === $user) {
+            return redirect()
+                ->route('user.list')
+                ->with(CommonConstant::MSG, UserConstant::MSG['not_found']);
+        }
+
+        return redirect()
+            ->route('user.list')
+            ->with(CommonConstant::MSG, UserConstant::MSG['update_success']);
+    }
 
     /**
      * Show User Login Form for ADMIN function

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class CategoryUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|exists:categories',
+            'name' => 'required',
             'thumbnail' => 'required|image|mimes:jpg,jpeg,png,gif,webp|max:2048',
         ];
     }
@@ -36,7 +36,6 @@ class CategoryRequest extends FormRequest
             'thumbnail.image' => 'Phải là ảnh',
             'thumbnail.mimes' => 'File phải có định dạng jpg, jpeg, png, gif',
             'thumbnail.max' => 'File có dung lượng tối đa 2mb',
-            'name.exists' => 'Danh mục đã tồn tại'
         ];
     }
 }

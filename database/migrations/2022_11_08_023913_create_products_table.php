@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('sold_out')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

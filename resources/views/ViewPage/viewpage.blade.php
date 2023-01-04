@@ -69,8 +69,6 @@
                     <a href="{{ route('user.update', ['id' => $id]) }}">Tài khoản
                         <span><i class="fa-solid fa-gear"></i></span></span>
                     </a>
-                    <a>Setting <span><i class="fa-solid fa-gear"></i></span></a>
-                    <a>Setting <span><i class="fa-solid fa-gear"></i></span></a>
                 </div>
             </div>
             <div class="sidebaruserpic">
