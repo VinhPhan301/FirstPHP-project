@@ -29,7 +29,7 @@ class ProductDetailController extends Controller
      */
     public function index($id)
     {
-        $productDetail = $this->productDetailRepo->getProductDetail($id);
+        $productDetail = $this->productDetailRepo->getProductPagination($id);
         $product = $this->productRepo->find($id);
 
         if (!$productDetail || null === $productDetail) {

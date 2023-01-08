@@ -14,4 +14,5 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
     public function getRelatedProduct($productID, $product);
     public function updateProductSoldout($id);
     public function createOrUpdate($attribute = []);
+    public function searchProduct($search);
 }

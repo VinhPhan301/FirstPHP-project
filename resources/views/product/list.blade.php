@@ -61,13 +61,16 @@
             </tbody>
         </table>
     </div>
+    <div class="pagination_box">
+        {{ $product->links() }}
+    </div>
     <a id='createbut' style="color:black" href="{{ route('product.create') }}">
         <button class='tocreate_btn'>Tạo mới</button>
     </a> 
 </div>
 <div class="alert_confirm_update">
     <p><i class="fa-solid fa-wrench"></i></p>
-    <p>Xác nhận chỉnh sửa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p>Xác nhận chỉnh sửa<span class="span_name" style="font-weight: bold"></span></p>
     <p class="p_id_update"></p>
     <div>
         <button onclick="closeAlertUpdate()">Hủy</button>
@@ -76,13 +79,15 @@
 </div>
 <div class="alert_confirm_delete">
     <p><i class="fa-regular fa-trash-can"></i></i></p>
-    <p>Xác nhận xóa tài khoản <span class="span_name" style="font-weight: bold"></span></p>
+    <p>Xác nhận xóa<span class="span_name" style="font-weight: bold"></span></p>
     <p class="p_id_delete"></p>
     <div>
         <button onclick="closeAlertDelete()">Hủy</button>
         <button onclick="toFormDelete()">Xác nhận</button>
     </div>
 </div>
+@endsection
+@section('script')
 <script>
     var message = document.querySelector('.success').innerHTML;
 
@@ -129,5 +134,9 @@
         var id = $('.p_id_delete').text()
         $(`.to_form_delete_${id}`).click()
     }
+
+    $(document).ready(function(){
+        $('#admin_ticked_product').css('background','#006977');   
+    })
 </script>
 @endsection

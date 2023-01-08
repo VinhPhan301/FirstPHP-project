@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->productRepo->getAll();
+        $products = $this->productRepo->getProductPagination();
 
         if (!$products || null === $products) {
             return redirect()
@@ -34,6 +34,7 @@ class ProductController extends Controller
         }
 
         return view('product.list', [
+            // compact('products'),
             'product' => $products,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);

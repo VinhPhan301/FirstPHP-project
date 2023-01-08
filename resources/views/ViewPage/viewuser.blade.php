@@ -12,22 +12,15 @@
 <div class='user_box'>
     <div class='user_box_left'>
         <div class='user_name'>
-            <p>User name</p>
+            @if($userLogin->name !== null)
+            <p>{{ $userLogin->name }}</p>
+            @else
+            <p>{{ $userLogin->email }}</p>
+            @endif
             <p><i class="fa-regular fa-envelope"></i></p>
         </div>
         <div class='user_point'>
-            <div>
-                <p>C-Point</p>
-                <p style='color:red'>100</p>
-            </div>
-            <div>
-                <p>KHTT</p>
-                <p style='color:rgb(0, 171, 194)'>125</p>
-            </div>
-            <div>
-                <p>Hạng thẻ</p>
-                <p class="cart_level">green</p>
-            </div>
+            CNF SHOP
         </div>
         <div class='user_action'>
             <ul>

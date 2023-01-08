@@ -68,6 +68,36 @@ p {
     top: 10px;
     left: 10px;
     line-height: 0;
+    z-index: 63;
+}
+.search_suggest {
+    position: absolute;
+    top: 57%;
+    right: 0;
+    background: #334451;
+    width: 100%;
+    height: fit-content;
+    border-bottom-left-radius: 22px;
+    border-bottom-right-radius: 22px;
+    padding: 20px 0px 12px 0px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    opacity: 0;
+}
+.search_suggest ul {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.search_suggest ul li {
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+.search_suggest ul li:hover {
+    background: #63b1bc;
+    cursor: pointer;
 }
 .search input {
     width: 100%;
@@ -78,7 +108,9 @@ p {
     color: #90b1c9;
     font-weight: bold;
     font-size: 13px;
+    z-index: 62;
 }
+
 .header_category {
     width: 100%;
     padding: 13px 50px;
@@ -138,7 +170,12 @@ p {
 #user_action a:hover {
     color: white;
 }
-
+.whatyoulookingfor:focus {
+    outline: none;
+}
+.whatyoulookingfor:focus::-webkit-input-placeholder {
+    opacity: 0;
+}
 /**************************************** End Header CSS ********************/
 
 /**************************************** Start Shop Signup CSS ********************/
@@ -147,7 +184,7 @@ p {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     height: 515px;
-    padding: 30px;
+    padding: 10px;
 }
 .signup_form_box form {
     width: 35%;
@@ -238,7 +275,7 @@ p {
     top: 5%;
     left: 37%;
     border-radius: 5px;
-    border: 1px solid rgb(32, 255, 32);
+    border: 3px solid #63b1bc;
 }
 .view_msg div {
     display: flex;
@@ -255,7 +292,7 @@ p {
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    background: rgb(32, 255, 32);
+    background: #63b1bc;
     font-size: 25px;
 }
 .view_msg div i {
@@ -496,34 +533,23 @@ p {
 }
 .contact {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
     color: white;
 }
 .contact div {
-    width: 49.3%;
+    width: 50%;
     display: flex;
     background: #333f48;
-    padding: 30px 50px;
+    padding: 20px 100px;
     justify-content: space-between;
-}
-.contact div input {
-    width: 65%;
-    background: #53616b;
-    color: white;
-    border: none;
-    border-radius: 2px;
-    padding: 5px 20px;
-    height: fit-content;
+    margin: 0 auto;
+    border-radius: 10px;
 }
 .contact div p {
     font-weight: bold;
     line-height: 34px;
 }
 .contact_icon {
-    padding: 30px 270px !important;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    width: 100%;
 }
 .contact_icon a {
     font-size: 25px;
@@ -608,14 +634,8 @@ p {
     padding: 25px;
     background: url(https://img.freepik.com/premium-photo/white-grey-marble-texture-background-natural-pattern_38607-395.jpg?w=2000);
 }
-.in_content_left {
-    width: 20%;
-}
-.in_content_right {
-    width: 80%;
-}
-.found_data_box {
-    color: black;
+.found_product_box {
+    width: 18.8%;
 }
 
 /**************************************** End Find Product CSS ******************************/
@@ -641,6 +661,10 @@ p {
 .productDetail_thumbnail img {
     width: 100%;
     margin-bottom: 5px;
+}
+.productDetail_thumbnail img:hover {
+    cursor: pointer;
+    border: 1px solid #63b1bc;
 }
 .product_infor {
     width: 33%;
@@ -875,9 +899,9 @@ p {
 }
 .success_tocart {
     position: fixed;
-    padding: 20px 40px 40px 40px;
+    padding: 15px 30px;
     background: white;
-    border: 1px solid rgb(127, 127, 127);
+    border: 4px solid #63b1bc;
     top: 4%;
     left: 35%;
     z-index: 3;
@@ -888,7 +912,7 @@ p {
     width: 100%;
     text-align: center;
     font-size: 55px;
-    color: #44c4a1;
+    color: #63b1bc;
 }
 .success_tocart span {
     font-weight: bold;
@@ -1175,24 +1199,17 @@ table {
 .user_name {
     display: flex;
     justify-content: space-between;
-    padding: 10px 30px;
+    padding: 10px 25px;
     font-size: 20px;
     font-weight: bold;
 }
 .user_point {
-    display: flex;
-    justify-content: space-between;
-}
-.user_point div {
-    width: 33%;
     text-align: center;
-}
-.user_point div:nth-child(2) {
-    border-left: 1px solid #ebebeb;
-    border-right: 1px solid #ebebeb;
-}
-.user_point div p:nth-child(2) {
+    padding: 10px 30px;
+    background: #63b1bc;
+    color: white;
     font-weight: bold;
+    font-size: 20px;
 }
 .cart_level {
     background: rgb(60, 162, 0);
@@ -1204,7 +1221,6 @@ table {
     border-radius: 5px;
 }
 .user_action {
-    margin-top: 10px;
     width: 100%;
     border-top: 1px solid #ebebeb;
 }
@@ -1216,14 +1232,15 @@ table {
 }
 
 .user_action ul li {
-    padding: 8px 30px;
+    padding: 10px 30px;
     width: 100%;
     border-bottom: 1px solid #ebebeb;
     font-size: 17px;
+    font-weight: bold;
 }
 .user_action ul li i {
-    margin-right: 10px;
-    color: rgb(220, 220, 220);
+    margin-right: 15px;
+    color: rgb(198, 198, 198);
     font-size: 23px;
 }
 .user_action ul li:hover {
@@ -1256,11 +1273,16 @@ table {
 .user_box_right form {
     width: 100%;
 }
-.user_box_right form div {
+.user_update_account_left {
     padding: 10px 20px 0px 15px;
-    border: 1px solid rgb(56, 192, 255);
+    border: 2px solid rgb(56, 192, 255);
     width: 60%;
     margin-bottom: 30px;
+}
+.user_update_account_left div {
+    padding: 8px 10px 0px 10px;
+    border: 1px solid rgb(56, 192, 255);
+    margin-bottom: 20px;
 }
 .user_box_right form div p {
     font-size: 13px;
@@ -1273,7 +1295,7 @@ table {
     font-size: 18px;
 }
 .user_box_right form button {
-    width: 60%;
+    width: 100%;
     color: white;
     background-color: rgb(56, 192, 255);
     border: none;
@@ -1536,6 +1558,41 @@ input[type="checkbox" i] {
 .user_update_account input:focus::-webkit-input-placeholder {
     opacity: 0;
 }
+.user_update_account {
+    display: flex;
+    justify-content: space-between;
+}
+.user_update_account_left {
+    padding: 20px 20px;
+}
+.user_update_account_left span {
+    color: red;
+    font-weight: bold;
+}
+.user_update_account_right {
+    width: 38%;
+    text-align: center;
+}
+.user_update_account_right img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #63b1bc;
+    object-fit: cover;
+}
+.label_for_avatar {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: #63b1bc;
+    color: white;
+}
+.label_for_avatar:hover {
+    background: #313e49;
+    font-weight: bold;
+    cursor: pointer;
+}
 /**************************************** End User Infor CSS ******************************/
 
 /**************************************** Start Checkout CSS ******************************/
@@ -1751,5 +1808,11 @@ input[type="checkbox" i] {
 }
 .shoppe_qr_code img {
     width: 60%;
+}
+#avatar_user {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 /**************************************** End Checkout CSS ******************************/

@@ -11,21 +11,26 @@ use Validator;
 use App\Http\Requests\SignupFormRequest;
 use App\Repositories\Product\UserRepositoryInterface;
 use App\Repositories\Product\OrderRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
 use App\Constants\CommonConstant;
 use App\Constants\UserConstant;
 use Illuminate\View\View;
+use Mail;
 
 class UserController extends Controller
 {
     protected $userRepo;
     protected $orderRepo;
+    protected $productRepo;
 
     public function __construct(
         UserRepositoryInterface $userRepo,
         OrderRepositoryInterface $orderRepo,
+        ProductRepositoryInterface $productRepo,
     ) {
         $this->userRepo = $userRepo;
         $this->orderRepo = $orderRepo;
+        $this->productRepo = $productRepo;
     }
 
 
@@ -36,7 +41,7 @@ class UserController extends Controller
      */
     public function index(): View
     {
-        $users = $this->userRepo->getAll();
+        $users = $this->userRepo->getUserPagination();
 
         if (!$users || null === $users) {
             return redirect()
@@ -153,7 +158,15 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        $user = $this->userRepo->update($id, $request->toArray());
+        $file = $request->file('avatar');
+        $file->move('picture', $file->getClientOriginalName());
+        $user = $this->userRepo->update($id, [
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'date_of_birth' => $request->date_of_birth,
+            'address' => $request->address,
+            'avatar' => $file->getClientOriginalName()
+        ]);
 
         if (!$user || null === $user) {
             return redirect()
@@ -198,7 +211,9 @@ class UserController extends Controller
     public function getViewLogin()
     {
         if (Auth::guard('user')->check() == false) {
-            return view('user.login');
+            return view('user.login', [
+                'msg' => session()->get(CommonConstant::MSG) ?? null
+            ]);
         } else {
             $role = Auth::guard('user')->user()->role;
             if ($role == 'admin') {
@@ -217,7 +232,13 @@ class UserController extends Controller
      */
     public function getViewPage(): View
     {
-        return view('user.viewpage');
+        $orders = $this->orderRepo->getOrderByStatus(null, 'complete');
+        $products = $this->productRepo->getAll();
+
+        return view('user.viewpage', [
+            'orders' => $orders,
+            'products' => $products
+        ]);
     }
 
 
@@ -232,6 +253,7 @@ class UserController extends Controller
         $login = [
             UserConstant::COLUMN['email'] => $request->email,
             UserConstant::COLUMN['password'] => $request->password,
+            'status' => 'unlock'
         ];
 
         if (auth()->guard('user')->attempt($login)) {
@@ -246,7 +268,7 @@ class UserController extends Controller
                     ->route('shop.view');
             }
         } else {
-            return redirect()->back()->with('message', UserConstant::MSG['login_fail']);
+            return redirect()->back()->with('msg', UserConstant::MSG['login_fail']);
         }
     }
 
@@ -272,7 +294,7 @@ class UserController extends Controller
      */
     public function getViewTest(): View
     {
-        return view('user.test');
+        // return view('mail.order');
     }
 
 
@@ -300,5 +322,21 @@ class UserController extends Controller
             'account' => $user,
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
+    }
+
+
+
+    public function userSearch(Request $request)
+    {
+        $userId = $this->userRepo->findIdByName($request->userName);
+
+        return $userId;
+    }
+
+    public function userSearchName(Request $request)
+    {
+        $userNames = $this->userRepo->userSuggest($request->search);
+
+        return $userNames;
     }
 }

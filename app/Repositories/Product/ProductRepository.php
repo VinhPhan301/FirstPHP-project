@@ -50,7 +50,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getProductType($type)
     {
-        $products = Product::where('type', $type)->get();
+        $products = Product::where('type', $type)->orderBy('created_at', 'DESC')->get();
 
         return $products;
     }
@@ -63,11 +63,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $products = $this->model
                 ->where('type', $type)
                 ->where('category_id', $category->id)
+                ->orderBy('created_at', 'DESC')
                 ->get();
         }
         if (null !== $category && null === $type) {
             $products = $this->model
                 ->where('category_id', $category->id)
+                ->orderBy('created_at', 'DESC')
                 ->get();
         }
 
@@ -86,9 +88,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function findProduct($categoryName, $type, $productName)
     {
-        $allCategories = Category::all();
-        $allProducts = Product::all();
-
         $category = Category::where('name', '=', $categoryName)
             ->first();
 
@@ -98,26 +97,52 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $dataFound = Product::where('category_id', $categoryID)
                 ->where('type', $type)
                 ->where('name', 'like', '%'.$productName.'%')
+                ->orderBy('created_at', 'DESC')
                 ->get();
         }
         if (null !== $type && null === $categoryName) {
             $dataFound = Product::where('type', $type)
-            ->where('name', 'like', '%'.$productName.'%')
-            ->get();
+                ->where('name', 'like', '%'.$productName.'%')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+        if (null === $type && null === $categoryName) {
+            $productNameSplit = explode(' ', $productName);
+
+            $dataFound = Product::where(function ($like) use ($productNameSplit) {
+                foreach ($productNameSplit as $item) {
+                    $like->Where('name', 'like', "%{$item}%");
+                }
+            })->get();
         }
 
-        return [
-            'dataFound' => $dataFound,
-            'allCategories' => $allCategories,
-            'allProducts' => $allProducts
-        ];
+        return $dataFound;
     }
+
+    public function searchProduct($search)
+    {
+        $productNameSplit = explode(' ', $search);
+        $dataFound = Product::where(function ($like) use ($productNameSplit) {
+            foreach ($productNameSplit as $item) {
+                $like->Where('name', 'like', "%{$item}%");
+            }
+        })->get();
+        $arrSearch = [];
+        foreach ($dataFound as $item) {
+            $arrSearch[] = $item->name;
+        }
+        $arrSearchUnique = array_unique($arrSearch);
+        return $arrSearchUnique;
+    }
+
+
 
     public function getRelatedProduct($productID, $product)
     {
         $relatedProducts = Product::where('id', '!=', $productID)
             ->where('type', $product->type)
             ->where('category_id', $product->category_id)
+            ->orderBy('created_at', 'DESC')
             ->take(4)
             ->get();
 
@@ -162,5 +187,12 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $createProduct = $this->create($attribute);
 
         return $createProduct;
+    }
+
+    public function getProductPagination()
+    {
+        $products = $this->model->orderBy('created_at', 'DESC')->paginate(10, ['*'], 'np');
+
+        return $products;
     }
 }

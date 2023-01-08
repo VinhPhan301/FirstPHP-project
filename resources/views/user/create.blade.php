@@ -8,12 +8,12 @@
             <div class='name_form'>
             <div class='signup_form_div'>
                 <p>Tên tài khoản: @error('name') <span>{{ $message }}</span> @enderror</p>
-                <input type="text" name="name">
+                <input type="text" name="name" value="{{ old('name') }}">
             </div>
             </div>
             <div class='email_form signup_form_div'>
                 <p>Địa chỉ Email: @error('email') <span>{{ $message }}</span> @enderror</p>
-                <input type="text"  name="email">           
+                <input type="text"  name="email" value="{{ old('email') }}">           
             </div>
             <div class='password_form '>
                 <div class='signup_form_div'>
@@ -28,30 +28,26 @@
             <div class='phone_date_form'>
                 <div class='dateofbirth signup_form_div'>
                     <p>Ngày sinh: @error('date_of_birth') <span>{{ $message }}</span> @enderror</p>
-                    <input  type="date" name="date_of_birth">
+                    <input  type="date" name="date_of_birth" value="{{ old('date_of_birth') }}">
                 </div>
                 <div class='phone signup_form_div'>
                     <p>Số điện thoại: @error('phone') <span>{{ $message }}</span> @enderror</p>
-                    <input  type="text" name="phone">
+                    <input  type="text" name="phone" value="{{ old('phone') }}">
                 </div>
             </div>
             <div class='address_role_form'>
                 <div class='address signup_form_div'>
                     <p>Địa chỉ: @error('address') <span>{{ $message }}</span> @enderror</p>
-                    <input  type="text" name="address">
+                    <input  type="text" name="address" value="{{ old('address') }}">
                 </div>
                 <div class='role signup_form_div'>
                     <p>Quyền</p>
                     <select  name="role" id="">
-                        @if ($userLogin->role == 'admin')
-                        <option value="user">Người dùng</option>  
+                        @if ($userLogin->role == 'admin') 
                         <option value="staff">Nhân viên</option>  
                         <option value="manager">Quản lý</option>
                         @elseif ($userLogin->role == 'manager')
-                        <option value="user">Người dùng</option>  
                         <option value="staff">Nhân viên</option> 
-                        @else 
-                        <option value="user">Người dùng</option>
                         @endif
                     </select>
                 </div>
@@ -59,4 +55,11 @@
             <button class="create_btn" type="submit">Tạo mới</button>
         </form>
     </div>
+@endsection
+@section('script')
+<script>
+   $(document).ready(function(){
+        $('#admin_ticked_account').css('background','#006977');   
+    })
+</script>
 @endsection

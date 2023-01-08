@@ -16,6 +16,7 @@ use App\Repositories\Product\VoucherRepositoryInterface;
 use App\Constants\CommonConstant;
 use Response;
 use Auth;
+use Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Constants\UserConstant;
 use App\Http\Requests\SignupFormRequest;
@@ -131,15 +132,23 @@ class ShopController extends Controller
         $productName =$request->query('productName');
 
         $findProduct = $this->productRepo->findProduct($categoryName, $type, $productName);
-        // dd($findProduct);
 
         return view('shop.findProduct', [
-            'dataFound' => $findProduct['dataFound'],
-            'type' => $type,
-            'categoryName' => $categoryName,
-            'allCategories' => $findProduct['allCategories'],
-            'allProducts' => $findProduct['allProducts'],
+            'findProduct' => $findProduct,
         ]);
+    }
+
+
+    /**
+     * Search Product And return Suggest function
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function searchProduct(Request $request)
+    {
+        $searchProduct = $this->productRepo->searchProduct($request->search);
+        return $searchProduct;
     }
 
 
@@ -202,6 +211,7 @@ class ShopController extends Controller
     {
         $password = Hash::make($request->password);
         $data = [
+            'name' => $request->name,
            'email' => $request->email,
            'password' => $password,
            'role' => $request->role,
@@ -210,6 +220,14 @@ class ShopController extends Controller
 
         $userAccount = $this->userRepo->create($data);
         $createVoucher = $this->voucherRepo->createFirstVoucher($userAccount->id);
+
+        $name = $userAccount->email;
+        $voucher = $createVoucher;
+
+        Mail::send('mail.signup', array('name' => $name, 'voucher' => $voucher), function ($email) use ($name) {
+            $email->subject('CNF SHOP');
+            $email->to($name, 'Customer');
+        });
 
         if (!$userAccount || null === $userAccount) {
             return redirect()
@@ -230,7 +248,9 @@ class ShopController extends Controller
      */
     public function getViewLogin()
     {
-        return view('shop.login');
+        return view('shop.login', [
+            'msg' => session()->get(CommonConstant::MSG) ?? null
+        ]);
     }
 
 
@@ -245,6 +265,7 @@ class ShopController extends Controller
         $login = [
             UserConstant::COLUMN['email'] => $request->email,
             UserConstant::COLUMN['password'] => $request->password,
+            'status' => 'unlock'
         ];
 
         if (auth()->guard('user')->attempt($login)) {
@@ -256,7 +277,7 @@ class ShopController extends Controller
         } else {
             return redirect()
                 ->back()
-                ->with('status', UserConstant::MSG['login_fail']);
+                ->with('msg', UserConstant::MSG['login_fail']);
         }
     }
 

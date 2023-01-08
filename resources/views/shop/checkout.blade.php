@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="checkout_container">
-    <form action="" method="post">
+    <form action="" method="POST">
         @csrf
         <div class="checkout_left">
             <div class="checkout_left_top">
@@ -23,19 +23,32 @@
                     </p>
                 </div>
                 <div class="order_infor_input">
-                    <p>Họ tên <span class="checkout_userId" style="display:none">{{ $user->id }}</span></p>
+                    <p>Họ tên: 
+                        @error('name')
+                        <span style="color:red; font-size:15px">{{ $message }}</span>
+                        @enderror
+                        <span class="checkout_userId" style="display:none">{{ $user->id }}</span>
+                    </p>
                     <input type="text" value="{{ $user->name}}" name="name">
                 </div>
                 <div class="order_infor_input">
-                    <p>Số điện thoại</p>
+                    <p>Số điện thoại:
+                        @error('phone')
+                        <span style="color:red; font-size:15px">{{ $message }}</span>
+                        @enderror
+                    </p>
                     <input class="checkout_phone" type="text" name='phone' value="{{ $user->phone}}">
                 </div>
                 <div class="order_infor_input">
-                    <p>Nhập địa chỉ</p>
+                    <p>Nhập địa chỉ:
+                        @error('address')
+                        <span style="color:red; font-size:15px">{{ $message }}</span>
+                        @enderror
+                    </p>
                     <input class='checkout_address' type="text" name="address" value="{{ $user->address}}">
                 </div>
                 <div class="order_infor_input">
-                    <p>Ghi chú</p>
+                    <p>Ghi chú:</p>
                     <input class='checkout_note' name="note" type="text">
                 </div>
             </div>
@@ -122,7 +135,7 @@
                                 </td>
                                 <td class='cart_product_price total_paid'>
                                     <span class='cart_total_price'>{{ $cartItem->total_price }}</span>
-                                    {{ number_format($cartItem->total_price,0,'.','.')}} đ
+                                    {{ number_format($cartItem->total_price,0,'.','.') }} đ
                                 </td>
                                 <td class='productDetail_storage{{ $cartItem->id }}' style='display:none'>
                                     {{ $cartItem->productDetail->storage }}
@@ -156,6 +169,7 @@
                     <span class="totalprice_afterdiscount">
                         {{ number_format($sumTotalPrice,0,',',',') }}
                     </span> đ
+                    <input id="sumTotalPrice" name="sumTotalPrice" type="text" value="{{ $sumTotalPrice }}">
                 </span>            
             </div>
             <div class='discount'>
@@ -211,6 +225,7 @@
             $('.discount_put_here').text(afterDiscount.toLocaleString())
             $('.discount_or_not').text(`(${$('#select_voucher').val()}%)`)
             $('.totalprice_afterdiscount').text((sumTotalPrice - afterDiscount).toLocaleString())
+            $('#sumTotalPrice').val(sumTotalPrice - afterDiscount)
         } else {
             var afterDiscount = 0
             $('.discount_put_here').text(afterDiscount.toLocaleString())

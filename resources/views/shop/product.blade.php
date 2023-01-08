@@ -18,7 +18,7 @@
         <div class='productDetail_thumbnail'>
             <img onclick="showimg('{{ $product->image }}')" src="{{ asset("picture/$product->image") }}">
             @foreach($detailThumbnail as $thumbnail)
-            <img onclick="showimg('{{ $thumbnail }}')" src="{{ asset("picture/$thumbnail") }}">
+            <img  onclick="showimg('{{ $thumbnail }}')" src="{{ asset("picture/$thumbnail") }}">
             @endforeach
         </div>
         <div class='product_infor'>
@@ -103,7 +103,7 @@
 </div>
 <div class="success_tocart">
     <p><i class="fa-solid fa-circle-check"></i></p>
-    <p>Bạn đã thêm <span>{{ $product->name }}</span>vào giỏ hàng.</p>
+    <p>Bạn đã thêm <span> {{ $product->name }} </span> vào giỏ hàng.</p>
 </div>
 @endsection
 @section('script')
@@ -176,11 +176,13 @@
         if (color === '') {
 
             $('.undefined_color').css('display','inline')
-
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         } else if (size === '') {
 
             $('.undefined_size').css('display','inline')
-
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         } else {
 
             var number = $(this).siblings('.choose_quantity').text()*1 + 1;
@@ -206,11 +208,13 @@
         if (color === '') {
 
             $('.undefined_color').css('display','inline')
-
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         } else if (size === '') {
 
             $('.undefined_size').css('display','inline')
-
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         } else { 
 
             var number = $(this).siblings('.choose_quantity').text()*1 - 1;
@@ -232,9 +236,13 @@
 
         if (color === '') {
             $('.undefined_color').css('display','inline')
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         }
         else if (size === '') {
             $('.undefined_size').css('display','inline')
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         }
         else {
             if($('.product_storage').text() !== '0') {
@@ -279,9 +287,13 @@
     
         if (color === '') {
             $('.undefined_color').css('display','inline')
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         }
         else if (size === '') {
             $('.undefined_size').css('display','inline')
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
         }
         else { 
             $.get( '{{ route('cart.create') }}',
@@ -333,8 +345,8 @@
     }
 
     function showimg(thumbnail){
-        console.log(thumbnail);
-        $('.main_thumbnail').attr('src',`{{ asset("picture/${thumbnail}") }}`)
+        var list = thumbnail
+        $('.main_thumbnail').attr('src',`http://localhost:8000/picture/${list}`)
     }
 </script>
 @endsection

@@ -25,6 +25,7 @@ class UserSignupRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users',
+            'name' => 'required|min:6',
             'password' => 'required|min:6|required_with:password_confirm|same:password_confirm',
             'password_confirm' => 'required|min:6|required_with:password|same:password',
         ];

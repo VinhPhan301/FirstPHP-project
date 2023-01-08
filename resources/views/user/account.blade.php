@@ -11,7 +11,11 @@
 <div class="userAcount_box">
     <div class="userAcount_box_left">
         <div class="account_avatar">
-            <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" alt="">
+            @if ($account->avatar === null)
+            <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745">
+            @else
+            <img src="{{ asset("picture/$account->avatar") }}">
+            @endif
         </div>
         <div class="account_role">
             @if($account->role == 'admin')
@@ -168,9 +172,8 @@
         </div>
     </div>
 </div>
-
-
-
+@endsection
+@section('script')
 <script>
     var message = document.querySelector('.success').innerHTML;
 
@@ -182,5 +185,9 @@
         $('.listmsg').fadeOut(300);
         },1200)
     }
+   $(document).ready(function(){
+        $('#admin_ticked_account').css('background','#006977');   
+    })
 </script>
 @endsection
+

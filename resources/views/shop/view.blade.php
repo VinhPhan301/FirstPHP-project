@@ -145,11 +145,6 @@
         @endforeach
     </div>
     <div class='contact'>
-        <div class='contact_email'>
-            <p>Đăng ký nhận bản tin</p>
-            <input type="text" placeholder='Enter your Email...'>
-            <p class="paper_plane"><i class="fa-regular fa-paper-plane"></i></p>
-        </div>
         <div class='contact_icon'>
             <p>Kết nối ngay</p>
             <a href='https://www.facebook.com/canifa.fanpage/'><i class="fa-brands fa-square-facebook"></i></a>

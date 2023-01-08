@@ -24,7 +24,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|exists:categories',
+            'name' => 'required|unique:categories,name',
             'thumbnail' => 'required|image|mimes:jpg,jpeg,png,gif,webp|max:2048',
         ];
     }
@@ -36,7 +36,7 @@ class CategoryRequest extends FormRequest
             'thumbnail.image' => 'Phải là ảnh',
             'thumbnail.mimes' => 'File phải có định dạng jpg, jpeg, png, gif',
             'thumbnail.max' => 'File có dung lượng tối đa 2mb',
-            'name.exists' => 'Danh mục đã tồn tại'
+            'name.unique' => 'Danh mục đã tồn tại'
         ];
     }
 }

@@ -17,13 +17,11 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::guard('user')->check() == true){
-            // $role = Auth::guard('user')->user()->role;
-            // if( $role == 'admin' || $role == 'user'){}
+        $user = Auth::guard('user')->user();
+        if (null !== $user && $user->status !== 'locked') {
             return redirect('/');
-        }
-        else{
+        } else {
             return redirect('/login');
-        }     
+        }
     }
 }

@@ -29,16 +29,31 @@
             </div>
             <div class='icon_type'>
                 <div class='search'>
-                    <p><i class="fa-solid fa-magnifying-glass"></i></p>
-                    <input type="text" placeholder="Bạn tìm gì ...">
+                    <p onclick="searchProduct()"><i class="fa-solid fa-magnifying-glass"></i></p>
+                    <input class="whatyoulookingfor" type="text" placeholder="Tìm sản phẩm ...">
+                    <div class="search_suggest">
+                        <ul>
+
+                        </ul>
+                    </div>
                 </div>
-                <p><i class="fa-solid fa-store"></i></p>
+                <p>
+                    <a href="{{ route('shop.view',['category' => $category]) }}">
+                        <i class="fa-solid fa-store"></i>
+                    </a> 
+                </p>
                 <p>
                     <a href="{{ route('shop.userfavorite', ['id' => $id]) }}">
                         <i class="fa-regular fa-heart"></i>
                     </a>
                 </p>
-                <p><i class="fa-regular fa-circle-user"></i></p>
+                <p>
+                    @if ($userLogin == 'none')
+                    <i class="fa-regular fa-circle-user show_user_action"></i>
+                    @else
+                    <img id='avatar_user' class='show_user_action' src="{{ asset("picture/$avatar") }}">
+                    @endif
+                </p>
                 <p>
                     <a href="{{ route('cartItem.view') }}">
                         <i class="fa-solid fa-bag-shopping"></i>
@@ -51,8 +66,7 @@
                     <p class='logged'><a href='{{ route('shop.logout') }}'>Đăng xuất</a></p>
                 </div>
             </div>
-        </div>
-        
+        </div> 
     </div>
     <div class="home_content">
         @yield('home_content')
@@ -111,21 +125,25 @@
         <div>
             <a href="https://www.facebook.com/canifa.fanpage/">
                 <p><i class="fa-solid fa-headset"></i></p>
-                <p>Support</p>
+                <p>Hỗ trợ</p>
             </a>
         </div>
-        <div>
-            <a href="#header">
+        <div class="scroll_to_top">
+            <a href="#top">
                 <p><i class="fa-solid fa-chevron-up"></i></p>
-                <p>To Top</p>
+                <p >Đầu trang</p>
             </a>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $('.fa-circle-user').click(function() {
+        $("a[href='#top']").click(function() {
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        });
+
+        $('.show_user_action').click(function() {
             var user = $('.user_logged').text()
             
             if(user === 'none'){
@@ -140,6 +158,47 @@
             $('#user_action').slideToggle(200)
 
         })
+
+        $('.whatyoulookingfor').keyup(function() {
+            var search = $('.whatyoulookingfor').val();
+            console.log(search.length);
+            if(search.length > 0){
+                $.get( '{{ route('shop.searchProduct') }}',
+                    {'search' : search}, 
+                    function( data ) {
+                        if(data.length > 0){
+                            $('.search_suggest ul').empty()
+                            $('.search_suggest').css('opacity', '1')
+                            var count = 0
+                            for (var i = 0; i < data.length; i++) {
+                                count++
+                                $('.search_suggest ul').append(`<li id='choosenSearch' >${data[i]}</li>`);
+                                if(count == 5){
+                                    break;
+                                }
+                            }
+                        } else {
+                            $('.search_suggest').css('opacity', '0')
+                        }
+                    }
+                )
+            }
+            if (search.length == 0) {
+                $('.search_suggest').css('opacity', '0')
+            }
+        })
+
+        $(document).on("click", "#choosenSearch", function(){
+            var productName = $(this).text()
+            var url = '{{ route('shop.findProduct') }}' + '?productName=' + productName;
+            window.location.href = url
+        });
+
+        function searchProduct(){
+            var productName = $('.whatyoulookingfor').val();
+            var url = '{{ route('shop.findProduct') }}' + '?productName=' + productName;
+            window.location.href = url
+        }
     </script>
     @yield('script')
 </body>

@@ -36,7 +36,7 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
             'discount' => '10'
         ]);
 
-        return true;
+        return [$firstVoucher, $secondVoucher];
     }
 
     public function deleteVoucher($orderId)
@@ -46,8 +46,12 @@ class VoucherRepository extends BaseRepository implements VoucherRepositoryInter
             ->where('user_id', $orderFound->user_id)
             ->where('discount', $orderFound->discount)
             ->first();
-        $voucherDelete = $this->delete($voucherFound->id);
+        if ($voucherFound) {
+            $voucherDelete = $this->delete($voucherFound->id);
 
-        return  $voucherDelete;
+            return  $voucherDelete;
+        }
+
+        return  false;
     }
 }

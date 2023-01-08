@@ -78,18 +78,27 @@
                 @endforeach
             </tbody>
         </table>
+        
+    </div>
+    <div class="pagination_box">
+        {{ $orders->links() }}
     </div>
 </div>
-
+@endsection
+@section('script')
 <script>
     var message = document.querySelector('.success').innerHTML;
     if(message == ''){
-     document.querySelector('.listmsg').style.display = 'none';
+        document.querySelector('.listmsg').style.display = 'none';
     }
     else{
-     setInterval(function() {
-     $('.listmsg').slideUp();
-    },2000)
+        setInterval(function() {
+        $('.listmsg').slideUp();
+        },2000)
     }
+
+    $(document).ready(function(){
+        $('#admin_ticked_order').css('background','#006977');   
+    })
 </script>
 @endsection

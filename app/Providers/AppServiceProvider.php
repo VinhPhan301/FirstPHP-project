@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Repositories\Product\OrderItemRepositoryInterface::class =>  \App\Repositories\Product\OrderItemRepository::class,
         \App\Repositories\Product\FavoriteRepositoryInterface::class =>  \App\Repositories\Product\FavoriteRepository::class,
         \App\Repositories\Product\VoucherRepositoryInterface::class =>  \App\Repositories\Product\VoucherRepository::class,
-           
+
     ];
 
     /**
@@ -63,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $category = Category::all();  
+        $category = Category::all();
         View::share([
             'category' => $category,
         ]);
@@ -81,20 +81,21 @@ class AppServiceProvider extends ServiceProvider
             'product' => $product
         ]);
 
-        view()->composer('*', function($view) {
+        view()->composer('*', function ($view) {
             $user = auth()->guard('user')->user();
-            if(null !== $user) {
+            if (null !== $user) {
                 view()->share([
                     'userLogin'=> $user,
-                    'id' => $user->id
+                    'id' => $user->id,
+                    'avatar' => $user->avatar,
                 ]);
             } else {
                 view()->share([
                     'userLogin'=> 'none',
-                    'id' => 0
+                    'id' => 0,
+                    'avatar' => 'none',
                 ]);
             }
-            
         });
     }
 }

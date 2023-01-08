@@ -187,6 +187,7 @@
     }
 
     $('.can_cancel').click(function() {
+        console.log(123);
         var orderCode = $(this).parent().siblings('.order_code').text()
         var orderId = $(this).parent().siblings('.hiden_orderId').text()
         $('.order_code_cancel').text(orderCode)
@@ -200,7 +201,7 @@
         $.get('{{ route('order.update') }}', {'id': orderId, 'status': status},  function( data ) {
             if ( data !== null ) {
                 $('.order_view').load('{{ route('shop.userorder', ['id => $user->id']) }} .order_view')
-            closeCancelConfirm()
+                closeCancelConfirm()
             } else {
                 alert('Huy that bai')
             } 

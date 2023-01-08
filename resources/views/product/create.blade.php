@@ -15,15 +15,16 @@
             </div>
             <div class='product_name'>
                 <p>Tên sản phẩm: <span>@error('name') {{ $message }} @enderror</span></p>
-                <input type="text" name="name">
+                <input type="text" name="name" value="{{ old('name') }}">
             </div>
             <div class='product_image'>
                 <p>Hình ảnh: <span>@error('image') {{ $message }} @enderror</span></p>
-                <input type="file" name="image" id='sp_hinh'>
+                <input type="file" name="image" id='sp_hinh' style="display:none">
+                <label for="sp_hinh" class="label_for_form">Chọn hình ảnh </label>
             </div>
             <div class='product_price'>
                 <p>Đơn giá sản phẩm: <span>@error('price') {{ $message }} @enderror</span></p>
-                <input type="number" name='price'>
+                <input type="number" name='price' value="{{ old('price') }}">
             </div>
             <div class='product_type'>
                 <p>Phân loại</p>
@@ -44,6 +45,8 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     function readURL(input) {
@@ -61,5 +64,9 @@
         readURL(this);
         $('.preview_picture p').css('display','none');
     });
+
+    $(document).ready(function(){
+        $('#admin_ticked_product').css('background','#006977');   
+    })
 </script>
 @endsection

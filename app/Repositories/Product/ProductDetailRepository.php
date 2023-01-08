@@ -98,4 +98,11 @@ class ProductDetailRepository extends BaseRepository implements ProductDetailRep
 
         return $createProductDetail;
     }
+
+    public function getProductPagination($id)
+    {
+        $products = $this->model->where('product_id', $id)->orderBy('created_at', 'DESC')->paginate(5, ['*'], 'np');
+
+        return $products;
+    }
 }

@@ -5,14 +5,21 @@
     <form action="" method='post'>
         <h2>Đăng ký</h2>
         @csrf
-        <input type="text" name='email' placeholder="Vui lòng nhập Email">
+        <input type="text" name='name' placeholder="Vui lòng nhập tên" value="{{ old('name') }}">
+        <span id='texterror'>
+            @error('name')
+            {{ $message }}
+            @enderror
+        </span>
+        <span style="opacity: 0">1</span>
+        <input type="text" name='email' placeholder="Vui lòng nhập Email" value="{{ old('email') }}">
         <span id='texterror'>
             @error('email')
             {{ $message }}
             @enderror
         </span>
         <span style="opacity: 0">1</span>
-        <input type="password" name='password' placeholder='Vui lòng nhập mật khẩu'>
+        <input type="password" name='password' placeholder='Vui lòng nhập mật khẩu' value="{{ old('password') }}">
         <span id='texterror'>
             @error('password')
             {{ $message }}

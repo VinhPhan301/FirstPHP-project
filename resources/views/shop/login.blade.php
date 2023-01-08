@@ -7,7 +7,7 @@
             <p>Đăng nhập</p>
             <p><i class="fa-solid fa-paw"></i></p>
         </div>
-        <input type="text" placeholder="Vui lòng nhập Email" name="email">
+        <input type="text" placeholder="Vui lòng nhập Email" name="email" value="{{ old('email') }}">
         <p class="login_shop_error">
             @error('email')
             <span>{{ $message }}</span> 
@@ -19,6 +19,7 @@
             @error('password')
             <span>{{ $message }}</span> 
             @enderror
+            <span>{{ $msg }}</span>
             <span style="opacity: 0">1</span>
         </p>
         <button type="submit">Đăng nhập</button>

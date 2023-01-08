@@ -14,11 +14,11 @@
         @csrf
         <p class="login_paw"><i class="fa-solid fa-paw"></i></p>
         <div class="div_input">
-            <p>Nhập Email</p>
+            <p>Nhập Email: </p>
             <input type="text" @error('email') placeholder="{{ $message }}" @enderror name="email"/>
         </div>
         <div class="div_input">
-            <p>Nhập mật khẩu</p>
+            <p>Nhập mật khẩu: <span style="color:red; font-size:12px">{{ $msg }}</span></p>
             <input type="password" @error('password') placeholder="{{ $message }}" @enderror name="password">
         </div>
         <div class="div_button">

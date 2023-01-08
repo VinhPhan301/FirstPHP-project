@@ -19,7 +19,7 @@
                     <th>Số điện thoại</th>
                     <th>Ngày sinh</th>
                     <th>Quyền</th>
-                    <th>Chỉnh sửa</th>
+                    <th>Thông tin</th>
                     <th>Trạng thái</th>
                 </tr>
             </thead>
@@ -84,6 +84,9 @@
             </tbody>
         </table>
     </div>
+    <div class="pagination_box">
+        {{ $user->links() }}
+    </div>
     <a id='createbut' style="color:black" href="create">
         <button class='tocreate_btn'>Tạo mới</button>
     </a>
@@ -107,9 +110,10 @@
         <button onclick="toFormDelete()">Xác nhận</button>
     </div>
 </div>
+@endsection
+@section('script')
 <script>
     var message = document.querySelector('.success').innerHTML;
-
     if(message == ''){
         document.querySelector('.listmsg').style.display = 'none';
     }
@@ -118,7 +122,7 @@
         $('.listmsg').fadeOut(300);
         },1200)
     }
-
+    
     function confirmUpdate(id, name){
         $('.alert_confirm_update').fadeOut(0)
         $('.alert_confirm_delete').fadeOut(0)
@@ -156,6 +160,10 @@
 
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();   
+    });
+
+    $(document).ready(function(){
+        $('#admin_ticked_account').css('background','#006977');   
     });
 </script>
 @endsection

@@ -162,12 +162,16 @@ header p:hover {
     border: 1px solid #334451;
     font-size: 18px;
     color: #90b1c9;
+    z-index: 62;
+}
+.headermid input:focus {
+    outline: none;
 }
 .headermid {
     width: 40%;
     position: relative;
 }
-.placeholder {
+.placeholder2 {
     position: absolute;
     top: 9px;
     left: 12px;
@@ -179,6 +183,35 @@ header p:hover {
 .headerright,
 .headerleft {
     height: 35px;
+}
+.search_suggest {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: #334451;
+    width: 100%;
+    height: fit-content;
+    border-radius: 15px;
+    padding: 20px 0px 12px 0px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    opacity: 0;
+    z-index: 60;
+}
+.search_suggest ul {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.search_suggest ul li {
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+.search_suggest ul li:hover {
+    background: #63b1bc;
+    cursor: pointer;
 }
 /********************* End header *********************/
 
@@ -259,8 +292,8 @@ header p:hover {
     color: white;
 }
 .sidebaruserpic img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
 }
 .username {
@@ -346,7 +379,7 @@ a {
 .list_user_table th,
 .list_user_table tr,
 .list_user_table td {
-    padding: 10px 0px;
+    padding: 10px;
     text-align: center;
 }
 .list_user_table th {
@@ -401,13 +434,14 @@ a {
 
 .listmsg {
     width: 25%;
-    background: #79c7d1;
+    border: 3px solid #79c7d1;
     position: fixed;
     top: 5%;
     left: 37%;
     border-radius: 5px;
     padding: 20px 30px;
-    color: white;
+    color: #63b1bc;
+    background: white;
 }
 .listmsg h3 {
     border-bottom: 2px solid white;
@@ -589,6 +623,13 @@ a {
 .name_form input {
     width: 100%;
 }
+#admin_account_update {
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+    padding: 0;
+    box-shadow: none;
+}
 #under_register {
     margin-bottom: 10px;
     font-size: 20px;
@@ -609,6 +650,8 @@ a {
     width: 100%;
     height: 100%;
     border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: 0px 0px 3px 3px rgb(172, 172, 172);
 }
 .update_form {
     padding: 20px;
@@ -636,8 +679,34 @@ a {
     color: red;
     font-size: 15px;
 }
-.admi_update_form_left {
+.admin_update_form_left {
     width: 60%;
+}
+.admin_update_form_right {
+    width: 38%;
+    text-align: center;
+}
+.admin_update_form_right img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid #63b1bc;
+    object-fit: cover;
+}
+
+.label_for_avatar {
+    display: block;
+    padding: 10px 20px;
+    margin: 20px auto;
+    width: fit-content;
+    background: #63b1bc;
+    color: white;
+    font-size: 16px;
+}
+.label_for_avatar:hover {
+    cursor: pointer;
+    background: #334451;
+    font-weight: bold;
 }
 /******************** End Update  CSS ********************/
 
@@ -1017,7 +1086,7 @@ a {
 }
 .orderItem_body {
     width: 100%;
-    height: 83%;
+    /* height: 83%; */
     margin-top: 15px;
     display: flex;
     justify-content: space-between;
@@ -1282,9 +1351,10 @@ textarea {
     text-align: center;
 }
 .account_avatar img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
+    object-fit: cover;
 }
 .account_role {
     text-align: center;
@@ -1420,4 +1490,103 @@ textarea {
     background: #63b1bc;
     color: white;
 }
+.label_for_form {
+    width: fit-content;
+    background: #63b1bc;
+    color: white;
+    padding: 7px 15px;
+    margin-bottom: 10px;
+}
+.label_for_form:hover {
+    background: #27313a;
+    font-weight: bold;
+    cursor: pointer;
+}
 /******************** End User Acount Admin CSS ********************/
+
+/******************** Start Pagination Admin CSS ********************/
+.pagination_box svg {
+    width: 20px;
+}
+.pagination_box {
+    position: absolute;
+    right: 20px;
+}
+.pagination_box a {
+    color: #2a808b;
+    font-weight: bold;
+}
+.pagination_box span[aria-current] span {
+    color: white;
+    background: #63b1bc !important;
+    font-weight: bold;
+}
+.pagination_box div:nth-child(1) {
+    display: none;
+}
+/******************** End Pagination Admin CSS ********************/
+
+/******************** Start Chart Admin CSS ********************/
+.chart_header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.in_chart_header {
+    width: 32%;
+    text-align: center;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+    background: #63b1bc;
+}
+.in_chart_header i {
+    margin-right: 20px;
+    font-size: 25px;
+}
+.in_chart_header p:nth-child(2) {
+    font-weight: bold;
+    font-size: 35px;
+}
+.chart_body {
+    width: 100%;
+    height: fit-content;
+    margin-top: 40px;
+}
+.chart_product_sold {
+    width: 100%;
+    height: 70px;
+    margin-bottom: 20px;
+}
+.in_chart_body {
+    display: flex;
+}
+.in_chart_body p {
+    margin-top: 20px;
+    margin-left: 15px;
+}
+.chart_footer {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+.chart_body div:nth-child(1) div {
+    background: red;
+}
+.chart_body div:nth-child(2) div {
+    background: green;
+}
+.chart_body div:nth-child(3) div {
+    background: blue;
+}
+.chart_body div:nth-child(4) div {
+    background: orange;
+}
+.chart_body div:nth-child(5) div {
+    background: rgb(255, 113, 137);
+}
+.chart_body p {
+    font-weight: bold;
+    color: #3eadbc;
+}

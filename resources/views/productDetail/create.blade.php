@@ -12,19 +12,20 @@
             </div>
             <div class='detail_color create_detail_form_div'>
                 <p>Màu sắc: <span>@error('color') {{ $message }} @enderror</span></p>
-                <input type="text" name="color">
+                <input type="text" name="color" value="{{ old('color') }}">
             </div>
             <div class='detail_size create_detail_form_div'>
                 <p>Kích cỡ: <span>@error('size') {{ $message }} @enderror</span></p>
-                <input type="text" name='size'>
+                <input type="text" name='size' value="{{ old('size') }}">
             </div>
             <div class='detail_thumbnail create_detail_form_div'>
                 <p>Hình ảnh: <span>@error('thumbnail') {{ $message }} @enderror</span></p>
-                <input type="file" name="thumbnail" id='sp_hinh'>
+                <input type="file" name="thumbnail" id='sp_hinh' style="display:none">
+                <label for="sp_hinh" class="label_for_form">Chọn hình ảnh </label>
             </div>
             <div class='detail_storage create_detail_form_div'>
                 <p>Số lượng kho: <span>@error('storage') {{ $message }} @enderror</span></p>
-                <input type="number" name='storage'>
+                <input type="number" name='storage' value="{{ old('storage') }}">
             </div>
             <div class='detail_storage create_detail_form_div'>
                 <p>Đơn giá: <span>@error('price') {{ $message }} @enderror</span></p>
@@ -40,6 +41,8 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     function readURL(input) {
@@ -57,5 +60,9 @@
         readURL(this);
         $('.preview_picture p').css('display','none');
     });
+
+    $(document).ready(function(){
+        $('#admin_ticked_product').css('background','#006977');   
+    })
 </script>
 @endsection

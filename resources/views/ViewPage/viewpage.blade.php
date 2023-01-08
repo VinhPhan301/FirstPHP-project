@@ -17,9 +17,14 @@
         </p>
     </div>
     <div class="headermid">
-        <input type="text">
-        <div class="placeholder">
-            <i class="fa-solid fa-magnifying-glass"></i>
+        <div class="placeholder2">
+            <i onclick="searchAccount()" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <input class="whatyoulookingfor" type="text" placeholder="Tìm kiếm tài khoản ...">
+        <div class="search_suggest">
+            <ul>
+
+            </ul>
         </div>
     </div>
     <div class='headerright'>
@@ -45,10 +50,6 @@
                 <i class="fa-solid fa-star "></i>
             </p>
         </div>
-        <div class="father">
-            <p><i class="fa-regular fa-envelope"></i></p>
-            <div class="son">1</div>
-        </div>
     </div>
 </header>
 <body>
@@ -59,7 +60,7 @@
                     <p><i class="fa-regular fa-gem"></i></p>
                 </div>
                 <div class="sideleftheader">
-                    <p><i class="fa-regular fa-bell"></i></p>
+                    <p></p>
                     <p class="logout"><i class="fa-regular fa-circle-user"></i></p>
                 </div>
                 <div class="logoutchild">
@@ -72,7 +73,11 @@
                 </div>
             </div>
             <div class="sidebaruserpic">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K7I2HBandSavKMZEI0tkyVDztS2ryFViOA&usqp=CAU" alt="">
+                @if ($userLogin->avatar === null )
+                <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745">
+                @else
+                <img src="{{ asset("picture/$userLogin->avatar") }}">
+                @endif
                 <p class="username">{{ $userLogin->name }}</p>
                 <p class="about">
                     @if ($userLogin->role == 'admin')
@@ -87,17 +92,17 @@
                 </p>
             </div>
             <div class="dashbar">
-                <h1>Trang chủ</h1>
+                <h1>Quản lý chung</h1>
             </div>
             <div class='actions'>
                 <div class="actionicon">
-                    <div class="fatherlist">
+                    <div class="fatherlist" id="admin_ticked_account">
                         <p><i class="fa-regular fa-clipboard"></i></p>
                         <p>Tài khoản</p>
                     </div>
                     <div class='childlist'>
                         <ul>
-                            <li>
+                            <li> 
                                 <a href="{{ route('user.list') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
@@ -117,13 +122,13 @@
                     </div>
                 </div>
                 <div class="actionicon">
-                    <div class="fatherlist">
+                    <div class="fatherlist" id="admin_ticked_category">
                         <p><i class="fa-regular fa-clipboard"></i></p>
                         <p>Danh mục</p>
                     </div>
-                    <div class='childlist'>
+                    <div class='childlist' >
                         <ul>
-                            <li>
+                            <li >
                                 <a href="{{ route('category.list') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
@@ -131,7 +136,7 @@
                                     </span>
                                 </a>
                             </li>
-                            <li>
+                            <li >
                                 <a href="{{ route('category.create') }}">
                                     <i class="fa-solid fa-users"></i> 
                                     <span>
@@ -144,7 +149,7 @@
                 
                 </div>
                 <div class="actionicon">
-                    <div class="fatherlist">
+                    <div class="fatherlist" id="admin_ticked_product">
                         <p><i class="fa-regular fa-clipboard"></i></p>
                         <p>Sản phẩm</p>
                     </div>
@@ -172,28 +177,24 @@
                 </div>
             </div>
             <div class="dashbar" >
-                <h1>APPLICATIONS</h1>
+                <h1>Quản lý đơn hàng</h1>
             </div>
             <div class='actions'>
                 <div class="actionicon">
                     <a href="{{ route('order.list') }}">
-                        <div class="fatherlist">
+                        <div class="fatherlist" id='admin_ticked_order'>
                             <p><i class="fa-regular fa-clipboard"></i></p>
                             <p>Đơn hàng</p>
                         </div>
                     </a>
                 </div>   
                 <div class="actionicon">
-                    <div class="fatherlist">
-                        <p><i class="fa-solid fa-hand-holding-dollar"></i></p> 
-                        <p>Income Money</p>
-                    </div>
-                </div>
-                <div class="actionicon">
-                    <div class="fatherlist">
-                        <p><i class="fa-solid fa-hand-holding-dollar"></i></p> 
-                        <p>Income Money</p>
-                    </div>
+                    <a href="{{ route('user.viewpage') }}">
+                        <div class="fatherlist">
+                            <p><i class="fa-solid fa-hand-holding-dollar"></i></p> 
+                            <p>Thống kê</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -244,12 +245,58 @@
         $('.logoutchild').slideToggle(200);
     })
 
-    // $('.fa-bars').click(function() {
-    //     $( "#toggle" ).toggle( "slide" );
-    //     $('header').css('width', '98.8%');
-    //     $('.content').css('width', '100%');
-    // });
+    function searchAccount(){
+        var userName = $('.whatyoulookingfor').val();
+        $.get( '{{ route('user.search') }}',
+            {'userName': userName}, 
+            function( id ) {
+                console.log(id);
+                var url = 'http://localhost:8000/admin/user/account' + id
+                window.location.href = url;
+            }
+        );  
+    }
 
+    $('.whatyoulookingfor').keyup(function() {
+        var search = $('.whatyoulookingfor').val();
+        console.log(search.length);
+        if(search.length > 0){
+            $.get( '{{ route('user.searchName') }}',
+                {'search' : search}, 
+                function( data ) {
+                    if(data.length > 0){
+                        $('.search_suggest ul').empty()
+                        $('.search_suggest').css('opacity', '1')
+                        var count = 0
+                        for (var i = 0; i < data.length; i++) {
+                            count++
+                            $('.search_suggest ul').append(`<li id='choosenSearch' >${data[i]}</li>`);
+                            if(count == 5){
+                                break;
+                            }
+                        }
+                    } else {
+                        $('.search_suggest').css('opacity', '0')
+                    }
+                }
+            )
+        }
+        if (search.length == 0) {
+            $('.search_suggest').css('opacity', '0')
+        }
+    })
+
+    $(document).on("click", "#choosenSearch", function(){
+        var userName = $(this).text()
+        $.get( '{{ route('user.search') }}',
+            {'userName': userName}, 
+            function( id ) {
+                console.log(id);
+                var url = 'http://localhost:8000/admin/user/account' + id
+                window.location.href = url;
+            }
+        )
+    });
    </script>
-</body>
+   @yield('script')
 </html>

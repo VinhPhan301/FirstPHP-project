@@ -43,7 +43,7 @@
             <div>
                 <p>Trạng thái thanh toán:</p>
                 <p>
-                    @if($order->status == 'complete')
+                    @if($order->status == 'complete' || $order->payment_method !== 'cod')
                     Đã thanh toán
                     @else
                     Chưa thanh toán
@@ -236,6 +236,8 @@
         <button onclick="toFormDelete()">Xác nhận</button>
     </div>
 </div>
+@endsection
+@section('script')
 <script>
     var message = document.querySelector('.success').innerHTML;
 
@@ -282,5 +284,9 @@
         var id = $('.p_id_delete').text()
         $(`.to_form_delete_${id}`).click()
     }
+
+    $(document).ready(function(){
+        $('#admin_ticked_order').css('background','#006977');   
+    })
 </script>
 @endsection

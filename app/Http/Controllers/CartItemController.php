@@ -9,7 +9,6 @@ use App\Repositories\Product\CartRepositoryInterface;
 use App\Constants\CommonConstant;
 use Auth;
 
-
 class CartItemController extends Controller
 {
     protected $cartItemRepo;
@@ -20,8 +19,7 @@ class CartItemController extends Controller
         CartItemRepositoryInterface $cartItemRepo,
         ProductDetailRepositoryInterface $productDetailRepo,
         CartRepositoryInterface $cartRepo
-        )
-    {
+    ) {
         $this->cartItemRepo = $cartItemRepo;
         $this->cartRepo = $cartRepo;
         $this->productDetailRepo = $productDetailRepo;
@@ -32,27 +30,27 @@ class CartItemController extends Controller
      *
      * @return void
      */
-    public function getViewCart() 
-    {   
+    public function getViewCart()
+    {
         $user = Auth::guard('user')->user();
-        if(null == $user){
-
+        if (null == $user) {
             return redirect()->route('shop.login');
         } else {
             $cartItems = $this->cartItemRepo->getCartById($user->id);
             if (!$cartItems || null === $cartItems) {
-
-                return redirect()
-                    ->back()
-                    ->with(CommonConstant::MSG, 'Không có sản phẩm trong giỏ');
+                return view('shop.cart', [
+                    'cartItemNumber' => 0,
+                    'cartItems' => [],
+                    'msg' => session()->get(CommonConstant::MSG) ?? null
+                ]);
             }
 
-            return view('shop.cart',[
+            return view('shop.cart', [
                 'cartItemNumber' => count($cartItems),
                 'cartItems' => $cartItems,
                 'msg' => session()->get(CommonConstant::MSG) ?? null
             ]);
-        }  
+        }
     }
 
 
@@ -63,14 +61,13 @@ class CartItemController extends Controller
      * @return void
      */
     public function delete(Request $request)
-    {  
+    {
         $id = $request->id;
         $cartItem = $this->cartItemRepo->delete($id);
 
-        if(true === $cartItem){
+        if (true === $cartItem) {
             return 'true';
-        }
-        else {
+        } else {
             return 'false';
         }
     }
@@ -83,7 +80,7 @@ class CartItemController extends Controller
      * @return void
      */
     public function update(Request $request)
-    { 
+    {
         $quantity = $request->quantity;
         $cartItemID = $request->id;
         $productDetailPrice = $request->productDetailPrice;
@@ -94,7 +91,7 @@ class CartItemController extends Controller
         ];
         $cartItemUpdate = $this->cartItemRepo->update($cartItemID, $data);
 
-        if($cartItemUpdate){
+        if ($cartItemUpdate) {
             return 'true';
         } else {
             return 'false';
