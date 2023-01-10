@@ -76,7 +76,7 @@
     <div class="orderItem_body_right">
         <div>
             <h4><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h4>
-            <input class="district" type="text" value="{{ $order->address }}">
+            <input class="district" type="text" value="{{ $order->address }}" readonly>
         </div>
         <div class="user_infor_bill">
             <h4><i class="fa-regular fa-user"></i> Thông tin người mua</h4>
@@ -140,7 +140,7 @@
         <div class='create_bill'>
             <div class="create_bill_right">
                 <h4><i class="fa-regular fa-clipboard"></i> Ghi chú đơn hàng</h4>
-                <textarea>{{ $order->note }}</textarea>
+                <textarea readonly>{{ $order->note }}</textarea>
             </div>
             <div class='create_bill_left'>
                 <div>

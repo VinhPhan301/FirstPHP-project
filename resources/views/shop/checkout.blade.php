@@ -169,7 +169,7 @@
                     <span class="totalprice_afterdiscount">
                         {{ number_format($sumTotalPrice,0,',',',') }}
                     </span> đ
-                    <input id="sumTotalPrice" name="sumTotalPrice" type="text" value="{{ $sumTotalPrice }}">
+                    <input style="display: none" id="sumTotalPrice" name="sumTotalPrice" type="text" value="{{ $sumTotalPrice }}">
                 </span>            
             </div>
             <div class='discount'>

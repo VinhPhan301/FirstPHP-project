@@ -62,7 +62,16 @@ class ProductController extends Controller
      */
     public function create(ProductCreateRequest $request)
     {
-        $product = $this->productRepo->createOrUpdate($request->toArray());
+        // dd($request);
+        $file = $request->file('image');
+        $file->move('picture', $file->getClientOriginalName());
+        $product = $this->productRepo->createOrUpdate([
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'price' => $request->price,
+            'type' => $request->type,
+            'image' => $file->getClientOriginalName()
+        ]);
 
         if (!$product || null === $product) {
             return redirect()

@@ -1556,14 +1556,14 @@ textarea {
 }
 .chart_product_sold {
     width: 100%;
-    height: 70px;
+    height: 55px;
     margin-bottom: 20px;
 }
 .in_chart_body {
     display: flex;
 }
 .in_chart_body p {
-    margin-top: 20px;
+    margin-top: 16px;
     margin-left: 15px;
 }
 .chart_footer {
@@ -1581,10 +1581,13 @@ textarea {
     background: blue;
 }
 .chart_body div:nth-child(4) div {
-    background: orange;
+    background: orangered;
 }
 .chart_body div:nth-child(5) div {
     background: rgb(255, 113, 137);
+}
+.chart_body div:nth-child(6) div {
+    background: rgb(255, 229, 83);
 }
 .chart_body p {
     font-weight: bold;

@@ -233,11 +233,13 @@ class UserController extends Controller
     public function getViewPage(): View
     {
         $orders = $this->orderRepo->getOrderByStatus(null, 'complete');
-        $products = $this->productRepo->getAll();
+        $products = $this->productRepo->getProductSoldOut();
+        $moneyIncome = $this->orderRepo->getOrderTotalPrice();
 
         return view('user.viewpage', [
             'orders' => $orders,
-            'products' => $products
+            'products' => $products,
+            'moneyIncome' => $moneyIncome,
         ]);
     }
 

@@ -3,7 +3,7 @@
 <div class="create_product_box">
     <h1>TẠO SẢN PHẨM MỚI</h1>
     <div id='create_product_box'>
-        <form action="" method="post" class="create_product_form">
+        <form action="" method="post" class="create_product_form" enctype="multipart/form-data">
             @csrf
             <div class="category_id">
                 <p>Dòng sản phẩm:</p>
@@ -29,10 +29,10 @@
             <div class='product_type'>
                 <p>Phân loại</p>
                 <select name="type">
-                    <option value="Nam">Nam</option>
                     <option value="Nữ">Nữ</option>
-                    <option value="Bé Trai">Bé Trai</option>
+                    <option value="Nam">Nam</option>
                     <option value="Bé Gái">Bé Gái</option>
+                    <option value="Bé Trai">Bé Trai</option>
                 </select>
             </div>
             <button type="submit">

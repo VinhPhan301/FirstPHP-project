@@ -23,7 +23,7 @@
                 <a class="to_main" href="{{ route('shop.view',['category' => $category]) }}"><p>TRANG CHỦ</p></a>
                 @foreach($productType as $item)
                 <a class="to_other" href="{{ route('shop.view',['type' => $item]) }}">
-                    <p>{{ strtoupper($item) }}</p>
+                    <p>{{ $item }}</p>
                 </a>
                 @endforeach
             </div>
@@ -48,7 +48,7 @@
                     </a>
                 </p>
                 <p>
-                    @if ($userLogin == 'none')
+                    @if ($userLogin == 'none' || $userLogin->avatar == null)
                     <i class="fa-regular fa-circle-user show_user_action"></i>
                     @else
                     <img id='avatar_user' class='show_user_action' src="{{ asset("picture/$avatar") }}">
@@ -158,24 +158,23 @@
             $('#user_action').slideToggle(200)
 
         })
-
-        $('.whatyoulookingfor').keyup(function() {
+        $(document).ready(function(){
+            $('.whatyoulookingfor').keyup(function() {
             var search = $('.whatyoulookingfor').val();
-            console.log(search.length);
             if(search.length > 0){
                 $.get( '{{ route('shop.searchProduct') }}',
                     {'search' : search}, 
                     function( data ) {
-                        if(data.length > 0){
+                        if(data.length >= 0){
                             $('.search_suggest ul').empty()
                             $('.search_suggest').css('opacity', '1')
-                            var count = 0
+                            // var count = 0
                             for (var i = 0; i < data.length; i++) {
-                                count++
+                                // count++
                                 $('.search_suggest ul').append(`<li id='choosenSearch' >${data[i]}</li>`);
-                                if(count == 5){
-                                    break;
-                                }
+                                // if(count === 5){
+                                //     break;
+                                // }
                             }
                         } else {
                             $('.search_suggest').css('opacity', '0')
@@ -187,6 +186,8 @@
                 $('.search_suggest').css('opacity', '0')
             }
         })
+        })
+        
 
         $(document).on("click", "#choosenSearch", function(){
             var productName = $(this).text()

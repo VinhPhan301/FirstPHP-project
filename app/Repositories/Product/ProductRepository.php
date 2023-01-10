@@ -195,4 +195,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         return $products;
     }
+
+    public function getProductSoldOut()
+    {
+        $products = $this->model->orderBy('sold_out', 'DESC')->get();
+
+        return $products;
+    }
 }

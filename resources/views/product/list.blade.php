@@ -62,7 +62,7 @@
         </table>
     </div>
     <div class="pagination_box">
-        {{ $product->links() }}
+        {{ $product->onEachSide(1)->links() }}
     </div>
     <a id='createbut' style="color:black" href="{{ route('product.create') }}">
         <button class='tocreate_btn'>Tạo mới</button>

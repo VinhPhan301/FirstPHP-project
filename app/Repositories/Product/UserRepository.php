@@ -60,7 +60,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function getUserPagination()
     {
-        $users = $this->model->orderBy('created_at', 'DESC')->paginate(5, ['*'], 'np');
+        $users = $this->model->orderBy('created_at', 'DESC')->paginate(10, ['*'], 'np');
 
         return $users;
     }

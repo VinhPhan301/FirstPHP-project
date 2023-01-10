@@ -29,8 +29,8 @@
                         <i class="fa-solid fa-box"></i> Đơn hàng của tôi
                     </a>
                 </li>
-                <li><i class="fa-solid fa-ticket"></i> Khuyến mại</li>
-                <li><i class="fa-solid fa-house"></i> Sổ địa chỉ</li>
+                {{-- <li><i class="fa-solid fa-ticket"></i> Khuyến mại</li>
+                <li><i class="fa-solid fa-house"></i> Sổ địa chỉ</li> --}}
                 <li class="user_favorite_ticked">
                     <a href="{{ route('shop.userfavorite',['id' => $userLogin->id ]) }}">
                         <i class="fa-regular fa-heart"></i> Yêu thích

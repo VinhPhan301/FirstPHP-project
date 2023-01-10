@@ -79,9 +79,9 @@ class ProductDetailController extends Controller
                 ->with(CommonConstant::MSG, ProductConstant::MSG['not_found']);
         }
 
-        return redirect()
-            ->route('product.list')
-            ->with(CommonConstant::MSG, ProductConstant::MSG['create_success']);
+        // return redirect()
+        //     ->route('product.list')
+        //     ->with(CommonConstant::MSG, ProductConstant::MSG['create_success']);
     }
 
 

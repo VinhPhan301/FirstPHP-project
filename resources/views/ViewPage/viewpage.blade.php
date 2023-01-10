@@ -94,6 +94,7 @@
             <div class="dashbar">
                 <h1>Quản lý chung</h1>
             </div>
+            @if($userLogin->role !== 'staff')
             <div class='actions'>
                 <div class="actionicon">
                     <div class="fatherlist" id="admin_ticked_account">
@@ -176,6 +177,90 @@
                 
                 </div>
             </div>
+            @else
+            <div class='actions'>
+                <div class="actionicon">
+                    <div class="fatherlist" id="admin_ticked_account">
+                        <p><i class="fa-regular fa-clipboard"></i></p>
+                        <p>Tài khoản</p>
+                    </div>
+                    <div class='childlist'>
+                        <ul>
+                            <li> 
+                                <a href="">
+                                    <i class="fa-solid fa-users"></i> 
+                                    <span>
+                                    Danh sách
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fa-solid fa-users"></i> 
+                                    <span>
+                                    Tạo mới
+                                    </span>
+                                </a>
+                            </li>                           
+                        </ul>
+                    </div>
+                </div>
+                <div class="actionicon">
+                    <div class="fatherlist" id="admin_ticked_category">
+                        <p><i class="fa-regular fa-clipboard"></i></p>
+                        <p>Danh mục</p>
+                    </div>
+                    <div class='childlist' >
+                        <ul>
+                            <li >
+                                <a href="">
+                                    <i class="fa-solid fa-users"></i> 
+                                    <span>
+                                    Danh sách
+                                    </span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="">
+                                    <i class="fa-solid fa-users"></i> 
+                                    <span>
+                                    Thêm mới
+                                    </span>
+                                </a>
+                            </li>                        
+                        </ul>
+                    </div>
+                
+                </div>
+                <div class="actionicon">
+                    <div class="fatherlist" id="admin_ticked_product">
+                        <p><i class="fa-regular fa-clipboard"></i></p>
+                        <p>Sản phẩm</p>
+                    </div>
+                    <div class='childlist'>
+                        <ul>
+                            <li>
+                                <a href="">
+                                    <i class="fa-solid fa-users"></i> 
+                                    <span>
+                                    Danh sách
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fa-solid fa-users"></i> 
+                                    <span>
+                                    Thêm mới
+                                    </span>
+                                </a>
+                            </li>                   
+                        </ul>
+                    </div>
+                
+                </div>
+            </div>
+            @endif
             <div class="dashbar" >
                 <h1>Quản lý đơn hàng</h1>
             </div>
@@ -190,7 +275,7 @@
                 </div>   
                 <div class="actionicon">
                     <a href="{{ route('user.viewpage') }}">
-                        <div class="fatherlist">
+                        <div class="fatherlist" id='admin_ticked_chart'>
                             <p><i class="fa-solid fa-hand-holding-dollar"></i></p> 
                             <p>Thống kê</p>
                         </div>

@@ -165,4 +165,31 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         //     echo json_encode($returnData);
         // }
     }
+
+    public function getOrderTotalPrice()
+    {
+        $orders = $this->model->where('status', 'complete')->get();
+        $arr = [];
+        foreach ($orders as $order) {
+            $sum = 0;
+            if ($order->discount == 'null') {
+                foreach ($order->orderItem as $orderItem) {
+                    $sum += $orderItem->total_price;
+                }
+                $arr[] = $sum;
+            } else {
+                foreach ($order->orderItem as $orderItem) {
+                    $sum += $orderItem->total_price;
+                    $discountSum = $sum - ($sum * $order->discount /100);
+                }
+                $arr[] = $discountSum;
+            }
+        }
+        $lastSum = 0;
+        foreach ($arr as $item) {
+            $lastSum += $item;
+        }
+
+        return $lastSum;
+    }
 }

@@ -2,25 +2,15 @@
 @section('content')
 <div class="chart_header">
     <div class="in_chart_header">
-        <?php 
-        $sum = 0
-        ?>
-        @foreach ($orders as $order)
-            @foreach ($order->orderItem as $orderItem)
-            <?php
-            $sum += $orderItem->total_price 
-            ?> 
-            @endforeach
-        @endforeach
         <p><i class="fa-solid fa-sack-dollar"></i> Tổng tiền đã thu  </p>
-        <p>{{ number_format($sum,0,'.','.')}} đ</p>
+        <p>{{ number_format($moneyIncome,0,'.','.')}} đ</p>
     </div>
     <div class="in_chart_header">
-        <p><i class="fa-solid fa-truck-ramp-box"></i> Tổng đơn hàng </p>
+        <p><i class="fa-solid fa-truck-ramp-box"></i> Đơn hàng đã giao </p>
         <p>{{ count($orders) }}</p>
     </div>
     <div class="in_chart_header">
-        <p><i class="fa-solid fa-box-open"></i> Số sản phẩm đã bán</p>
+        <p><i class="fa-solid fa-box-open"></i> Sản phẩm đã bán</p>
         <p>{{ count($products) }}</p>
     </div>
 </div>
@@ -35,10 +25,10 @@
             ?>
             <div class="in_chart_body">
                 <div style="width:{{ $product->sold_out }}00px" class="chart_product_sold"></div>
-                <p>{{ $product->name }}-{{ $product->id }}</p>
+                <p>{{ $product->name }}-SP{{ $product->id }}</p>
             </div>
         @endif
-        @if($i == 5)
+        @if($i == 6)
             @break
         @endif
     @endforeach
@@ -46,4 +36,11 @@
 <div class="chart_footer">
     <p>Biểu đồ Số lượng sản phẩm đã bán</p>
 </div>
+@endsection
+@section('script')
+<script>
+    $(document).ready(function(){
+        $('#admin_ticked_chart').css('background','#006977');   
+    })
+</script>
 @endsection
