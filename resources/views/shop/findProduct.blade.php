@@ -29,4 +29,7 @@
         </div>
     </div>
 </div>
+<div class="pagination_box">
+    {{ $findProduct->links() }}
+</div>
 @endsection

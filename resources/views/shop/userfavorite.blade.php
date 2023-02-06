@@ -23,5 +23,7 @@
 <script>
     $('.user_favorite_ticked a').css('color', '#63b1bc');
     $('.user_favorite_ticked i').css('color', '#63b1bc');
+    $('.user_favorite_ticked').css('border-left', '4px solid #63b1bc');
+    $('.user_favorite_ticked').css('padding-left', '26px');
 </script>
 @endsection

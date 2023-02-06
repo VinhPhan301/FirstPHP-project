@@ -47,6 +47,8 @@
 <script>
     $('.user_account_ticked a').css('color', '#63b1bc');
     $('.user_account_ticked i').css('color', '#63b1bc');
+    $('.user_account_ticked').css('border-left', '4px solid #63b1bc');
+    $('.user_account_ticked').css('padding-left', '26px');
     
     var message = $('.logout_msg').text()
     if(message === '') {

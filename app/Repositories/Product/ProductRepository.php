@@ -98,13 +98,20 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 ->where('type', $type)
                 ->where('name', 'like', '%'.$productName.'%')
                 ->orderBy('created_at', 'DESC')
-                ->get();
+                ->paginate(15)
+                ->setPath(route('shop.findProduct'))
+                ->appends('productName', $productName)
+                ->appends('type', $type)
+                ->appends('category', $categoryName);
         }
         if (null !== $type && null === $categoryName) {
             $dataFound = Product::where('type', $type)
                 ->where('name', 'like', '%'.$productName.'%')
                 ->orderBy('created_at', 'DESC')
-                ->get();
+                ->paginate(15)
+                ->setPath(route('shop.findProduct'))
+                ->appends('productName', $productName)
+                ->appends('type', $type);
         }
         if (null === $type && null === $categoryName) {
             $productNameSplit = explode(' ', $productName);
@@ -113,7 +120,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 foreach ($productNameSplit as $item) {
                     $like->Where('name', 'like', "%{$item}%");
                 }
-            })->get();
+            })->paginate(15)
+            ->setPath(route('shop.findProduct'))
+            ->appends('productName', $productName);
         }
 
         return $dataFound;
@@ -132,6 +141,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $arrSearch[] = $item->name;
         }
         $arrSearchUnique = array_unique($arrSearch);
+
         return $arrSearchUnique;
     }
 

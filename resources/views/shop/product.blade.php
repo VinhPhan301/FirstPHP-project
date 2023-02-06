@@ -1,6 +1,12 @@
 @extends('Viewpage.viewhome')
 @section('home_content')
 <p class="userID_logged" style="display: none"></p>
+<div class="view_msg">
+    <div>
+        <p class="logout_msg">{{ $msg }}</p>
+        <p><i class="fa-solid fa-otter"></i></p>
+    </div>
+</div>
 <div class="header_category">
     <div class='in_header_category'>
         @foreach($category as $item)
@@ -30,7 +36,7 @@
             <div class='mid_infor'>
                 <p>Màu sắc: <span class='undefined_color'>Vui lòng chọn màu</span></p>
                 @foreach ($detailThumbnail as $thumbnail)
-                    <span class="detail_color" style="background: url('{{ asset("picture/$thumbnail") }}')">{{ $thumbnail }}</span>
+                    <span color='{{ $thumbnail }}' class="detail_color" style="background: url('{{ asset("picture/$thumbnail") }}')">{{ $thumbnail }}</span>
                 @endforeach
                 <p>Kích cỡ: <span class='undefined_size'>Vui lòng chọn kích cỡ</span></p>
                 @foreach ($detailSize as $size)
@@ -117,7 +123,14 @@
         $(".remove_from_favorite").css('display','none')
     }
     
+    function showimg(thumbnail){
+        var showThumbnail = thumbnail
+        $('.main_thumbnail').attr('src',`http://localhost:8000/picture/${showThumbnail}`)
+    }
+
     $('.detail_color').click(function(){
+        console.log($(this).attr('color'));
+        showimg($(this).attr('color'))
         $('#limited_quantity').css('opacity', '0')
         $('.choose_quantity').text('1')
         $('#limited_storage').css('opacity', '0')  
@@ -344,9 +357,14 @@
         );
     }
 
-    function showimg(thumbnail){
-        var list = thumbnail
-        $('.main_thumbnail').attr('src',`http://localhost:8000/picture/${list}`)
+    var message = $('.logout_msg').text()
+    if(message === '') {
+        $('.view_msg').css('display','none')
+    } else {
+        $('.view_msg').css('display','block')
+        setInterval(function() {
+            $('.view_msg').slideUp();
+        },800)
     }
 </script>
 @endsection

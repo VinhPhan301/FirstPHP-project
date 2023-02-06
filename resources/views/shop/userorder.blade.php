@@ -158,6 +158,8 @@
 <script>
     $('.user_order_ticked a').css('color', '#63b1bc');
     $('.user_order_ticked i').css('color', '#63b1bc');
+    $('.user_order_ticked').css('border-left', '4px solid #63b1bc');
+    $('.user_order_ticked').css('padding-left', '26px');
 
     function orderStatus(status) {
         var url = "{{ route('shop.userorder', ":id") }}?status=" + status;

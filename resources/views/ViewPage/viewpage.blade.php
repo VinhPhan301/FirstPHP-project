@@ -98,7 +98,7 @@
             <div class='actions'>
                 <div class="actionicon">
                     <div class="fatherlist" id="admin_ticked_account">
-                        <p><i class="fa-regular fa-clipboard"></i></p>
+                        <p><i class="fa-solid fa-circle-user"></i></p>
                         <p>Tài khoản</p>
                     </div>
                     <div class='childlist'>
@@ -113,7 +113,7 @@
                             </li>
                             <li>
                                 <a href="{{ route('user.create') }}">
-                                    <i class="fa-solid fa-users"></i> 
+                                    <i class="fa-solid fa-user-plus"></i> 
                                     <span>
                                     Tạo mới
                                     </span>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="actionicon">
                     <div class="fatherlist" id="admin_ticked_product">
-                        <p><i class="fa-regular fa-clipboard"></i></p>
+                        <p><i class="fa-solid fa-box"></i></p>
                         <p>Sản phẩm</p>
                     </div>
                     <div class='childlist'>
@@ -181,7 +181,7 @@
             <div class='actions'>
                 <div class="actionicon">
                     <div class="fatherlist" id="admin_ticked_account">
-                        <p><i class="fa-regular fa-clipboard"></i></p>
+                        <p><i class="fa-solid fa-circle-user"></i></p>
                         <p>Tài khoản</p>
                     </div>
                     <div class='childlist'>
@@ -196,7 +196,7 @@
                             </li>
                             <li>
                                 <a href="">
-                                    <i class="fa-solid fa-users"></i> 
+                                    <i class="fa-solid fa-user-plus"></i>
                                     <span>
                                     Tạo mới
                                     </span>
@@ -268,7 +268,7 @@
                 <div class="actionicon">
                     <a href="{{ route('order.list') }}">
                         <div class="fatherlist" id='admin_ticked_order'>
-                            <p><i class="fa-regular fa-clipboard"></i></p>
+                            <p><i class="fa-solid fa-truck-ramp-box"></i></p>
                             <p>Đơn hàng</p>
                         </div>
                     </a>

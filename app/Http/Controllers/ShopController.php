@@ -148,6 +148,7 @@ class ShopController extends Controller
     public function searchProduct(Request $request)
     {
         $searchProduct = $this->productRepo->searchProduct($request->search);
+
         return $searchProduct;
     }
 
@@ -174,6 +175,7 @@ class ShopController extends Controller
                 'detailThumbnail' => $getSizeColor['thumbnailUnique'],
                 'relatedProducts' => $relatedProducts,
                 'favorite' => $getFavorite,
+                'msg' => session()->get(CommonConstant::MSG) ?? null
             ]);
         }
 
@@ -183,6 +185,7 @@ class ShopController extends Controller
             'detailThumbnail' => $getSizeColor['thumbnailUnique'],
             'relatedProducts' => $relatedProducts,
             'favorite' => [],
+            'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
     }
 
@@ -248,6 +251,10 @@ class ShopController extends Controller
      */
     public function getViewLogin()
     {
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+
         return view('shop.login', [
             'msg' => session()->get(CommonConstant::MSG) ?? null
         ]);
@@ -271,9 +278,7 @@ class ShopController extends Controller
         if (auth()->guard('user')->attempt($login)) {
             $this->currentUser = auth()->guard('user')->user();
 
-            return redirect()
-                ->route('shop.view')
-                ->with(CommonConstant::MSG, UserConstant::MSG['login_success']);
+            return redirect(session()->get('url.intended'))->with(CommonConstant::MSG, UserConstant::MSG['login_success']);
         } else {
             return redirect()
                 ->back()

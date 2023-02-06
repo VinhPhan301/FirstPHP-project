@@ -462,7 +462,7 @@ p {
 }
 .category_product {
     width: 100%;
-    padding: 20px 0px;
+    padding-top: 20px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -1816,3 +1816,34 @@ input[type="checkbox" i] {
     object-fit: cover;
 }
 /**************************************** End Checkout CSS ******************************/
+
+/******************** Start Pagination Admin CSS ********************/
+.pagination_box svg {
+    width: 20px;
+}
+.pagination_box {
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: right;
+    padding-right: 30px;
+}
+.pagination_box a {
+    color: #2a808b;
+    font-weight: bold;
+    text-decoration: none;
+}
+.pagination_box span[aria-current] span {
+    color: white;
+    background: #63b1bc !important;
+    font-weight: bold;
+}
+.pagination_box div:nth-child(1) {
+    display: none;
+}
+/******************** End Pagination Admin CSS ********************/
+/******************** Start User Address Book CSS ********************/
+.user_address_header {
+    display: flex;
+    justify-content: space-between;
+}
+/******************** End User Address Book CSS ********************/ ;
