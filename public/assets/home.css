@@ -1194,7 +1194,7 @@ table {
 .user_box_left {
     width: 30%;
     height: 490px;
-    box-shadow: 0px 0px 3px 3px rgb(232, 232, 232);
+    box-shadow: 0px 0px 3px 3px rgb(145, 145, 145);
 }
 .user_name {
     display: flex;

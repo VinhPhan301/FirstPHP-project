@@ -35,7 +35,7 @@ class OrderController extends Controller
         UserRepositoryInterface $userRepo,
         ProductDetailRepositoryInterface $productDetailRepo,
         ProductRepositoryInterface $productRepo,
-        VoucherRepositoryInterface $voucherRepo,
+        VoucherRepositoryInterface $voucherRepo
     ) {
         $this->orderRepo = $orderRepo;
         $this->cartItemRepo = $cartItemRepo;

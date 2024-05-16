@@ -26,7 +26,7 @@ class UserController extends Controller
     public function __construct(
         UserRepositoryInterface $userRepo,
         OrderRepositoryInterface $orderRepo,
-        ProductRepositoryInterface $productRepo,
+        ProductRepositoryInterface $productRepo
     ) {
         $this->userRepo = $userRepo;
         $this->orderRepo = $orderRepo;

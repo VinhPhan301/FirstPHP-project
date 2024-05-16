@@ -38,7 +38,7 @@ class ShopController extends Controller
         CartItemRepositoryInterface $cartItemRepo,
         OrderRepositoryInterface $orderRepo,
         FavoriteRepositoryInterface $favoriteRepo,
-        VoucherRepositoryInterface $voucherRepo,
+        VoucherRepositoryInterface $voucherRepo
     ) {
         $this->productRepo = $productRepo;
         $this->productDetailRepo = $productDetailRepo;
